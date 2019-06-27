@@ -1,25 +1,15 @@
 import React from 'react'
-import ReactDom from 'react-dom'
-import CanvasDraw from 'react-canvas-draw'
+import Canvas from './canvas'
 
-export default class Draw extends React.Component {
-  // state = {
-  //   color: '#000000',
-  //   brushRadius: 10,
-  //   lazyRadius: 12,
-  //   width: 800
-  // }
-
-  render() {
-    return (
-      <div>
-        <button>Start Mic</button>
-        <button>Stop Mic</button>
-        <button>Clear</button>
-        <canvas id="canvas" />
-        {/* <CanvasDraw style={{width: '80%'}}/> */}
-        <button>Save</button>
-      </div>
-    )
-  }
+export const Draw = props => {
+  return (
+    <Canvas
+      draw={ctx => {
+        ctx.beginPath()
+        ctx.arc(95, 50, 40, 0, 2 * Math.PI)
+        ctx.closePath()
+        ctx.stroke()
+      }}
+    />
+  )
 }
