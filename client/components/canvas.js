@@ -1,6 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import CanvasDraw from 'react-canvas-draw'
 
 export default class Canvas extends React.Component {
   // state = {
@@ -19,6 +17,6 @@ export default class Canvas extends React.Component {
   }
 
   render() {
-    return <canvas ref={this.canvas} />
+    return <canvas ref={this.canvas} width="850" height="850" />
   }
 }
