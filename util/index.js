@@ -25,16 +25,8 @@ let drawAlt = function() {
 }
 
 const getColor = function() {
-  analyser.getByteFrequencyData(dataArrayAlt)
-  const newArray = dataArrayAlt.slice(0, 60)
   const newLength = 150
 
-  let max = 0
-  for (let i = 0; i < newArray.length; i++) {
-    if (newArray[i] > newArray[max]) {
-      max = i
-    }
-  }
   const maxColor = colors[max]
 
   let barWidth = WIDTH / newLength

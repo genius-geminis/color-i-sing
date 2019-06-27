@@ -1,5 +1,5 @@
 import React from 'react'
-import Canvas from './canvas'
+import {AudioAnalyser} from './audioAnalyser'
 
 export class Draw extends React.Component {
   constructor(props) {
@@ -33,15 +33,7 @@ export class Draw extends React.Component {
         <button type="button" onClick={this.stopMic}>
           Stop
         </button>
-        <Canvas
-          draw={ctx => {
-            // ctx.beginPath()
-            // ctx.arc(95, 50, 40, 0, 2 * Math.PI)
-            // ctx.closePath()
-            // ctx.stroke()
-            ctx.strokeRect(0, 0, 500, 500)
-          }}
-        />
+        {this.state.audio ? <AudioAnalyser audio={this.state.audio} /> : ''}
       </React.Fragment>
     )
   }
