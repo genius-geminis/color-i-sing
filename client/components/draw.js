@@ -21,7 +21,7 @@ export class Draw extends React.Component {
     this.getColor = this.getColor.bind(this)
     this.makePath = this.makePath.bind(this)
     this.clear = this.clear.bind(this)
-    this.downloadImage = this.downloadImage.bind(this)
+    this.getImage = this.getImage.bind(this)
   }
 
   componentDidMount() {
@@ -58,6 +58,7 @@ export class Draw extends React.Component {
   stopMic() {
     this.state.audio.getTracks()[0].stop()
     this.setState({audio: null})
+    this.getImage()
   }
 
   getColor() {
@@ -92,8 +93,11 @@ export class Draw extends React.Component {
 
   componentWillUnmount() {
     cancelAnimationFrame(this.rafId)
-    this.analyser.disconnect()
-    this.source.disconnect()
+    if (this.analyser && this.source) {
+      this.analyser.disconnect()
+      this.source.disconnect()
+    }
+
     clearInterval(this.state.intervalId)
   }
 
@@ -106,7 +110,7 @@ export class Draw extends React.Component {
     }
   }
 
-  downloadImage() {
+  getImage() {
     const canvas = document.getElementById('canvas')
     const dataUrl = canvas.toDataURL('image/png')
     this.setState({dataUrl})
@@ -127,9 +131,7 @@ export class Draw extends React.Component {
         <button type="button" onClick={this.stopMic}>
           Stop
         </button>
-        <button type="button" onClick={this.downloadImage}>
-          Save
-        </button>
+        <button type="button">Save</button>
         <button type="button">
           <a href={this.state.dataUrl} download="image">
             Download
