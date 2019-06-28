@@ -4,12 +4,12 @@ module.exports = router
 
 //api for finished images
 
-router.get('/:userId', async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   try {
     const images = await Images.findAll({
       where: {
         // +req.params.userId????
-        id: req.params.userId
+        id: req.params.id
       }
     })
     res.json(images)
