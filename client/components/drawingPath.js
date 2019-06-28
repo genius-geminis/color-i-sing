@@ -46,6 +46,7 @@ export class DrawingPath extends React.Component {
         draw={ctx => {
           ctx.fillStyle = this.props.maxColor
           ctx.fillRect(this.state.x, this.state.y, 5, 5)
+          ctx.save()
         }}
       />
     )
