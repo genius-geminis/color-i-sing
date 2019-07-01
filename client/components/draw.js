@@ -1,40 +1,30 @@
 import React from 'react'
-import {colors} from '../../util/colors'
+// import {colors, greenMonster} from '../../util/colors'
+import {makePath, getColor} from '../../util/functions'
 
 export class Draw extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       audio: null,
-      maxColor: 'white',
       x: 0,
       y: 0,
       dataUrl: ''
     }
-    this.WIDTH = 500
-    this.HEIGHT = 500
-    this.pixWidth = this.WIDTH / 100
-    this.pixHeight = this.HEIGHT / 100
     this.canvas = React.createRef()
-    this.getMic = this.getMic.bind(this)
-    this.paintNext = this.paintNext.bind(this)
-    this.stopMic = this.stopMic.bind(this)
-    this.getColor = this.getColor.bind(this)
-    this.makePath = this.makePath.bind(this)
-    this.clear = this.clear.bind(this)
-    this.getImage = this.getImage.bind(this)
   }
 
-  async getMic() {
+  getMic = async () => {
     const audio = await navigator.mediaDevices.getUserMedia({
       audio: true
     })
-    this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
-    this.analyser = this.audioContext.createAnalyser()
-    this.analyser.fftSize = 2048
-    this.dataArray = new Uint8Array(this.analyser.frequencyBinCount)
 
     if (audio) {
+      this.audioContext = new (window.AudioContext ||
+        window.webkitAudioContext)()
+      this.analyser = this.audioContext.createAnalyser()
+      this.analyser.fftSize = 8192
+      this.dataArray = new Uint8Array(this.analyser.frequencyBinCount)
       this.source = this.audioContext.createMediaStreamSource(audio)
       this.source.connect(this.analyser)
       this.rafId = requestAnimationFrame(this.paintNext)
@@ -43,53 +33,32 @@ export class Draw extends React.Component {
     this.setState({audio})
   }
 
-  stopMic() {
-    this.state.audio.getTracks()[0].stop()
-    this.setState({audio: null})
-    cancelAnimationFrame(this.rafId)
-    this.getImage()
+  stopMic = () => {
+    if (this.state.audio) {
+      this.state.audio.getTracks()[0].stop()
+      this.setState({audio: null})
+      cancelAnimationFrame(this.rafId)
+      this.getImage()
+    }
   }
 
-  paintNext() {
-    this.getColor()
+  paintNext = () => {
+    const color = getColor(this.analyser, this.dataArray, 'rainbow')
     const ctx = this.canvas.current.getContext('2d')
-    ctx.fillStyle = this.state.maxColor
+    ctx.fillStyle = color
     ctx.fillRect(this.state.x, this.state.y, 5, 5)
-    ctx.save()
     this.rafId = requestAnimationFrame(this.paintNext)
-    this.makePath()
-  }
-
-  getColor() {
-    this.analyser.getByteFrequencyData(this.dataArray)
-    const newArray = this.dataArray.slice(0, 60)
-    let max = 0
-    for (let i = 0; i < newArray.length; i++) {
-      if (newArray[i] > newArray[max]) {
-        max = i
-      }
-    }
-    const maxColor = colors[max]
-    this.setState({maxColor})
-  }
-
-  makePath() {
-    let newX = this.state.x + this.pixWidth
-    let newY = this.state.y
-    if (newX > this.WIDTH) {
-      newY = this.state.y + this.pixHeight
-      newX = 0
-    }
+    const {newX, newY} = makePath(this.state.x, this.state.y, 'linear')
     this.setState({x: newX, y: newY})
   }
 
-  getImage() {
+  getImage = () => {
     const canvas = document.getElementById('canvas')
     const dataUrl = canvas.toDataURL('image/png')
     this.setState({dataUrl})
   }
 
-  clear() {
+  clear = () => {
     const context = this.canvas.current.getContext('2d')
     context.clearRect(0, 0, 500, 500)
     this.setState({dataUrl: '', x: 0, y: 0})
