@@ -1,5 +1,6 @@
 import React from 'react'
 import {colors} from '../../util/colors'
+import {Link} from 'react-router-dom'
 
 export class Draw extends React.Component {
   constructor(props) {
@@ -104,6 +105,7 @@ export class Draw extends React.Component {
   }
 
   render() {
+    console.log('this is props:', this.props)
     return (
       <React.Fragment>
         <button type="button" onClick={this.getMic}>
@@ -112,7 +114,13 @@ export class Draw extends React.Component {
         <button type="button" onClick={this.stopMic}>
           Stop
         </button>
-        <button type="button">Save</button>
+        <button type="button">
+          <Link
+            to={{pathname: '/upload', state: {dataUrl: this.state.dataUrl}}}
+          >
+            Save
+          </Link>
+        </button>
         <button type="button">
           <a href={this.state.dataUrl} download="image">
             Download
@@ -126,3 +134,5 @@ export class Draw extends React.Component {
     )
   }
 }
+
+export default Draw
