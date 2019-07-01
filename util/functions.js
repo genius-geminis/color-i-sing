@@ -7,7 +7,7 @@ const pixHeight = HEIGHT / 100
 
 export const getColor = (analyser, dataArray, colorPalette) => {
   analyser.getByteFrequencyData(dataArray)
-  const newArray = dataArray.slice(25, 85)
+  const newArray = dataArray.slice(15, 85)
   let max = 0
   for (let i = 0; i < newArray.length; i++) {
     if (newArray[i] > newArray[max]) {
