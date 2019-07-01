@@ -1,18 +1,18 @@
 const router = require('express').Router()
-const {Images, User} = require('../db/models')
+const {User, Images} = require('../db/models')
 module.exports = router
 
-//api for finished images
+//express gate checks:
 
-router.get('/:id', async (req, res, next) => {
+//checks if user sending request is logged in
+const isLoggedInGate = (req, res, next) =>
+  req.user ? next() : res.send('Please log in!')
+
+router.post('/', isLoggedInGate, async (req, res, next) => {
   try {
-    const images = await Images.findAll({
-      where: {
-        // +req.params.userId????
-        id: req.params.id
-      }
-    })
-    res.json(images)
+    let {userId, imageUrl, name} = req.body
+    await Images.create({name, imageUrl, userId})
+    res.status(201).send(name)
   } catch (error) {
     next(error)
   }

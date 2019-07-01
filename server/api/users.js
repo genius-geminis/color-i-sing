@@ -16,11 +16,14 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:id', async (req, res, next) => {
+router.get('/account', async (req, res, next) => {
   try {
-    if (req.params.id) {
-      const user = await User.findByPk(req.params.id, {
-        include: [{model: Images}]
+    if (req.user) {
+      const user = await User.findByPk(req.user.id, {
+        attributes: ['email'],
+        include: [
+          {model: Images, attributes: ['name', 'imageUrl', 'createdAt']}
+        ]
       })
       res.json(user)
     }
