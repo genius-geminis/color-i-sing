@@ -2,7 +2,14 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, Draw} from './components'
+import {
+  Login,
+  Signup,
+  UserHome,
+  Draw,
+  UserAccount,
+  FormAddImage
+} from './components'
 import {me} from './store'
 
 /**
@@ -22,14 +29,10 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/draw" component={Draw} />
-        {isLoggedIn && (
-          <Switch>
-            {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={UserHome} />
-          </Switch>
-        )}
+        <Route path="/upload" component={FormAddImage} />
+        {isLoggedIn && <Route path="/account" component={UserAccount} />}
         {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
+        <Route path="/home" component={Draw} />
       </Switch>
     )
   }
@@ -42,7 +45,8 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    userId: state.user.id
   }
 }
 

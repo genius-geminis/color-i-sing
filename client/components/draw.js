@@ -1,15 +1,18 @@
 import React from 'react'
 import {colors} from '../../util/colors'
+import {Link} from 'react-router-dom'
+import {addedImageUrl} from '../store'
+import {connect} from 'react-redux'
 
-export class Draw extends React.Component {
-  constructor(props) {
-    super(props)
+class Draw extends React.Component {
+  constructor() {
+    super()
     this.state = {
       audio: null,
       maxColor: 'white',
       x: 0,
       y: 0,
-      dataUrl: ''
+      imageUrl: ''
     }
     this.WIDTH = 500
     this.HEIGHT = 500
@@ -85,14 +88,17 @@ export class Draw extends React.Component {
 
   getImage() {
     const canvas = document.getElementById('canvas')
-    const dataUrl = canvas.toDataURL('image/png')
-    this.setState({dataUrl})
+    const imageUrl = canvas.toDataURL('image/png')
+    // console.log('are we hitting this?', imageUrl)
+    this.setState({imageUrl})
+    console.log('are we hitting this?', this.props)
+    this.props.sendImageUrl(imageUrl)
   }
 
   clear() {
     const context = this.canvas.current.getContext('2d')
     context.clearRect(0, 0, 500, 500)
-    this.setState({dataUrl: '', x: 0, y: 0})
+    this.setState({imageUrl: '', x: 0, y: 0})
   }
 
   componentWillUnmount() {
@@ -104,6 +110,7 @@ export class Draw extends React.Component {
   }
 
   render() {
+    // console.log('this is props:', this.props)
     return (
       <React.Fragment>
         <button type="button" onClick={this.getMic}>
@@ -112,9 +119,15 @@ export class Draw extends React.Component {
         <button type="button" onClick={this.stopMic}>
           Stop
         </button>
-        <button type="button">Save</button>
         <button type="button">
-          <a href={this.state.dataUrl} download="image">
+          {this.props.isLoggedIn ? (
+            <Link to="upload">Save</Link>
+          ) : (
+            <Link to="signup">Log in or Sign up to Save</Link>
+          )}
+        </button>
+        <button type="button">
+          <a href={this.state.imageUrl} download="image">
             Download
           </a>
         </button>
@@ -126,3 +139,13 @@ export class Draw extends React.Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  isLoggedIn: !!state.user.id
+})
+
+const mapDispatchToProps = dispatch => ({
+  sendImageUrl: image => dispatch(addedImageUrl(image))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Draw)

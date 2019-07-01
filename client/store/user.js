@@ -1,5 +1,7 @@
 import axios from 'axios'
 import history from '../history'
+import store from './index'
+import {addImageThunk} from './images'
 
 /**
  * ACTION TYPES
@@ -30,7 +32,7 @@ export const me = () => async dispatch => {
   }
 }
 
-export const auth = (email, password, method) => async dispatch => {
+export const auth = (email, password, method, hasImage) => async dispatch => {
   let res
   try {
     res = await axios.post(`/auth/${method}`, {email, password})
@@ -40,7 +42,11 @@ export const auth = (email, password, method) => async dispatch => {
 
   try {
     dispatch(getUser(res.data))
-    history.push('/home')
+    if (hasImage) {
+      history.push('/upload')
+    } else {
+      history.push('/account')
+    }
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
   }
