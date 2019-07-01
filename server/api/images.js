@@ -8,11 +8,11 @@ module.exports = router
 const isLoggedInGate = (req, res, next) =>
   req.user ? next() : res.send('Please log in!')
 
-router.post('/', async (req, res, next) => {
+router.post('/', isLoggedInGate, async (req, res, next) => {
   try {
     let {userId, imageUrl, name} = req.body
-    let {imageEntry} = await Images.create(req.body)
-    res.status(201).json(imageEntry)
+    await Images.create({name, imageUrl, userId})
+    res.sendStatus(201)
   } catch (error) {
     next(error)
   }

@@ -26,9 +26,14 @@ export const addedImageUrl = imageUrl => ({type: ADD_IMAGE_URL, imageUrl})
 //thunk
 export const addImageThunk = image => async dispatch => {
   try {
-    const {data} = await axios.post('/api/images/', {image})
-    dispatch(addedImage(data))
-    console.log(data)
+    const {imageUrl, name, userId} = image
+    const {data} = await axios.post('/api/images/', {imageUrl, name, userId})
+    if (data === 'Please log in!') {
+      history.push('/signup')
+    } else {
+      dispatch(addedImage(data))
+      history.push('/account')
+    }
   } catch (error) {
     console.log('There was an error with addImageThunk:', error)
   }

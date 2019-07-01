@@ -11,7 +11,7 @@ const Images = db.define('images', {
     }
   },
   imageUrl: {
-    type: Sequelize.STRING
+    type: Sequelize.TEXT
   }
 })
 

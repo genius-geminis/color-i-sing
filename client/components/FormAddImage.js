@@ -28,7 +28,6 @@ class FormAddImage extends React.Component {
     this.props.addImageThunk(imageData)
   }
   render() {
-    console.log('this is imgageURL!!', this.props)
     return (
       <form onSubmit={this.uploadImage}>
         <label>Name</label>
