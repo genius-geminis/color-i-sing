@@ -23,6 +23,8 @@ export class Draw extends React.Component {
       this.audioContext = new (window.AudioContext ||
         window.webkitAudioContext)()
       this.analyser = this.audioContext.createAnalyser()
+      this.analyser.minDecibels = -80
+      this.analyser.maxDecibels = -30
       this.analyser.fftSize = 8192
       this.dataArray = new Uint8Array(this.analyser.frequencyBinCount)
       this.source = this.audioContext.createMediaStreamSource(audio)

@@ -7,18 +7,20 @@ const pixHeight = HEIGHT / 100
 
 export const getColor = (analyser, dataArray, colorPalette) => {
   analyser.getByteFrequencyData(dataArray)
-  const newArray = dataArray.slice(10, 85)
+  const newArray = dataArray.slice(40, 199)
   let max = 0
   for (let i = 0; i < newArray.length; i++) {
     if (newArray[i] > newArray[max]) {
       max = i
     }
   }
-  console.log('bin: ', max)
+  console.log('max bin: ', max)
+  console.log('lower bins: ', newArray)
   switch (colorPalette) {
     case 'greenMonster':
       return greenMonster[max]
     default:
+      // console.log('color:')
       return rainbow[max]
   }
 }
