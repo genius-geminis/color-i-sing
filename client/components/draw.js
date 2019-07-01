@@ -1,10 +1,10 @@
 import React from 'react'
 import {colors} from '../../util/colors'
 import {Link} from 'react-router-dom'
-import {addedImageUrl} from '../store/images'
+import {addedImageUrl} from '../store'
 import {connect} from 'react-redux'
 
-export class Draw extends React.Component {
+class Draw extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -110,7 +110,7 @@ export class Draw extends React.Component {
   }
 
   render() {
-    console.log('this is props:', this.props)
+    // console.log('this is props:', this.props)
     return (
       <React.Fragment>
         <button type="button" onClick={this.getMic}>
