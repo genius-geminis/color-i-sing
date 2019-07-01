@@ -2,16 +2,17 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import {Link} from 'react-router-dom'
 
 /**
  * COMPONENT
  */
 const AuthForm = props => {
-  const {name, displayName, handleSubmit, error} = props
+  const {name, displayName, handleSubmit, error, hasImage} = props
 
   return (
     <div>
-      <form onSubmit={handleSubmit} name={name}>
+      <form onSubmit={evt => handleSubmit(evt, hasImage)} name={name}>
         <div>
           <label htmlFor="email">
             <small>Email</small>
@@ -30,6 +31,14 @@ const AuthForm = props => {
         {error && error.response && <div> {error.response.data} </div>}
       </form>
       <a href="/auth/google">{displayName} with Google</a>
+      <div>
+        <Link to={name === 'login' ? 'signup' : 'login'}>
+          {' '}
+          {name === 'login'
+            ? "Don't have an account? Sign Up!"
+            : 'Already have an account? Log In!'}{' '}
+        </Link>
+      </div>
     </div>
   )
 }
@@ -45,7 +54,8 @@ const mapLogin = state => {
   return {
     name: 'login',
     displayName: 'Login',
-    error: state.user.error
+    error: state.user.error,
+    hasImage: !!state.images.imageUrl
   }
 }
 
@@ -53,18 +63,19 @@ const mapSignup = state => {
   return {
     name: 'signup',
     displayName: 'Sign Up',
-    error: state.user.error
+    error: state.user.error,
+    hasImage: !!state.images.imageUrl
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    handleSubmit(evt) {
+    handleSubmit(evt, hasImage) {
       evt.preventDefault()
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
-      dispatch(auth(email, password, formName))
+      dispatch(auth(email, password, formName, hasImage))
     }
   }
 }

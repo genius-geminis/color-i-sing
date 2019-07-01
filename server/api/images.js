@@ -12,7 +12,7 @@ router.post('/', isLoggedInGate, async (req, res, next) => {
   try {
     let {userId, imageUrl, name} = req.body
     await Images.create({name, imageUrl, userId})
-    res.sendStatus(201)
+    res.status(201).send(name)
   } catch (error) {
     next(error)
   }

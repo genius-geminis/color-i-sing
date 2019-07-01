@@ -6,13 +6,14 @@ import history from '../history'
  */
 const ADD_IMAGE = 'ADD_IMAGE'
 const ADD_IMAGE_URL = 'ADD_IMAGE_URL'
+const ADD_IMAGE_NAME = 'ADD_IMAGE_NAME'
 
 /**
  * INITIAL STATE
  */
 const initialState = {
   images: [],
-  image: {},
+  name: '',
   loading: true,
   imageUrl: ''
 }
@@ -22,6 +23,7 @@ const initialState = {
  */
 export const addedImage = image => ({type: ADD_IMAGE, image})
 export const addedImageUrl = imageUrl => ({type: ADD_IMAGE_URL, imageUrl})
+const addedImageName = name => ({type: ADD_IMAGE_NAME, name})
 
 //thunk
 export const addImageThunk = image => async dispatch => {
@@ -29,6 +31,7 @@ export const addImageThunk = image => async dispatch => {
     const {imageUrl, name, userId} = image
     const {data} = await axios.post('/api/images/', {imageUrl, name, userId})
     if (data === 'Please log in!') {
+      dispatch(addedImageName(name))
       history.push('/signup')
     } else {
       dispatch(addedImage(data))
@@ -54,6 +57,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         imageUrl: action.imageUrl
+      }
+    case ADD_IMAGE_NAME:
+      return {
+        ...state,
+        name: action.name
       }
     default:
       return state

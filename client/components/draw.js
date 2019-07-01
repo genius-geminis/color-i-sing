@@ -120,7 +120,11 @@ class Draw extends React.Component {
           Stop
         </button>
         <button type="button">
-          <Link to="upload">Save</Link>
+          {this.props.isLoggedIn ? (
+            <Link to="upload">Save</Link>
+          ) : (
+            <Link to="signup">Log in or Sign up to Save</Link>
+          )}
         </button>
         <button type="button">
           <a href={this.state.imageUrl} download="image">
@@ -136,8 +140,12 @@ class Draw extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  isLoggedIn: !!state.user.id
+})
+
 const mapDispatchToProps = dispatch => ({
   sendImageUrl: image => dispatch(addedImageUrl(image))
 })
 
-export default connect(null, mapDispatchToProps)(Draw)
+export default connect(mapStateToProps, mapDispatchToProps)(Draw)
