@@ -28,19 +28,9 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/draw" component={Draw} />
         <Route path="/upload" component={FormAddImage} />
-        <Route
-          path="/draw"
-          render={props => (
-            <Draw
-              {...props}
-              userId={this.props.userId}
-              isLoggedIn={isLoggedIn}
-            />
-          )}
-        />
         {isLoggedIn && <Route path="/account" component={UserAccount} />}
-        )}
         {/* Displays our Login component as a fallback */}
         <Route path="/home" component={Draw} />
       </Switch>

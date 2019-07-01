@@ -10,7 +10,7 @@ const isLoggedInGate = (req, res, next) =>
 
 router.post('/', async (req, res, next) => {
   try {
-    // let {userId, id} = req.body
+    let {userId, imageUrl, name} = req.body
     let {imageEntry} = await Images.create(req.body)
     res.status(201).json(imageEntry)
   } catch (error) {

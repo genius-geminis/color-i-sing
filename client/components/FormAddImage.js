@@ -20,29 +20,37 @@ class FormAddImage extends React.Component {
 
   uploadImage() {
     event.preventDefault()
-    this.props.addImageThunk(this.state)
+    const imageData = {
+      name: this.state.name,
+      imageUrl: this.props.imageUrl,
+      userId: this.props.userId
+    }
+    this.props.addImageThunk(imageData)
   }
   render() {
+    console.log('this is imgageURL!!', this.props)
     return (
       <form onSubmit={this.uploadImage}>
         <label>Name</label>
         <input name="name" type="text" onChange={this.handleChange} />
 
         <label>Image Url</label>
-        <input name="image" type="url" defaultValue={this.props.dataUrl} />
+        <input name="image" type="url" defaultValue={this.props.imageUrl} />
         <button type="submit">Submit</button>
       </form>
     )
   }
 }
 
-// const mapStateToProps = state => ({
-//   image: state.images.image,
-//   loading: state.images.loading
-// })
+const mapStateToProps = state => ({
+  userId: state.user.id,
+  imageUrl: state.images.imageUrl,
+  image: state.images.image,
+  loading: state.images.loading
+})
 
 const mapDispatchToProps = dispatch => ({
   addImageThunk: image => dispatch(addImageThunk(image))
 })
 
-export default connect(null, mapDispatchToProps)(FormAddImage)
+export default connect(mapStateToProps, mapDispatchToProps)(FormAddImage)
