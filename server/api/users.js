@@ -8,7 +8,7 @@ router.get('/', async (req, res, next) => {
       // explicitly select only the id and email fields - even though
       // users' passwords are encrypted, it won't help if we just
       // send everything to anyone who asks!
-      attributes: ['id', 'email']
+      attributes: ['id', 'email', 'fullName']
     })
     res.json(users)
   } catch (err) {
@@ -20,9 +20,12 @@ router.get('/account', async (req, res, next) => {
   try {
     if (req.user) {
       const user = await User.findByPk(req.user.id, {
-        attributes: ['email'],
+        attributes: ['email', 'fullName'],
         include: [
-          {model: Images, attributes: ['id', 'name', 'imageUrl', 'createdAt']}
+          {
+            model: Images,
+            attributes: ['id', 'name', 'imageUrl', 'createdAt']
+          }
         ]
       })
       res.json(user)
