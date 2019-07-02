@@ -1,8 +1,11 @@
 import React from 'react'
-import {Tapable} from 'tapable'
+import {deleteImageThunk} from '../store'
+import {connect} from 'react-redux'
+import {makeDate} from '../../util/toDate'
 
 const SingleImage = props => {
   const {image} = props
+  console.log(props)
 
   return (
     <React.Fragment>
@@ -16,11 +19,11 @@ const SingleImage = props => {
       >
         <thead>
           <tr>
-            <th>Image </th>
-            <th>Name</th>
-            <th>Date</th>
-            <th>Change Name</th>
-            <th>Delete</th>
+            <th width="35%">Image </th>
+            <th width="25%">Name</th>
+            <th width="20%">Date</th>
+            <th width="10%">Doanload</th>
+            <th width="10%">Delete</th>
           </tr>
         </thead>
 
@@ -30,9 +33,22 @@ const SingleImage = props => {
               <img src={image.imageUrl} width="150" />
             </td>
             <td>{image.name}</td>
-            <td>{image.createAt}</td>
-            <td>change name</td>
-            <td>delete</td>
+            <td>{makeDate(image.createdAt)}</td>
+            <td>
+              <button type="button">
+                <a href={props.image.imageUrl} download="image">
+                  Download
+                </a>
+              </button>
+            </td>
+            <td>
+              <button
+                type="button"
+                onClick={() => props.deleteImageThunk(image.id)}
+              >
+                delete
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -40,4 +56,8 @@ const SingleImage = props => {
   )
 }
 
-export default SingleImage
+const mapDispatchToProps = dispatch => ({
+  deleteImageThunk: id => dispatch(deleteImageThunk(id))
+})
+
+export default connect(null, mapDispatchToProps)(SingleImage)

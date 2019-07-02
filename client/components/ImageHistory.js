@@ -1,5 +1,6 @@
 import React from 'react'
 import SingleImage from './SingleImage'
+import {connect} from 'react-redux'
 
 const ImageHistory = props => {
   const {images} = props || []
@@ -17,4 +18,8 @@ const ImageHistory = props => {
   )
 }
 
-export default ImageHistory
+const mapStateToProps = state => ({
+  images: state.account.accountDetails.images
+})
+
+export default connect(mapStateToProps, null)(ImageHistory)

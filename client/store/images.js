@@ -25,11 +25,15 @@ export const addedImage = image => ({type: ADD_IMAGE, image})
 export const addedImageUrl = imageUrl => ({type: ADD_IMAGE_URL, imageUrl})
 const addedImageName = name => ({type: ADD_IMAGE_NAME, name})
 
-//thunk
+/**
+ * THUNK CREATORS
+ */
+
 export const addImageThunk = image => async dispatch => {
   try {
-    const {imageUrl, name, userId} = image
-    const {data} = await axios.post('/api/images/', {imageUrl, name, userId})
+    const {name, imageUrl, userId} = image
+    const {data} = await axios.post('/api/images', {name, imageUrl, userId})
+    // console.log('this is data', data)
     if (data === 'Please log in!') {
       dispatch(addedImageName(name))
       history.push('/signup')
@@ -50,8 +54,7 @@ export default function(state = initialState, action) {
     case ADD_IMAGE:
       return {
         ...state,
-        images: [...state.images, action.image],
-        loading: true
+        images: [...state.images, action.image]
       }
     case ADD_IMAGE_URL:
       return {
@@ -63,6 +66,7 @@ export default function(state = initialState, action) {
         ...state,
         name: action.name
       }
+
     default:
       return state
   }

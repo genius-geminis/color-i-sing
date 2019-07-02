@@ -22,7 +22,7 @@ router.get('/account', async (req, res, next) => {
       const user = await User.findByPk(req.user.id, {
         attributes: ['email'],
         include: [
-          {model: Images, attributes: ['name', 'imageUrl', 'createdAt']}
+          {model: Images, attributes: ['id', 'name', 'imageUrl', 'createdAt']}
         ]
       })
       res.json(user)
