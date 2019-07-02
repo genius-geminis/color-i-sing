@@ -49,7 +49,7 @@ class Draw extends React.Component {
   }
 
   paintNext = () => {
-    const color = getColor(this.analyser, this.dataArray, 'rainbow')
+    const color = getColor(this.analyser, this.dataArray, 'sunset')
     const ctx = this.canvas.current.getContext('2d')
     ctx.fillStyle = color
     ctx.fillRect(this.state.x, this.state.y, 5, 5)
