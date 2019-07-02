@@ -12,7 +12,8 @@ class Draw extends React.Component {
       x: 0,
       y: 0,
       imageUrl: '',
-      micStopped: false
+      micStopped: false,
+      cleared: false
     }
     this.canvas = React.createRef()
   }
@@ -35,7 +36,7 @@ class Draw extends React.Component {
       this.rafId = requestAnimationFrame(this.paintNext)
     }
 
-    this.setState({audio, micStopped: false})
+    this.setState({audio, micStopped: false, cleared: false})
   }
 
   stopMic = () => {
@@ -67,7 +68,7 @@ class Draw extends React.Component {
   clear = () => {
     const context = this.canvas.current.getContext('2d')
     context.clearRect(0, 0, 500, 500)
-    this.setState({imageUrl: '', x: 0, y: 0})
+    this.setState({imageUrl: '', x: 0, y: 0, cleared: true})
   }
 
   componentWillUnmount() {
@@ -90,25 +91,26 @@ class Draw extends React.Component {
             Start
           </button>
         )}
-        {this.state.micStopped && (
-          <>
-            <button type="button">
-              {this.props.isLoggedIn ? (
-                <Link to="upload">Save</Link>
-              ) : (
-                <Link to="signup">Log in or Sign up to Save</Link>
-              )}
-            </button>
-            <button type="button">
-              <a href={this.state.imageUrl} download="image">
-                Download
-              </a>
-            </button>
-            <button type="button" onClick={this.clear}>
-              Clear
-            </button>
-          </>
-        )}
+        {this.state.micStopped &&
+          !this.state.cleared && (
+            <>
+              <button type="button">
+                {this.props.isLoggedIn ? (
+                  <Link to="upload">Save</Link>
+                ) : (
+                  <Link to="signup">Log in or Sign up to Save</Link>
+                )}
+              </button>
+              <button type="button">
+                <a href={this.state.imageUrl} download="image">
+                  Download
+                </a>
+              </button>
+              <button type="button" onClick={this.clear}>
+                Clear
+              </button>
+            </>
+          )}
         <canvas id="canvas" ref={this.canvas} width="500" height="500" />
       </React.Fragment>
     )
