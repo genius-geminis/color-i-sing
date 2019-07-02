@@ -49,12 +49,17 @@ class Draw extends React.Component {
   }
 
   paintNext = () => {
-    const color = getColor(this.analyser, this.dataArray, 'rainbow')
+    // console.log()
+    const color = getColor(this.analyser, this.dataArray, this.props.palette)
     const ctx = this.canvas.current.getContext('2d')
     ctx.fillStyle = color
     ctx.fillRect(this.state.x, this.state.y, 5, 5)
     this.rafId = requestAnimationFrame(this.paintNext)
-    const {newX, newY} = makePath(this.state.x, this.state.y, 'linear')
+    const {newX, newY} = makePath(
+      this.state.x,
+      this.state.y,
+      this.props.brushMotion
+    )
     this.setState({x: newX, y: newY})
   }
 
@@ -118,7 +123,9 @@ class Draw extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  isLoggedIn: !!state.user.accountDetails.id
+  isLoggedIn: !!state.user.accountDetails.id,
+  palette: state.drawOptions.palette,
+  brushMotion: state.drawOptions.brushMotion
 })
 
 const mapDispatchToProps = dispatch => ({

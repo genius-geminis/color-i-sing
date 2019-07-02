@@ -9,7 +9,7 @@ export const getColor = (analyser, dataArray, colorPalette) => {
   analyser.getByteFrequencyData(dataArray)
   const newArray = dataArray.slice(0, 159)
   let i = 0
-  while (newArray[i] < 100 && i < newArray.length) {
+  while (newArray[i] < 100 && i < newArray.length - 1) {
     i++
   }
   if (newArray[i] < 100) {

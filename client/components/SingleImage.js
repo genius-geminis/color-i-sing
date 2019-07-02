@@ -21,7 +21,7 @@ const SingleImage = props => {
             <th width="35%">Image </th>
             <th width="25%">Name</th>
             <th width="20%">Date</th>
-            <th width="10%">Doanload</th>
+            <th width="10%">Download</th>
             <th width="10%">Delete</th>
           </tr>
         </thead>
