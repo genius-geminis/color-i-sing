@@ -1,11 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {getUserAccountThunk} from '../store/account'
+import {me} from '../store/user'
 import ImageHistory from './ImageHistory'
 
 class UserAccount extends React.Component {
   componentDidMount() {
-    this.props.getUserAccountThunk()
+    this.props.me()
   }
   render() {
     const {userAccount} = this.props
@@ -26,12 +26,11 @@ class UserAccount extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  userAccount: state.account.accountDetails,
-  loading: state.account.loading
+  userAccount: state.user.accountDetails
 })
 
 const mapDispatchToProps = dispatch => ({
-  getUserAccountThunk: () => dispatch(getUserAccountThunk())
+  me: () => dispatch(me())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserAccount)

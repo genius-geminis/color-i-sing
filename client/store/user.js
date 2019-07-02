@@ -1,28 +1,39 @@
 import axios from 'axios'
 import history from '../history'
-import store from './index'
-import {addImageThunk} from './images'
 
 /**
  * ACTION TYPES
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
+const DELETE_IMAGE = 'DELETE_IMAGE'
 
 /**
  * INITIAL STATE
  */
-const defaultUser = {}
+const defaultUser = {
+  accountDetails: {}
+}
 
 /**
  * ACTION CREATORS
  */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
+const deletedImage = id => ({type: DELETE_IMAGE, id})
 
 /**
  * THUNK CREATORS
  */
+
+export const deleteImageThunk = id => async dispatch => {
+  try {
+    dispatch(deletedImage(id))
+    await axios.delete(`/api/images?id=${id}`)
+  } catch (error) {
+    console.log('There was an error with deleteImagehunk:', error)
+  }
+}
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
@@ -78,9 +89,17 @@ export const logout = () => async dispatch => {
 export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
-      return action.user
+      return {...state, accountDetails: action.user}
     case REMOVE_USER:
       return defaultUser
+    case DELETE_IMAGE:
+      let newImages = state.accountDetails.images.filter(
+        image => image.id !== action.id
+      )
+      return {
+        ...state,
+        accountDetails: {...state.accountDetails, images: newImages}
+      }
     default:
       return state
   }

@@ -42,7 +42,7 @@ class FormAddImage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  userId: state.user.id,
+  userId: state.user.accountDetails.id,
   imageUrl: state.images.imageUrl,
   image: state.images.image,
   loading: state.images.loading

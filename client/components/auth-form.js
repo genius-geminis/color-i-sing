@@ -63,7 +63,7 @@ const mapLogin = state => {
   return {
     name: 'login',
     displayName: 'Login',
-    error: state.user.error,
+    error: state.user.accountDetails.error,
     hasImage: !!state.images.imageUrl
   }
 }
@@ -72,7 +72,7 @@ const mapSignup = state => {
   return {
     name: 'signup',
     displayName: 'Sign Up',
-    error: state.user.error,
+    error: state.user.accountDetails.error,
     hasImage: !!state.images.imageUrl
   }
 }
@@ -84,7 +84,7 @@ const mapDispatch = dispatch => {
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
-      const fullName = evt.target.fullName.value
+      const fullName = formName === 'signup' ? evt.target.fullName.value : ''
       dispatch(auth(email, password, formName, hasImage, fullName))
     }
   }
