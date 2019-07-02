@@ -18,10 +18,11 @@ const SingleImage = props => {
       >
         <thead>
           <tr>
-            <th width="40%">Image </th>
-            <th width="30%">Name</th>
-            <th width="15%">Date</th>
-            <th width="15%">Delete</th>
+            <th width="35%">Image </th>
+            <th width="25%">Name</th>
+            <th width="20%">Date</th>
+            <th width="10%">Doanload</th>
+            <th width="10%">Delete</th>
           </tr>
         </thead>
 
@@ -31,7 +32,14 @@ const SingleImage = props => {
               <img src={image.imageUrl} width="150" />
             </td>
             <td>{image.name}</td>
-            <td>{image.createAt}</td>
+            <td>{image.createdAt.slice(0, 10)}</td>
+            <td>
+              <button type="button">
+                <a href={props.image.imageUrl} download="image">
+                  Download
+                </a>
+              </button>
+            </td>
             <td>
               <button
                 type="button"
