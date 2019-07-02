@@ -61,7 +61,7 @@ class Draw extends React.Component {
     const imageUrl = canvas.toDataURL('image/png')
     // console.log('are we hitting this?', imageUrl)
     this.setState({imageUrl})
-    console.log('are we hitting this?', this.props)
+    // console.log('are we hitting this?', this.props)
     this.props.sendImageUrl(imageUrl)
   }
 

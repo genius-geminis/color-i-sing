@@ -14,8 +14,8 @@ export const getColor = (analyser, dataArray, colorPalette) => {
       max = i
     }
   }
-  console.log('max bin: ', max)
-  console.log('lower bins: ', newArray)
+  // console.log('max bin: ', max)
+  // console.log('lower bins: ', newArray)
   switch (colorPalette) {
     case 'greenMonster':
       return greenMonster[max]

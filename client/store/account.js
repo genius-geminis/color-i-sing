@@ -34,7 +34,7 @@ export const getUserAccountThunk = () => async dispatch => {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_USER_ACCOUNT:
-      return {accountDetails: action.userAccount, loading: false}
+      return {accountDetails: action.userAccount}
     default:
       return state
   }
