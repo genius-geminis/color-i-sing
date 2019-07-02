@@ -7,7 +7,7 @@ import history from '../history'
 const ADD_IMAGE = 'ADD_IMAGE'
 const ADD_IMAGE_URL = 'ADD_IMAGE_URL'
 const ADD_IMAGE_NAME = 'ADD_IMAGE_NAME'
-const DELETE_IMAGE = 'DELETE_IMAGE'
+// const DELETE_IMAGE = 'DELETE_IMAGE'
 
 /**
  * INITIAL STATE
@@ -25,7 +25,7 @@ const initialState = {
 export const addedImage = image => ({type: ADD_IMAGE, image})
 export const addedImageUrl = imageUrl => ({type: ADD_IMAGE_URL, imageUrl})
 const addedImageName = name => ({type: ADD_IMAGE_NAME, name})
-const deletedImage = id => ({type: DELETE_IMAGE, id})
+// const deletedImage = id => ({type: DELETE_IMAGE, id})
 
 /**
  * THUNK CREATORS
@@ -48,14 +48,14 @@ export const addImageThunk = image => async dispatch => {
   }
 }
 
-export const deleteImageThunk = id => async dispatch => {
-  try {
-    dispatch(deletedImage(id))
-    await axios.delete(`/api/images?id=${id}`)
-  } catch (error) {
-    console.log('There was an error with deleteImagehunk:', error)
-  }
-}
+// export const deleteImageThunk = id => async dispatch => {
+//   try {
+//     dispatch(deletedImage(id))
+//     await axios.delete(`/api/images?id=${id}`)
+//   } catch (error) {
+//     console.log('There was an error with deleteImagehunk:', error)
+//   }
+// }
 
 /**
  * REDUCER
@@ -77,9 +77,9 @@ export default function(state = initialState, action) {
         ...state,
         name: action.name
       }
-    case DELETE_IMAGE:
-      let newImages = state.images.filter(image => image.id !== action.id)
-      return {...state, images: newImages}
+    // case DELETE_IMAGE:
+    //   let newImages = state.images.filter(image => image.id !== action.id)
+    //   return {...state, images: newImages}
 
     default:
       return state

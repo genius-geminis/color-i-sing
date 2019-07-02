@@ -19,7 +19,7 @@ class UserAccount extends React.Component {
           <span>Email : </span>
           {userAccount.email}
         </div>
-        <ImageHistory images={userAccount.images} />
+        <ImageHistory />
       </React.Fragment>
     )
   }

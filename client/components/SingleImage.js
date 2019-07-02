@@ -54,12 +54,9 @@ const SingleImage = props => {
     </React.Fragment>
   )
 }
-const mapStateToProps = state => ({
-  images: state.images.image
-})
 
 const mapDispatchToProps = dispatch => ({
   deleteImageThunk: id => dispatch(deleteImageThunk(id))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(SingleImage)
+export default connect(null, mapDispatchToProps)(SingleImage)
