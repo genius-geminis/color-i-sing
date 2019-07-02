@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User, Images} = require('../db/models')
+const {User} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -13,24 +13,5 @@ router.get('/', async (req, res, next) => {
     res.json(users)
   } catch (err) {
     next(err)
-  }
-})
-
-router.get('/account', async (req, res, next) => {
-  try {
-    if (req.user) {
-      const user = await User.findByPk(req.user.id, {
-        attributes: ['email', 'fullName'],
-        include: [
-          {
-            model: Images,
-            attributes: ['id', 'name', 'imageUrl', 'createdAt']
-          }
-        ]
-      })
-      res.json(user)
-    }
-  } catch (error) {
-    next(error)
   }
 })
