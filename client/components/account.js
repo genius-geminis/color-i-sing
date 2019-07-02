@@ -13,7 +13,7 @@ class UserAccount extends React.Component {
       <React.Fragment>
         <div>
           <span>Name : </span>
-          {userAccount.name}
+          {userAccount.fullName}
         </div>
         <div>
           <span>Email : </span>
