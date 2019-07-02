@@ -30,6 +30,11 @@ export const makePath = (x, y, pathType) => {
       const newY = Math.round(Math.random() * HEIGHT / PIX_HEIGHT) * PIX_HEIGHT
       return {newX, newY}
     }
+    case 'vertical': {
+      const newY = y > HEIGHT ? 0 : y + PIX_HEIGHT
+      const newX = y > HEIGHT ? x + PIX_WIDTH : x
+      return {newX, newY}
+    }
     default: {
       const newX = x > WIDTH ? 0 : x + PIX_WIDTH
       const newY = x > WIDTH ? y + PIX_HEIGHT : y
