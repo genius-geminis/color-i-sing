@@ -1,4 +1,4 @@
-import {rainbow, greenMonster} from './colors'
+import {rainbow, sunset} from './colors'
 
 const WIDTH = 500
 const HEIGHT = 500
@@ -16,8 +16,8 @@ export const getColor = (analyser, dataArray, colorPalette) => {
     return 'rgb(255,255,255)'
   }
   switch (colorPalette) {
-    case 'greenMonster':
-      return greenMonster[i]
+    case 'sunset':
+      return sunset[i]
     default:
       return rainbow[i]
   }
