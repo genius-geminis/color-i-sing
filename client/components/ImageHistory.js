@@ -19,7 +19,7 @@ const ImageHistory = props => {
 }
 
 const mapStateToProps = state => ({
-  images: state.account.accountDetails.images
+  images: state.user.accountDetails.images
 })
 
 export default connect(mapStateToProps, null)(ImageHistory)

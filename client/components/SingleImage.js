@@ -5,7 +5,6 @@ import {makeDate} from '../../util/toDate'
 
 const SingleImage = props => {
   const {image} = props
-  console.log(props)
 
   return (
     <React.Fragment>

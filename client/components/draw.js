@@ -118,7 +118,7 @@ class Draw extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  isLoggedIn: !!state.user.id
+  isLoggedIn: !!state.user.accountDetails.id
 })
 
 const mapDispatchToProps = dispatch => ({
