@@ -16,8 +16,9 @@ const drawOptions = props => {
       <label>Select Brush Motion</label>
       <select onChange={props.chooseBrushMotion}>
         <option>--</option>
-        <option value="linear">Linear</option>
+        <option value="horizontal">Linear Horizontal</option>
         <option value="random">Random</option>
+        <option value="vertical">Linear Vertical</option>
       </select>
       <div>
         <button type="button">
