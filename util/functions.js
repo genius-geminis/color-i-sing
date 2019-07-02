@@ -2,39 +2,37 @@ import {rainbow, greenMonster} from './colors'
 
 const WIDTH = 500
 const HEIGHT = 500
-const pixWidth = WIDTH / 100
-const pixHeight = HEIGHT / 100
+const PIX_WIDTH = WIDTH / 100
+const PIX_HEIGHT = HEIGHT / 100
 
 export const getColor = (analyser, dataArray, colorPalette) => {
   analyser.getByteFrequencyData(dataArray)
-  const newArray = dataArray.slice(40, 199)
-  let max = 0
-  for (let i = 0; i < newArray.length; i++) {
-    if (newArray[i] > newArray[max]) {
-      max = i
-    }
+  const newArray = dataArray.slice(0, 159)
+  let i = 0
+  while (newArray[i] < 100 && i < newArray.length) {
+    i++
   }
-  // console.log('max bin: ', max)
-  // console.log('lower bins: ', newArray)
+  if (newArray[i] < 100) {
+    return 'rgb(255,255,255)'
+  }
   switch (colorPalette) {
     case 'greenMonster':
-      return greenMonster[max]
+      return greenMonster[i]
     default:
-      // console.log('color:')
-      return rainbow[max]
+      return rainbow[i]
   }
 }
 
 export const makePath = (x, y, pathType) => {
   switch (pathType) {
     case 'random': {
-      const newX = Math.round(Math.random() * WIDTH / pixWidth) * pixWidth
-      const newY = Math.round(Math.random() * HEIGHT / pixHeight) * pixHeight
+      const newX = Math.round(Math.random() * WIDTH / PIX_WIDTH) * PIX_WIDTH
+      const newY = Math.round(Math.random() * HEIGHT / PIX_HEIGHT) * PIX_HEIGHT
       return {newX, newY}
     }
     default: {
-      const newX = x > WIDTH ? 0 : x + pixWidth
-      const newY = x > WIDTH ? y + pixHeight : y
+      const newX = x > WIDTH ? 0 : x + PIX_WIDTH
+      const newY = x > WIDTH ? y + PIX_HEIGHT : y
       return {newX, newY}
     }
   }
