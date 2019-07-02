@@ -1,4 +1,4 @@
-import {rainbow, greenMonster} from './colors'
+import {rainbow, sunset} from './colors'
 
 const WIDTH = 500
 const HEIGHT = 500
@@ -9,15 +9,15 @@ export const getColor = (analyser, dataArray, colorPalette) => {
   analyser.getByteFrequencyData(dataArray)
   const newArray = dataArray.slice(0, 159)
   let i = 0
-  while (newArray[i] < 100 && i < newArray.length) {
+  while (newArray[i] < 100 && i < newArray.length - 1) {
     i++
   }
   if (newArray[i] < 100) {
     return 'rgb(255,255,255)'
   }
   switch (colorPalette) {
-    case 'greenMonster':
-      return greenMonster[i]
+    case 'sunset':
+      return sunset[i]
     default:
       return rainbow[i]
   }
