@@ -89,11 +89,18 @@ class Draw extends React.Component {
         }
       })
     }
-    Object.keys(inQ).forEach(coordStr => {
-      let coordArr = coordStr.split(' ')
-      let x = Number(coordArr[0]) * 5
-      let y = Number(coordArr[1]) * 5
-      ctx.fillRect(x, y, 5, 5)
+
+    Object.keys(inQ).map(coordStr => {
+      new Promise(function(resolve, reject) {
+        setTimeout(function() {
+          return resolve('done')
+        }, 5000)
+      }).then(res => {
+        let coordArr = coordStr.split(' ')
+        let x = Number(coordArr[0]) * 5
+        let y = Number(coordArr[1]) * 5
+        ctx.fillRect(x, y, 5, 5)
+      })
     })
     const {newX, newY} = getNext(inQ)
     this.setState({x: newX, y: newY})
