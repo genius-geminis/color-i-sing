@@ -47,12 +47,10 @@ export const makePath = (x, y, pathType) => {
 let starCopy = [...star]
 
 export const getNext = inQ => {
-  console.dir('full starCopy', starCopy)
   Object.keys(inQ).forEach(coordStr => {
     let coordArr = coordStr.split(' ')
     let x = Number(coordArr[0])
     let y = Number(coordArr[1])
-    console.log('x and y', x, y, 'value ', starCopy[x][y])
   })
   let newX = Math.round(Math.random() * WIDTH / PIX_WIDTH)
   let newY = Math.round(Math.random() * HEIGHT / PIX_HEIGHT)

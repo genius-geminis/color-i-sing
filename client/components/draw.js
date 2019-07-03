@@ -37,7 +37,7 @@ class Draw extends React.Component {
       new Promise(function(resolve, reject) {
         setTimeout(function() {
           return resolve('success!')
-        }, 5000)
+        }, 1000)
       }).then(res => {
         this.rafId = requestAnimationFrame(this.paintNext)
       })
@@ -97,20 +97,7 @@ class Draw extends React.Component {
     })
     const {newX, newY} = getNext(inQ)
     this.setState({x: newX, y: newY})
-    console.log(
-      'done, and here is the color',
-      color,
-      'new x and y: ',
-      newX,
-      newY
-    )
-    // this.setState({x: nextX, y: nextY})
     this.rafId = requestAnimationFrame(this.paintNext)
-    // const {newX, newY} = makePath(
-    //   this.state.x,
-    //   this.state.y,
-    //   this.props.brushMotion
-    // )
   }
 
   getImage = () => {
@@ -125,7 +112,6 @@ class Draw extends React.Component {
     context.clearRect(0, 0, 400, 400)
     this.setState({imageUrl: '', x: 0, y: 0, cleared: true})
   }
-
   componentWillUnmount() {
     cancelAnimationFrame(this.rafId)
     if (this.analyser && this.source) {

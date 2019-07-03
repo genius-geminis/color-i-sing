@@ -1,0 +1,15 @@
+diff a/client/components/draw.js b/client/components/draw.js	(rejected hunks)
+@@ -38 +38,3 @@ class Draw extends React.Component {
+-        setTimeout(function() {return resolve('success!')}, 5000)
++        setTimeout(function() {
++          return resolve('success!')
++        }, 5000)
+@@ -85 +100,7 @@ class Draw extends React.Component {
+-    console.log('done, and here is the color', color, 'new x and y: ', newX, newY)
++    console.log(
++      'done, and here is the color',
++      color,
++      'new x and y: ',
++      newX,
++      newY
++    )
