@@ -3,6 +3,7 @@ import {makePath, getColor} from '../../util/functions'
 import {Link} from 'react-router-dom'
 import {addedImageUrl} from '../store'
 import {connect} from 'react-redux'
+import {Facebook, Twitter} from 'react-sharingbuttons'
 
 class Draw extends React.Component {
   constructor() {
@@ -52,6 +53,9 @@ class Draw extends React.Component {
     const color = getColor(this.analyser, this.dataArray, this.props.palette)
     const ctx = this.canvas.current.getContext('2d')
     ctx.fillStyle = color
+    // for(let i = 0; i <= color.max; i++){
+
+    // }
     ctx.fillRect(this.state.x, this.state.y, 5, 5)
     this.rafId = requestAnimationFrame(this.paintNext)
     const {newX, newY} = makePath(
@@ -65,6 +69,7 @@ class Draw extends React.Component {
   getImage = () => {
     const canvas = document.getElementById('canvas')
     const imageUrl = canvas.toDataURL('image/png')
+
     this.setState({imageUrl})
     this.props.sendImageUrl(imageUrl)
   }
@@ -113,6 +118,10 @@ class Draw extends React.Component {
               <button type="button" onClick={this.clear}>
                 Clear
               </button>
+              <div>
+                <Facebook url={encodeURIComponent(this.state.imageUrl)} />
+                <Twitter url={this.state.imageUrl} shareText="Check this!" />
+              </div>
             </>
           )}
         <canvas id="canvas" ref={this.canvas} width="500" height="500" />
