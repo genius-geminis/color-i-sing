@@ -1,8 +1,9 @@
 import React from 'react'
-import {makePath, getColor} from '../../util/functions'
+import {makePath, getColor, getNext} from '../../util/functions'
 import {Link} from 'react-router-dom'
 import {addedImageUrl} from '../store'
 import {connect} from 'react-redux'
+import {test, heart, flower, star} from '../../util/templates'
 
 class Draw extends React.Component {
   constructor() {
@@ -33,7 +34,13 @@ class Draw extends React.Component {
       this.dataArray = new Uint8Array(this.analyser.frequencyBinCount)
       this.source = this.audioContext.createMediaStreamSource(audio)
       this.source.connect(this.analyser)
-      this.rafId = requestAnimationFrame(this.paintNext)
+      new Promise(function(resolve, reject) {
+        setTimeout(function() {
+          return resolve('success!')
+        }, 5000)
+      }).then(res => {
+        this.rafId = requestAnimationFrame(this.paintNext)
+      })
     }
 
     this.setState({audio, micStopped: false, cleared: false})
@@ -49,17 +56,61 @@ class Draw extends React.Component {
   }
 
   paintNext = () => {
-    const color = getColor(this.analyser, this.dataArray, this.props.palette)
+    let color = getColor(this.analyser, this.dataArray, this.props.palette)
     const ctx = this.canvas.current.getContext('2d')
     ctx.fillStyle = color
-    ctx.fillRect(this.state.x, this.state.y, 5, 5)
-    this.rafId = requestAnimationFrame(this.paintNext)
-    const {newX, newY} = makePath(
-      this.state.x,
-      this.state.y,
-      this.props.brushMotion
-    )
+    let queue = [[this.state.x, this.state.y]]
+    const inQ = {}
+    while (queue.length) {
+      const nextCoord = queue.shift()
+      inQ[`${nextCoord[0]} ${nextCoord[1]}`] = true
+      const neighbors = [
+        [nextCoord[0] - 1, nextCoord[1] - 1],
+        [nextCoord[0], nextCoord[1] - 1],
+        [nextCoord[0] + 1, nextCoord[1] - 1],
+        [nextCoord[0] - 1, nextCoord[1]],
+        [nextCoord[0] + 1, nextCoord[1]],
+        [nextCoord[0] - 1, nextCoord[1] + 1],
+        [nextCoord[0], nextCoord[1] + 1],
+        [nextCoord[0] + 1, nextCoord[1] + 1]
+      ]
+      neighbors.forEach(coord => {
+        if (!inQ[`${coord[0]} ${coord[1]}`]) {
+          if (
+            coord[0] < 80 &&
+            coord[0] >= 0 &&
+            coord[1] < 80 &&
+            coord[1] >= 0 &&
+            star[coord[0]][coord[1]] === 0
+          ) {
+            inQ[`${coord[0]} ${coord[1]}`] = true
+            queue.push(coord)
+          }
+        }
+      })
+    }
+    Object.keys(inQ).forEach(coordStr => {
+      let coordArr = coordStr.split(' ')
+      let x = Number(coordArr[0]) * 5
+      let y = Number(coordArr[1]) * 5
+      ctx.fillRect(x, y, 5, 5)
+    })
+    const {newX, newY} = getNext(inQ)
     this.setState({x: newX, y: newY})
+    console.log(
+      'done, and here is the color',
+      color,
+      'new x and y: ',
+      newX,
+      newY
+    )
+    // this.setState({x: nextX, y: nextY})
+    this.rafId = requestAnimationFrame(this.paintNext)
+    // const {newX, newY} = makePath(
+    //   this.state.x,
+    //   this.state.y,
+    //   this.props.brushMotion
+    // )
   }
 
   getImage = () => {
@@ -71,7 +122,7 @@ class Draw extends React.Component {
 
   clear = () => {
     const context = this.canvas.current.getContext('2d')
-    context.clearRect(0, 0, 500, 500)
+    context.clearRect(0, 0, 400, 400)
     this.setState({imageUrl: '', x: 0, y: 0, cleared: true})
   }
 
@@ -115,7 +166,7 @@ class Draw extends React.Component {
               </button>
             </>
           )}
-        <canvas id="canvas" ref={this.canvas} width="500" height="500" />
+        <canvas id="canvas" ref={this.canvas} width="400" height="400" />
       </React.Fragment>
     )
   }

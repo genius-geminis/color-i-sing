@@ -1,4 +1,5 @@
 import {rainbow, sunset} from './colors'
+import {star} from './templates'
 
 const WIDTH = 500
 const HEIGHT = 500
@@ -13,7 +14,7 @@ export const getColor = (analyser, dataArray, colorPalette) => {
     i++
   }
   if (newArray[i] < 100) {
-    return 'rgb(255,255,255)'
+    return 'rgb(0,255,255)'
   }
   switch (colorPalette) {
     case 'sunset':
@@ -41,4 +42,23 @@ export const makePath = (x, y, pathType) => {
       return {newX, newY}
     }
   }
+}
+
+let starCopy = [...star]
+
+export const getNext = inQ => {
+  console.dir('full starCopy', starCopy)
+  Object.keys(inQ).forEach(coordStr => {
+    let coordArr = coordStr.split(' ')
+    let x = Number(coordArr[0])
+    let y = Number(coordArr[1])
+    console.log('x and y', x, y, 'value ', starCopy[x][y])
+  })
+  let newX = Math.round(Math.random() * WIDTH / PIX_WIDTH)
+  let newY = Math.round(Math.random() * HEIGHT / PIX_HEIGHT)
+  while (newX >= 80 || newY >= 80 || starCopy[newX][newY] === 1) {
+    newX = Math.round(Math.random() * WIDTH / PIX_WIDTH)
+    newY = Math.round(Math.random() * HEIGHT / PIX_HEIGHT)
+  }
+  return {newX, newY}
 }
