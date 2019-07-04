@@ -1,5 +1,5 @@
 import {rainbow, sunset} from './colors'
-import {star} from './templates'
+import {star, flower} from './templates'
 
 const WIDTH = 500
 const HEIGHT = 500
@@ -45,18 +45,28 @@ export const makePath = (x, y, pathType) => {
 }
 
 let starCopy = [...star]
+let flowerCopy = [...flower]
+let coloredPixCounter = 545
 
 export const getNext = inQ => {
   Object.keys(inQ).forEach(coordStr => {
     let coordArr = coordStr.split(' ')
-    let x = Number(coordArr[0])
-    let y = Number(coordArr[1])
+    let x = Number(coordArr[1])
+    let y = Number(coordArr[0])
+    if (x < 80 && y < 80) {
+      flowerCopy[y][x] = 1
+      coloredPixCounter++
+    }
   })
-  let newX = Math.round(Math.random() * WIDTH / PIX_WIDTH)
-  let newY = Math.round(Math.random() * HEIGHT / PIX_HEIGHT)
-  while (newX >= 80 || newY >= 80 || starCopy[newX][newY] === 1) {
-    newX = Math.round(Math.random() * WIDTH / PIX_WIDTH)
-    newY = Math.round(Math.random() * HEIGHT / PIX_HEIGHT)
+  if (coloredPixCounter >= 6400) {
+    return 'done'
+  } else {
+    let newX = Math.round(Math.random() * WIDTH / PIX_WIDTH)
+    let newY = Math.round(Math.random() * HEIGHT / PIX_HEIGHT)
+    while (newX >= 80 || newY >= 80 || flowerCopy[newY][newX] === 1) {
+      newX = Math.round(Math.random() * WIDTH / PIX_WIDTH)
+      newY = Math.round(Math.random() * HEIGHT / PIX_HEIGHT)
+    }
+    return {newY, newX}
   }
-  return {newX, newY}
 }

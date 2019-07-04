@@ -3,7 +3,7 @@ import {makePath, getColor, getNext} from '../../util/functions'
 import {Link} from 'react-router-dom'
 import {addedImageUrl} from '../store'
 import {connect} from 'react-redux'
-import {test, heart, flower, star} from '../../util/templates'
+import {heart, flower, star} from '../../util/templates'
 
 class Draw extends React.Component {
   constructor() {
@@ -37,7 +37,7 @@ class Draw extends React.Component {
       new Promise(function(resolve, reject) {
         setTimeout(function() {
           return resolve('success!')
-        }, 1000)
+        }, 800)
       }).then(res => {
         this.rafId = requestAnimationFrame(this.paintNext)
       })
@@ -59,7 +59,7 @@ class Draw extends React.Component {
     let color = getColor(this.analyser, this.dataArray, this.props.palette)
     const ctx = this.canvas.current.getContext('2d')
     ctx.fillStyle = color
-    let queue = [[this.state.x, this.state.y]]
+    let queue = [[this.state.y, this.state.x]]
     const inQ = {}
     while (queue.length) {
       const nextCoord = queue.shift()
@@ -81,30 +81,25 @@ class Draw extends React.Component {
             coord[0] >= 0 &&
             coord[1] < 80 &&
             coord[1] >= 0 &&
-            star[coord[0]][coord[1]] === 0
+            flower[coord[0]][coord[1]] === 0
           ) {
             inQ[`${coord[0]} ${coord[1]}`] = true
             queue.push(coord)
           }
         }
       })
+      let x = Number(nextCoord[1]) * 5
+      let y = Number(nextCoord[0]) * 5
+      ctx.fillRect(x, y, 5, 5)
     }
 
-    Object.keys(inQ).map(coordStr => {
-      new Promise(function(resolve, reject) {
-        setTimeout(function() {
-          return resolve('done')
-        }, 5000)
-      }).then(res => {
-        let coordArr = coordStr.split(' ')
-        let x = Number(coordArr[0]) * 5
-        let y = Number(coordArr[1]) * 5
-        ctx.fillRect(x, y, 5, 5)
-      })
-    })
-    const {newX, newY} = getNext(inQ)
-    this.setState({x: newX, y: newY})
-    this.rafId = requestAnimationFrame(this.paintNext)
+    const coords = getNext(inQ)
+    if (coords === 'done') {
+      this.stopMic()
+    } else {
+      this.setState({x: coords.newX, y: coords.newY})
+      this.rafId = requestAnimationFrame(this.paintNext)
+    }
   }
 
   getImage = () => {
