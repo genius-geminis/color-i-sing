@@ -70,3 +70,8 @@ export const getNext = inQ => {
     return {newY, newX}
   }
 }
+
+export const clearTemplate = () => {
+  flowerCopy = [...flower]
+  coloredPixCounter = 545
+}

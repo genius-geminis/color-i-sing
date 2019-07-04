@@ -1,5 +1,5 @@
 import React from 'react'
-import {makePath, getColor, getNext} from '../../util/functions'
+import {makePath, getColor, getNext, clearTemplate} from '../../util/functions'
 import {Link} from 'react-router-dom'
 import {addedImageUrl} from '../store'
 import {connect} from 'react-redux'
@@ -13,13 +13,14 @@ class Draw extends React.Component {
       x: 0,
       y: 0,
       imageUrl: '',
-      micStopped: false,
-      cleared: false
+      isRecording: false,
+      cleared: false,
+      currentColor: 'rgb(255,255,255)'
     }
     this.canvas = React.createRef()
   }
 
-  getMic = async () => {
+  async componentDidMount() {
     const audio = await navigator.mediaDevices.getUserMedia({
       audio: true
     })
@@ -34,45 +35,56 @@ class Draw extends React.Component {
       this.dataArray = new Uint8Array(this.analyser.frequencyBinCount)
       this.source = this.audioContext.createMediaStreamSource(audio)
       this.source.connect(this.analyser)
-      new Promise(function(resolve, reject) {
-        setTimeout(function() {
-          return resolve('success!')
-        }, 800)
-      }).then(res => {
-        this.rafId = requestAnimationFrame(this.paintNext)
-      })
+      this.setState({audio, cleared: false})
+      this.rafId = requestAnimationFrame(this.showColor)
     }
+  }
 
-    this.setState({audio, micStopped: false, cleared: false})
+  getMic = async () => {
+    this.setState({isRecording: true})
+    await this.setWaiter(1000)
+    this.paintNext()
   }
 
   stopMic = () => {
     if (this.state.audio) {
       this.state.audio.getTracks()[0].stop()
-      this.setState({audio: null, micStopped: true})
+      this.setState({audio: null, isRecording: false})
       cancelAnimationFrame(this.rafId)
       this.getImage()
     }
   }
 
-  paintNext = () => {
-    let color = getColor(this.analyser, this.dataArray, this.props.palette)
+  setWaiter = timeout => {
+    return new Promise(function(resolve, reject) {
+      setTimeout(function() {
+        return resolve('success!')
+      }, timeout)
+    })
+  }
+
+  showColor = () => {
+    const color = getColor(this.analyser, this.dataArray, this.props.palette)
+    this.setState({currentColor: color})
+    this.rafId = requestAnimationFrame(this.showColor)
+  }
+
+  paintNext = async () => {
+    const color = getColor(this.analyser, this.dataArray, this.props.palette)
+    this.setState({currentColor: color})
     const ctx = this.canvas.current.getContext('2d')
     ctx.fillStyle = color
-    let queue = [[this.state.y, this.state.x]]
+    const queue = [[this.state.y, this.state.x]]
     const inQ = {}
+    let waitCounter = 0
     while (queue.length) {
       const nextCoord = queue.shift()
       inQ[`${nextCoord[0]} ${nextCoord[1]}`] = true
       const neighbors = [
-        [nextCoord[0] - 1, nextCoord[1] - 1],
         [nextCoord[0], nextCoord[1] - 1],
-        [nextCoord[0] + 1, nextCoord[1] - 1],
         [nextCoord[0] - 1, nextCoord[1]],
         [nextCoord[0] + 1, nextCoord[1]],
-        [nextCoord[0] - 1, nextCoord[1] + 1],
-        [nextCoord[0], nextCoord[1] + 1],
-        [nextCoord[0] + 1, nextCoord[1] + 1]
+        [nextCoord[0], nextCoord[1] + 1]
       ]
       neighbors.forEach(coord => {
         if (!inQ[`${coord[0]} ${coord[1]}`]) {
@@ -88,8 +100,14 @@ class Draw extends React.Component {
           }
         }
       })
-      let x = Number(nextCoord[1]) * 5
-      let y = Number(nextCoord[0]) * 5
+      const x = Number(nextCoord[1]) * 5
+      const y = Number(nextCoord[0]) * 5
+      if (waitCounter === 10) {
+        waitCounter = 0
+        await this.setWaiter(1)
+      } else {
+        waitCounter++
+      }
       ctx.fillRect(x, y, 5, 5)
     }
 
@@ -98,7 +116,8 @@ class Draw extends React.Component {
       this.stopMic()
     } else {
       this.setState({x: coords.newX, y: coords.newY})
-      this.rafId = requestAnimationFrame(this.paintNext)
+      await this.setWaiter(1000)
+      this.paintNext()
     }
   }
 
@@ -112,6 +131,7 @@ class Draw extends React.Component {
   clear = () => {
     const context = this.canvas.current.getContext('2d')
     context.clearRect(0, 0, 400, 400)
+    clearTemplate()
     this.setState({imageUrl: '', x: 0, y: 0, cleared: true})
   }
   componentWillUnmount() {
@@ -124,8 +144,8 @@ class Draw extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
-        {this.state.audio ? (
+      <>
+        {this.state.isRecording ? (
           <button type="button" onClick={this.stopMic}>
             Stop
           </button>
@@ -134,7 +154,7 @@ class Draw extends React.Component {
             Start
           </button>
         )}
-        {this.state.micStopped &&
+        {!this.state.isRecording &&
           !this.state.cleared && (
             <>
               <button type="button">
@@ -155,7 +175,18 @@ class Draw extends React.Component {
             </>
           )}
         <canvas id="canvas" ref={this.canvas} width="400" height="400" />
-      </React.Fragment>
+        <div>
+          <h1>This is your current color!</h1>
+          <div
+            style={{
+              backgroundColor: this.state.currentColor,
+              width: '100px',
+              height: '100px',
+              border: '1px solid gray'
+            }}
+          />
+        </div>
+      </>
     )
   }
 }
