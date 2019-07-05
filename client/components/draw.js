@@ -6,8 +6,10 @@ import {
   getNeighbors
 } from '../../util/functions'
 import {Link} from 'react-router-dom'
-import {addedImageUrl} from '../store'
+import {addedImageUrl, PostImageToShareThunk} from '../store'
 import {connect} from 'react-redux'
+import {Twitter} from 'react-sharingbuttons'
+import {Base64} from 'js-base64'
 
 const WHITE = 'rgb(255,255,255)'
 const RED = 'rgb(255,0,0)'
@@ -83,6 +85,7 @@ class Draw extends React.Component {
       return
     }
     const ctx = this.canvas.current.getContext('2d')
+
     ctx.fillStyle = this.state.currentColor
     this.toRePaint.forEach(([x, y]) => {
       ctx.fillRect(x, y, 1, 1)
@@ -128,11 +131,13 @@ class Draw extends React.Component {
       await this.setWaiter(1000)
       this.paintNext(nextToPaint, nextDone)
     }
+
   }
 
   getImage = () => {
     const canvas = document.getElementById('canvas')
     const imageUrl = canvas.toDataURL('image/png')
+
     this.setState({imageUrl})
     this.props.sendImageUrl(imageUrl)
   }
@@ -142,6 +147,11 @@ class Draw extends React.Component {
     context.clearRect(0, 0, 300, 300)
     clearTemplate()
     this.setState({imageUrl: '', status: 'cleared'})
+  }
+
+  shareImageLink = () => {
+    console.log('are we calling it')
+    this.props.PostImageToShareThunk(this.state.imageUrl)
   }
 
   componentWillUnmount() {
@@ -166,6 +176,7 @@ class Draw extends React.Component {
             Start
           </button>
         )}
+
         {this.state.status === 'stopped' && (
           <>
             <button type="button">
@@ -183,6 +194,10 @@ class Draw extends React.Component {
             <button type="button" onClick={this.clear}>
               Clear
             </button>
+            <button type="button" onClick={this.shareImageLink}>
+                Share Link
+            </button>
+            <p>{this.props.link}</p>
           </>
         )}
         <canvas id="canvas" ref={this.canvas} width="300" height="300" />
@@ -206,12 +221,17 @@ const mapStateToProps = state => ({
   isLoggedIn: !!state.user.accountDetails.id,
   palette: state.drawOptions.palette,
   brushMotion: state.drawOptions.brushMotion,
+  link: state.imagesShare.link
   template: state.drawOptions.template,
   templateInfo: state.drawOptions.templateInfo
 })
 
 const mapDispatchToProps = dispatch => ({
-  sendImageUrl: image => dispatch(addedImageUrl(image))
+  sendImageUrl: image => dispatch(addedImageUrl(image)),
+  PostImageToShareThunk: imageUrl => {
+    console.log('are we calling in dispatch')
+    dispatch(PostImageToShareThunk(imageUrl))
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Draw)
