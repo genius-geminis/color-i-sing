@@ -1,18 +1,17 @@
-import axios from 'axios'
-import history from '../history'
-
 /**
  * ACTION TYPES
  */
 const SELECT_PALETTE = 'SELECT_PALETTE'
 const SELECT_BRUSH_MOTION = 'SELECT_BRUSH_MOTION'
+const SELECT_TEMPLATE = 'SELECT_TEMPLATE'
 
 /**
  * INITIAL STATE
  */
 const initialState = {
   palette: '',
-  brushMotion: ''
+  brushMotion: '',
+  template: ''
 }
 
 /**
@@ -26,6 +25,10 @@ export const choosePalette = palette => ({
 export const chooseBrushMotion = brushMotion => ({
   type: SELECT_BRUSH_MOTION,
   brushMotion
+})
+export const chooseTemplate = template => ({
+  type: SELECT_TEMPLATE,
+  template
 })
 
 /**
@@ -43,7 +46,11 @@ export default function(state = initialState, action) {
         ...state,
         brushMotion: action.brushMotion
       }
-
+    case SELECT_TEMPLATE:
+      return {
+        ...state,
+        template: action.template
+      }
     default:
       return state
   }

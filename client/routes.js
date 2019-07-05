@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import {
   Login,
   Signup,
-  UserHome,
+  // UserHome,
   Draw,
   UserAccount,
   FormAddImage,
