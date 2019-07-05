@@ -1,23 +1,29 @@
 import React from 'react'
-import {makePath, getColor, getNext, clearTemplate} from '../../util/functions'
+import {
+  makePath,
+  getColor,
+  getNext,
+  clearTemplate,
+  getNeighbors
+} from '../../util/functions'
 import {Link} from 'react-router-dom'
 import {addedImageUrl} from '../store'
 import {connect} from 'react-redux'
 import {heart, flower, star} from '../../util/templates'
 
+const WHITE = 'rgb(255,255,255)'
+const RED = 'rgb(255,0,0)'
 class Draw extends React.Component {
   constructor() {
     super()
     this.state = {
       audio: null,
-      x: 0,
-      y: 0,
       imageUrl: '',
-      isRecording: false,
-      cleared: false,
-      currentColor: 'rgb(255,255,255)'
+      status: 'cleared',
+      currentColor: WHITE
     }
     this.canvas = React.createRef()
+    this.toRePaint = []
   }
 
   async componentDidMount() {
@@ -35,22 +41,28 @@ class Draw extends React.Component {
       this.dataArray = new Uint8Array(this.analyser.frequencyBinCount)
       this.source = this.audioContext.createMediaStreamSource(audio)
       this.source.connect(this.analyser)
-      this.setState({audio, cleared: false})
+      this.setState({audio})
       this.rafId = requestAnimationFrame(this.showColor)
     }
   }
 
   getMic = async () => {
-    this.setState({isRecording: true})
+    this.setState({status: 'recording'})
+    const ctx = this.canvas.current.getContext('2d')
+    const {toPaint, done, edges} = getNeighbors()
+    edges.forEach(coord => {
+      ctx.fillStyle = RED
+      const x = coord[1] * 5
+      const y = coord[0] * 5
+      ctx.fillRect(x, y, 5, 5)
+    })
     await this.setWaiter(1000)
-    this.paintNext()
+    this.paintNext(toPaint, done)
   }
 
   stopMic = () => {
     if (this.state.audio) {
-      this.state.audio.getTracks()[0].stop()
-      this.setState({audio: null, isRecording: false})
-      cancelAnimationFrame(this.rafId)
+      this.setState({status: 'stopped'})
       this.getImage()
     }
   }
@@ -65,43 +77,32 @@ class Draw extends React.Component {
 
   showColor = () => {
     const color = getColor(this.analyser, this.dataArray, this.props.palette)
-    this.setState({currentColor: color})
+    if (color !== this.state.currentColor) {
+      this.setState({currentColor: color}, this.rePaint)
+    }
     this.rafId = requestAnimationFrame(this.showColor)
   }
 
-  paintNext = async () => {
-    const color = getColor(this.analyser, this.dataArray, this.props.palette)
-    this.setState({currentColor: color})
+  rePaint = () => {
+    if (this.state.currentColor === WHITE) {
+      return
+    }
     const ctx = this.canvas.current.getContext('2d')
-    ctx.fillStyle = color
-    const queue = [[this.state.y, this.state.x]]
-    const inQ = {}
+    ctx.fillStyle = this.state.currentColor
+    this.toRePaint.forEach(([x, y]) => {
+      ctx.fillRect(x, y, 5, 5)
+    })
+  }
+
+  paintNext = async (toPaint, done) => {
+    const ctx = this.canvas.current.getContext('2d')
     let waitCounter = 0
-    while (queue.length) {
-      const nextCoord = queue.shift()
-      inQ[`${nextCoord[0]} ${nextCoord[1]}`] = true
-      const neighbors = [
-        [nextCoord[0], nextCoord[1] - 1],
-        [nextCoord[0] - 1, nextCoord[1]],
-        [nextCoord[0] + 1, nextCoord[1]],
-        [nextCoord[0], nextCoord[1] + 1]
-      ]
-      neighbors.forEach(coord => {
-        if (!inQ[`${coord[0]} ${coord[1]}`]) {
-          if (
-            coord[0] < 80 &&
-            coord[0] >= 0 &&
-            coord[1] < 80 &&
-            coord[1] >= 0 &&
-            flower[coord[0]][coord[1]] === 0
-          ) {
-            inQ[`${coord[0]} ${coord[1]}`] = true
-            queue.push(coord)
-          }
-        }
-      })
-      const x = Number(nextCoord[1]) * 5
-      const y = Number(nextCoord[0]) * 5
+    ctx.fillStyle = this.state.currentColor
+
+    for (let i = 0; i < toPaint.length; i++) {
+      const coord = toPaint[i]
+      const x = coord[1] * 5
+      const y = coord[0] * 5
       if (waitCounter === 10) {
         waitCounter = 0
         await this.setWaiter(1)
@@ -109,15 +110,25 @@ class Draw extends React.Component {
         waitCounter++
       }
       ctx.fillRect(x, y, 5, 5)
+      this.toRePaint.push([x, y])
     }
-
-    const coords = getNext(inQ)
-    if (coords === 'done') {
+    this.toRePaint = []
+    if (done) {
       this.stopMic()
     } else {
-      this.setState({x: coords.newX, y: coords.newY})
+      const {
+        toPaint: nextToPaint,
+        done: nextDone,
+        edges: nextEdges
+      } = getNeighbors()
+      nextEdges.forEach(coord => {
+        ctx.fillStyle = RED
+        const x = coord[1] * 5
+        const y = coord[0] * 5
+        ctx.fillRect(x, y, 5, 5)
+      })
       await this.setWaiter(1000)
-      this.paintNext()
+      this.paintNext(nextToPaint, nextDone)
     }
   }
 
@@ -132,7 +143,7 @@ class Draw extends React.Component {
     const context = this.canvas.current.getContext('2d')
     context.clearRect(0, 0, 400, 400)
     clearTemplate()
-    this.setState({imageUrl: '', x: 0, y: 0, cleared: true})
+    this.setState({imageUrl: '', status: 'cleared'})
   }
   componentWillUnmount() {
     cancelAnimationFrame(this.rafId)
@@ -145,35 +156,35 @@ class Draw extends React.Component {
   render() {
     return (
       <>
-        {this.state.isRecording ? (
+        {this.state.status === 'recording' && (
           <button type="button" onClick={this.stopMic}>
             Stop
           </button>
-        ) : (
+        )}
+        {this.state.status === 'cleared' && (
           <button type="button" onClick={this.getMic}>
             Start
           </button>
         )}
-        {!this.state.isRecording &&
-          !this.state.cleared && (
-            <>
-              <button type="button">
-                {this.props.isLoggedIn ? (
-                  <Link to="upload">Save</Link>
-                ) : (
-                  <Link to="signup">Log in or Sign up to Save</Link>
-                )}
-              </button>
-              <button type="button">
-                <a href={this.state.imageUrl} download="image">
-                  Download
-                </a>
-              </button>
-              <button type="button" onClick={this.clear}>
-                Clear
-              </button>
-            </>
-          )}
+        {this.state.status === 'stopped' && (
+          <>
+            <button type="button">
+              {this.props.isLoggedIn ? (
+                <Link to="upload">Save</Link>
+              ) : (
+                <Link to="signup">Log in or Sign up to Save</Link>
+              )}
+            </button>
+            <button type="button">
+              <a href={this.state.imageUrl} download="image">
+                Download
+              </a>
+            </button>
+            <button type="button" onClick={this.clear}>
+              Clear
+            </button>
+          </>
+        )}
         <canvas id="canvas" ref={this.canvas} width="400" height="400" />
         <div>
           <h1>This is your current color!</h1>

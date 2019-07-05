@@ -14,7 +14,7 @@ export const getColor = (analyser, dataArray, colorPalette) => {
     i++
   }
   if (newArray[i] < 100) {
-    return 'rgb(0,255,255)'
+    return 'rgb(255,255,255)'
   }
   switch (colorPalette) {
     case 'sunset':
@@ -44,34 +44,63 @@ export const makePath = (x, y, pathType) => {
   }
 }
 
-let starCopy = [...star]
-let flowerCopy = [...flower]
+let starCopy = star.map(arr => [...arr])
+let flowerCopy = flower.map(arr => [...arr])
 let coloredPixCounter = 545
+const TOTAL_PIX = 6400
 
-export const getNext = inQ => {
-  Object.keys(inQ).forEach(coordStr => {
-    let coordArr = coordStr.split(' ')
-    let x = Number(coordArr[1])
-    let y = Number(coordArr[0])
-    if (x < 80 && y < 80) {
-      flowerCopy[y][x] = 1
+export const getNext = () => {
+  let newX = Math.round(Math.random() * WIDTH / PIX_WIDTH)
+  let newY = Math.round(Math.random() * HEIGHT / PIX_HEIGHT)
+  while (newX >= 80 || newY >= 80 || flowerCopy[newY][newX] === 1) {
+    newX = Math.round(Math.random() * WIDTH / PIX_WIDTH)
+    newY = Math.round(Math.random() * HEIGHT / PIX_HEIGHT)
+  }
+  return {newY, newX}
+}
+
+export const getNeighbors = () => {
+  const startCoord = getNext()
+  const queue = [[startCoord.newY, startCoord.newX]]
+  const inQ = {}
+  const edges = new Set()
+  while (queue.length) {
+    const nextCoord = queue.shift()
+    inQ[`${nextCoord[0]} ${nextCoord[1]}`] = true
+    const neighbors = [
+      [nextCoord[0], nextCoord[1] - 1],
+      [nextCoord[0] - 1, nextCoord[1]],
+      [nextCoord[0] + 1, nextCoord[1]],
+      [nextCoord[0], nextCoord[1] + 1]
+    ]
+    neighbors.forEach(coord => {
+      if (
+        coord[0] < 80 &&
+        coord[0] >= 0 &&
+        coord[1] < 80 &&
+        coord[1] >= 0 &&
+        flower[coord[0]][coord[1]] === 0
+      ) {
+        if (!inQ[`${coord[0]} ${coord[1]}`]) {
+          inQ[`${coord[0]} ${coord[1]}`] = true
+          queue.push(coord)
+        }
+      } else {
+        edges.add(nextCoord)
+      }
+    })
+    if (nextCoord[1] < 80 && nextCoord[0] < 80) {
+      flowerCopy[nextCoord[0]][nextCoord[1]] = 1
       coloredPixCounter++
     }
-  })
-  if (coloredPixCounter >= 6400) {
-    return 'done'
-  } else {
-    let newX = Math.round(Math.random() * WIDTH / PIX_WIDTH)
-    let newY = Math.round(Math.random() * HEIGHT / PIX_HEIGHT)
-    while (newX >= 80 || newY >= 80 || flowerCopy[newY][newX] === 1) {
-      newX = Math.round(Math.random() * WIDTH / PIX_WIDTH)
-      newY = Math.round(Math.random() * HEIGHT / PIX_HEIGHT)
-    }
-    return {newY, newX}
   }
+  const toPaint = Object.keys(inQ).map(coordStr =>
+    coordStr.split(' ').map(str => Number(str))
+  )
+  return {toPaint, done: coloredPixCounter >= TOTAL_PIX, edges}
 }
 
 export const clearTemplate = () => {
-  flowerCopy = [...flower]
+  flowerCopy = flower.map(arr => [...arr])
   coloredPixCounter = 545
 }
