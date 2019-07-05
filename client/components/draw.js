@@ -58,7 +58,6 @@ class Draw extends React.Component {
   }
 
   stopMic = () => {
-    cancelAnimationFrame(this.rafId)
     this.setState({status: 'stopped'})
     this.getImage()
   }
@@ -144,12 +143,14 @@ class Draw extends React.Component {
     clearTemplate()
     this.setState({imageUrl: '', status: 'cleared'})
   }
+
   componentWillUnmount() {
     cancelAnimationFrame(this.rafId)
     if (this.analyser && this.source) {
       this.analyser.disconnect()
       this.source.disconnect()
     }
+    this.clear()
   }
 
   render() {
