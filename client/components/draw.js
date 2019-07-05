@@ -1,9 +1,10 @@
 import React from 'react'
 import {makePath, getColor} from '../../util/functions'
 import {Link} from 'react-router-dom'
-import {addedImageUrl} from '../store'
+import {addedImageUrl, PostImageToShareThunk} from '../store'
 import {connect} from 'react-redux'
-import {Facebook, Twitter} from 'react-sharingbuttons'
+import {Twitter} from 'react-sharingbuttons'
+import {Base64} from 'js-base64'
 
 class Draw extends React.Component {
   constructor() {
@@ -80,6 +81,11 @@ class Draw extends React.Component {
     this.setState({imageUrl: '', x: 0, y: 0, cleared: true})
   }
 
+  shareImageLink = () => {
+    console.log('are we calling it')
+    this.props.PostImageToShareThunk(this.state.imageUrl)
+  }
+
   componentWillUnmount() {
     cancelAnimationFrame(this.rafId)
     if (this.analyser && this.source) {
@@ -118,10 +124,10 @@ class Draw extends React.Component {
               <button type="button" onClick={this.clear}>
                 Clear
               </button>
-              <div>
-                <Facebook url={encodeURIComponent(this.state.imageUrl)} />
-                <Twitter url={this.state.imageUrl} shareText="Check this!" />
-              </div>
+              <button type="button" onClick={this.shareImageLink}>
+                Share Link
+              </button>
+              <p>{this.props.link}</p>
             </>
           )}
         <canvas id="canvas" ref={this.canvas} width="500" height="500" />
@@ -133,11 +139,16 @@ class Draw extends React.Component {
 const mapStateToProps = state => ({
   isLoggedIn: !!state.user.accountDetails.id,
   palette: state.drawOptions.palette,
-  brushMotion: state.drawOptions.brushMotion
+  brushMotion: state.drawOptions.brushMotion,
+  link: state.imagesShare.link
 })
 
 const mapDispatchToProps = dispatch => ({
-  sendImageUrl: image => dispatch(addedImageUrl(image))
+  sendImageUrl: image => dispatch(addedImageUrl(image)),
+  PostImageToShareThunk: imageUrl => {
+    console.log('are we calling in dispatch')
+    dispatch(PostImageToShareThunk(imageUrl))
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Draw)
