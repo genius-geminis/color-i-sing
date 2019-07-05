@@ -75,13 +75,14 @@ const getTemplate = name => {
 
 export const getNeighbors = temp => {
   if (!templateCopy.length) {
-    templateCopy.push(...templateInfo[temp].copy)
+    templateCopy = templateInfo[temp].copy.map(arr => [...arr])
     coloredPixCounter = templateInfo[temp].numAlreadyColored
     totalPix = templateInfo[temp].totalPix
   }
 
   template = getTemplate(temp)
   const startCoord = getSeed()
+
   const queue = [[startCoord.newY, startCoord.newX]]
   const inQ = {}
   const edges = new Set()
