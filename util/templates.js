@@ -1,4 +1,6 @@
-export const flower = [
+export {flower} from './bigFlower'
+
+export const littelFlower = [
   [
     0,
     0,

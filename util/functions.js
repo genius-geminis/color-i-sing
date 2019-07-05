@@ -1,10 +1,19 @@
 import {rainbow, sunset} from './colors'
 import {star, flower} from './templates'
+import {templateInfo} from './template-info'
 
 const WIDTH = 500
 const HEIGHT = 500
 const PIX_WIDTH = WIDTH / 100
 const PIX_HEIGHT = HEIGHT / 100
+
+let starCopy = star.map(arr => [...arr])
+let bigFlowerCopy = flower.map(arr => [...arr])
+
+let template = []
+let templateCopy = []
+let coloredPixCounter = 0
+let totalPix = 0
 
 export const getColor = (analyser, dataArray, colorPalette) => {
   analyser.getByteFrequencyData(dataArray)
@@ -44,23 +53,32 @@ export const makePath = (x, y, pathType) => {
   }
 }
 
-let starCopy = star.map(arr => [...arr])
-let flowerCopy = flower.map(arr => [...arr])
-let coloredPixCounter = 545
-const TOTAL_PIX = 6400
-
-export const getNext = () => {
-  let newX = Math.round(Math.random() * WIDTH / PIX_WIDTH)
-  let newY = Math.round(Math.random() * HEIGHT / PIX_HEIGHT)
-  while (newX >= 80 || newY >= 80 || flowerCopy[newY][newX] === 1) {
-    newX = Math.round(Math.random() * WIDTH / PIX_WIDTH)
-    newY = Math.round(Math.random() * HEIGHT / PIX_HEIGHT)
+export const getSeed = () => {
+  for (let i = 0; i < templateCopy.length; i++) {
+    for (let j = 0; j < templateCopy[0].length; j++) {
+      if (templateCopy[i][j] === 0) {
+        return {newY: i, newX: j}
+      }
+    }
   }
-  return {newY, newX}
 }
 
-export const getNeighbors = () => {
-  const startCoord = getNext()
+const getTemplate = name => {
+  switch (name) {
+    default:
+      return flower
+  }
+}
+
+export const getNeighbors = temp => {
+  if (!templateCopy.length) {
+    templateCopy.push(...templateInfo[temp].copy)
+    coloredPixCounter = templateInfo[temp].numAlreadyColored
+    totalPix = templateInfo[temp].totalPix
+  }
+
+  template = getTemplate(temp)
+  const startCoord = getSeed()
   const queue = [[startCoord.newY, startCoord.newX]]
   const inQ = {}
   const edges = new Set()
@@ -75,11 +93,11 @@ export const getNeighbors = () => {
     ]
     neighbors.forEach(coord => {
       if (
-        coord[0] < 80 &&
+        coord[0] < template.length &&
         coord[0] >= 0 &&
-        coord[1] < 80 &&
+        coord[1] < template[0].length &&
         coord[1] >= 0 &&
-        flower[coord[0]][coord[1]] === 0
+        template[coord[0]][coord[1]] === 0
       ) {
         if (!inQ[`${coord[0]} ${coord[1]}`]) {
           inQ[`${coord[0]} ${coord[1]}`] = true
@@ -89,18 +107,16 @@ export const getNeighbors = () => {
         edges.add(nextCoord)
       }
     })
-    if (nextCoord[1] < 80 && nextCoord[0] < 80) {
-      flowerCopy[nextCoord[0]][nextCoord[1]] = 1
-      coloredPixCounter++
-    }
+    templateCopy[nextCoord[0]][nextCoord[1]] = 1
+    coloredPixCounter++
   }
   const toPaint = Object.keys(inQ).map(coordStr =>
     coordStr.split(' ').map(str => Number(str))
   )
-  return {toPaint, done: coloredPixCounter >= TOTAL_PIX, edges}
+  return {toPaint, done: coloredPixCounter >= totalPix, edges}
 }
 
 export const clearTemplate = () => {
-  flowerCopy = flower.map(arr => [...arr])
-  coloredPixCounter = 545
+  templateCopy = []
+  coloredPixCounter = 0
 }
