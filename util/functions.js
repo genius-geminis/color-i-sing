@@ -1,14 +1,11 @@
 import {rainbow, sunset} from './colors'
-import {star, flower} from './templates'
+import {star, flower, heart} from './templates'
 import {templateInfo} from './template-info'
 
 const WIDTH = 500
 const HEIGHT = 500
 const PIX_WIDTH = WIDTH / 100
 const PIX_HEIGHT = HEIGHT / 100
-
-let starCopy = star.map(arr => [...arr])
-let bigFlowerCopy = flower.map(arr => [...arr])
 
 let template = []
 let templateCopy = []
@@ -65,6 +62,12 @@ export const getSeed = () => {
 
 const getTemplate = name => {
   switch (name) {
+    case 'flower':
+      return flower
+    case 'heart':
+      return heart
+    case 'star':
+      return star
     default:
       return flower
   }

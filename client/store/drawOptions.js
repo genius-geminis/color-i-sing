@@ -4,7 +4,6 @@
 const SELECT_PALETTE = 'SELECT_PALETTE'
 const SELECT_BRUSH_MOTION = 'SELECT_BRUSH_MOTION'
 const SELECT_TEMPLATE = 'SELECT_TEMPLATE'
-// const UPDATE_TEMPLATE_INFO = 'UPDATE_TEMPLATE_INFO'
 
 /**
  * INITIAL STATE
@@ -13,7 +12,6 @@ const initialState = {
   palette: '',
   brushMotion: '',
   template: ''
-  // templateInfo: {},
 }
 
 /**
@@ -32,10 +30,6 @@ export const chooseTemplate = template => ({
   type: SELECT_TEMPLATE,
   template
 })
-// export const updateTemplateInfo= templateInfo => ({
-//   type: UPDATE_TEMPLATE_INFO,
-//   templateInfo
-// })
 
 /**
  * REDUCER
@@ -56,13 +50,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         template: action.template
-        // templateInfo: templateInfo[action.template]
       }
-    // case UPDATE_TEMPLATE_INFO:
-    // return {
-    //   ...state,
-    // templateInfo: {...state.template, ...action.templateInfo}
-    // }
     default:
       return state
   }
