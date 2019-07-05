@@ -131,7 +131,6 @@ class Draw extends React.Component {
       await this.setWaiter(1000)
       this.paintNext(nextToPaint, nextDone)
     }
-
   }
 
   getImage = () => {
@@ -150,7 +149,6 @@ class Draw extends React.Component {
   }
 
   shareImageLink = () => {
-    console.log('are we calling it')
     this.props.PostImageToShareThunk(this.state.imageUrl)
   }
 
@@ -195,7 +193,7 @@ class Draw extends React.Component {
               Clear
             </button>
             <button type="button" onClick={this.shareImageLink}>
-                Share Link
+              Share Link
             </button>
             <p>{this.props.link}</p>
           </>
@@ -221,17 +219,14 @@ const mapStateToProps = state => ({
   isLoggedIn: !!state.user.accountDetails.id,
   palette: state.drawOptions.palette,
   brushMotion: state.drawOptions.brushMotion,
-  link: state.imagesShare.link
+  link: state.imagesShare.link,
   template: state.drawOptions.template,
   templateInfo: state.drawOptions.templateInfo
 })
 
 const mapDispatchToProps = dispatch => ({
   sendImageUrl: image => dispatch(addedImageUrl(image)),
-  PostImageToShareThunk: imageUrl => {
-    console.log('are we calling in dispatch')
-    dispatch(PostImageToShareThunk(imageUrl))
-  }
+  PostImageToShareThunk: imageUrl => dispatch(PostImageToShareThunk(imageUrl))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Draw)
