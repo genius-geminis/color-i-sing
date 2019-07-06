@@ -1,5 +1,5 @@
 import {rainbow, sunset} from './colors'
-import {star, flower, heart} from './templates'
+import {star, flower, heart} from './templates/index'
 import {templateInfo} from './template-info'
 
 const WIDTH = 500
@@ -50,10 +50,10 @@ export const makePath = (x, y, pathType) => {
   }
 }
 
-export const getSeed = () => {
+export const getSeed = val => {
   for (let i = 0; i < templateCopy.length; i++) {
     for (let j = 0; j < templateCopy[0].length; j++) {
-      if (templateCopy[i][j] === 0) {
+      if (templateCopy[i][j] === val) {
         return {newY: i, newX: j}
       }
     }
@@ -73,15 +73,19 @@ const getTemplate = name => {
   }
 }
 
-export const getNeighbors = temp => {
+export const getNeighbors = (templateName, val) => {
+  if (templateName === '') {
+    templateName = 'flower'
+  }
   if (!templateCopy.length) {
-    templateCopy = templateInfo[temp].copy.map(arr => [...arr])
-    coloredPixCounter = templateInfo[temp].numAlreadyColored
-    totalPix = templateInfo[temp].totalPix
+    templateCopy = templateInfo[templateName].copy.map(arr => [...arr])
+    coloredPixCounter = templateInfo[templateName].numAlreadyColored
+    totalPix = templateInfo[templateName].totalPix
   }
 
-  template = getTemplate(temp)
-  const startCoord = getSeed()
+  template = getTemplate(templateName)
+
+  const startCoord = getSeed(val)
 
   const queue = [[startCoord.newY, startCoord.newX]]
   const inQ = {}
@@ -101,7 +105,7 @@ export const getNeighbors = temp => {
         coord[0] >= 0 &&
         coord[1] < template[0].length &&
         coord[1] >= 0 &&
-        template[coord[0]][coord[1]] === 0
+        template[coord[0]][coord[1]] === val
       ) {
         if (!inQ[`${coord[0]} ${coord[1]}`]) {
           inQ[`${coord[0]} ${coord[1]}`] = true
@@ -111,16 +115,26 @@ export const getNeighbors = temp => {
         edges.add(nextCoord)
       }
     })
-    templateCopy[nextCoord[0]][nextCoord[1]] = 1
-    coloredPixCounter++
+    if (val === 0) {
+      templateCopy[nextCoord[0]][nextCoord[1]] = 1
+      coloredPixCounter++
+    }
   }
+
   const toPaint = Object.keys(inQ).map(coordStr =>
     coordStr.split(' ').map(str => Number(str))
   )
-  return {toPaint, done: coloredPixCounter >= totalPix, edges}
+  if (val === 0) {
+    return {toPaint, done: coloredPixCounter >= totalPix, edges}
+  } else {
+    return toPaint
+  }
 }
 
-export const clearTemplate = () => {
-  templateCopy = []
-  coloredPixCounter = 0
+export const clearTemplate = (templateName = 'flower') => {
+  if (templateName === '') {
+    templateName = 'flower'
+  }
+  templateCopy = templateInfo[templateName].copy.map(arr => [...arr])
+  coloredPixCounter = templateInfo[templateName].numAlreadyColored
 }

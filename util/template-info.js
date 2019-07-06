@@ -1,4 +1,4 @@
-import {star, flower, heart} from './templates'
+import {star, flower, heart} from './templates/index'
 
 export const templateInfo = {
   flower: {
