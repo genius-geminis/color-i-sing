@@ -23,3 +23,9 @@ form div {
 #canvas {
   border: 1px solid gray;
 }
+
+.palette-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 160px;
+}

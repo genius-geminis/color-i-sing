@@ -3,14 +3,12 @@ import {
   // makePath,
   getColor,
   clearTemplate,
-  getNeighbors,
-  getOutline
+  getNeighbors
 } from '../../util/functions'
+import * as palettes from '../../util/colors'
 import {Link} from 'react-router-dom'
 import {addedImageUrl, PostImageToShareThunk} from '../store'
 import {connect} from 'react-redux'
-import {Twitter} from 'react-sharingbuttons'
-import {Base64} from 'js-base64'
 
 const WHITE = 'rgb(255,255,255)'
 const RED = 'rgb(255,0,0)'
@@ -117,7 +115,7 @@ class Draw extends React.Component {
       const coord = toPaint[i]
       const x = coord[1] * 1
       const y = coord[0] * 1
-      if (waitCounter === 50) {
+      if (waitCounter > toPaint.length / 100) {
         waitCounter = 0
         await this.setWaiter(1)
       } else {
@@ -214,7 +212,24 @@ class Draw extends React.Component {
         )}
         <canvas id="canvas" ref={this.canvas} width="300" height="300" />
         <div>
-          <h1>This is your current color!</h1>
+          <h1>Your Color Palette (Low-High):</h1>
+          <div>
+            {palettes[this.props.palette].map(color => (
+              <span
+                style={{
+                  backgroundColor: color,
+                  width: '1px',
+                  height: '100px',
+                  display: 'inline-block'
+                }}
+              />
+            ))}
+            <div className="palette-labels">
+              <p>low</p>
+              <p>high</p>
+            </div>
+          </div>
+          <h2>Current Color:</h2>
           <div
             style={{
               backgroundColor: this.state.currentColor,
