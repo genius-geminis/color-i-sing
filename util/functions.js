@@ -1,5 +1,5 @@
 import {rainbow, sunset, redBlue} from './colors'
-import {star, flower, heart} from './templates/index'
+import {star, flower, heart} from './templates'
 import {templateInfo} from './template-info'
 
 const WIDTH = 500
@@ -76,9 +76,6 @@ const getTemplate = name => {
 }
 
 export const getNeighbors = (templateName, val) => {
-  if (templateName === '') {
-    templateName = 'flower'
-  }
   if (!templateCopy.length) {
     templateCopy = templateInfo[templateName].copy.map(arr => [...arr])
     coloredPixCounter = templateInfo[templateName].numAlreadyColored
@@ -134,9 +131,6 @@ export const getNeighbors = (templateName, val) => {
 }
 
 export const clearTemplate = (templateName = 'flower') => {
-  if (templateName === '') {
-    templateName = 'flower'
-  }
   templateCopy = templateInfo[templateName].copy.map(arr => [...arr])
   coloredPixCounter = templateInfo[templateName].numAlreadyColored
 }

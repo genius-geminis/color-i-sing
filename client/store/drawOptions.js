@@ -9,9 +9,9 @@ const SELECT_TEMPLATE = 'SELECT_TEMPLATE'
  * INITIAL STATE
  */
 const initialState = {
-  palette: '',
+  palette: 'rainbow',
   brushMotion: '',
-  template: ''
+  template: 'flower'
 }
 
 /**
