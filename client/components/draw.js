@@ -3,7 +3,8 @@ import {
   // makePath,
   getColor,
   clearTemplate,
-  getNeighbors
+  getNeighbors,
+  getOutline
 } from '../../util/functions'
 import {Link} from 'react-router-dom'
 import {addedImageUrl, PostImageToShareThunk} from '../store'
@@ -13,6 +14,7 @@ import {Base64} from 'js-base64'
 
 const WHITE = 'rgb(255,255,255)'
 const RED = 'rgb(255,0,0)'
+const BLACK = 'rgb(0,0,0)'
 
 class Draw extends React.Component {
   constructor() {
@@ -41,6 +43,7 @@ class Draw extends React.Component {
       this.dataArray = new Uint8Array(this.analyser.frequencyBinCount)
       this.source = this.audioContext.createMediaStreamSource(audio)
       this.source.connect(this.analyser)
+      this.paintOutline()
       this.rafId = requestAnimationFrame(this.showColor)
     }
   }
@@ -48,7 +51,7 @@ class Draw extends React.Component {
   startColoring = async () => {
     this.setState({status: 'recording'})
     const ctx = this.canvas.current.getContext('2d')
-    const {toPaint, done, edges} = getNeighbors(this.props.template)
+    const {toPaint, done, edges} = getNeighbors(this.props.template, 0)
     edges.forEach(coord => {
       ctx.fillStyle = RED
       const x = coord[1] * 1
@@ -78,6 +81,16 @@ class Draw extends React.Component {
       this.setState({currentColor: color}, this.rePaint)
     }
     this.rafId = requestAnimationFrame(this.showColor)
+  }
+
+  paintOutline = () => {
+    const toPaint = getNeighbors(this.props.template, 1)
+    const ctx = this.canvas.current.getContext('2d')
+
+    ctx.fillStyle = BLACK
+    toPaint.forEach(([y, x]) => {
+      ctx.fillRect(x, y, 1, 1)
+    })
   }
 
   rePaint = () => {
@@ -121,7 +134,7 @@ class Draw extends React.Component {
         toPaint: nextToPaint,
         done: nextDone,
         edges: nextEdges
-      } = getNeighbors(this.props.template)
+      } = getNeighbors(this.props.template, 0)
       nextEdges.forEach(coord => {
         ctx.fillStyle = RED
         const x = coord[1] * 1
@@ -144,7 +157,8 @@ class Draw extends React.Component {
   clear = () => {
     const context = this.canvas.current.getContext('2d')
     context.clearRect(0, 0, 300, 300)
-    clearTemplate()
+    clearTemplate(this.props.template)
+    this.paintOutline()
     this.setState({imageUrl: '', status: 'cleared'})
   }
 

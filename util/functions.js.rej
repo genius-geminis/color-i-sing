@@ -1,9 +1,0 @@
-diff a/util/functions.js b/util/functions.js	(rejected hunks)
-@@ -49,2 +49,2 @@ let starCopy = [...star]
--export const getNext = (inQ) => {
--  console.dir('full starCopy',starCopy)
-+export const getNext = inQ => {
-+  console.dir('full starCopy', starCopy)
-@@ -55 +55 @@ export const getNext = (inQ) => {
--    console.log('x and y',x, y, 'value ',starCopy[x][y])
-+    console.log('x and y', x, y, 'value ', starCopy[x][y])
