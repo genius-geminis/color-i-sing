@@ -1,4 +1,4 @@
-import {rainbow, sunset} from './colors'
+import {rainbow, sunset, redBlue} from './colors'
 import {star, flower, heart} from './templates/index'
 import {templateInfo} from './template-info'
 
@@ -25,6 +25,8 @@ export const getColor = (analyser, dataArray, colorPalette) => {
   switch (colorPalette) {
     case 'sunset':
       return sunset[i]
+    case 'redBlue':
+      return redBlue[i]
     default:
       return rainbow[i]
   }

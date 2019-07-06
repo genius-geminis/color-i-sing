@@ -11,6 +11,7 @@ const drawOptions = props => {
         <option>--</option>
         <option value="rainbow">Rainbow</option>
         <option value="sunset">Sunset</option>
+        <option value="redBlue">Red to Blue</option>
       </select>
 
       <label>Select Brush Motion</label>

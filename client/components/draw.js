@@ -3,14 +3,11 @@ import {
   // makePath,
   getColor,
   clearTemplate,
-  getNeighbors,
-  getOutline
+  getNeighbors
 } from '../../util/functions'
 import {Link} from 'react-router-dom'
 import {addedImageUrl, PostImageToShareThunk} from '../store'
 import {connect} from 'react-redux'
-import {Twitter} from 'react-sharingbuttons'
-import {Base64} from 'js-base64'
 
 const WHITE = 'rgb(255,255,255)'
 const RED = 'rgb(255,0,0)'
@@ -117,7 +114,7 @@ class Draw extends React.Component {
       const coord = toPaint[i]
       const x = coord[1] * 1
       const y = coord[0] * 1
-      if (waitCounter === 50) {
+      if (waitCounter > toPaint.length / 100) {
         waitCounter = 0
         await this.setWaiter(1)
       } else {
