@@ -6,8 +6,10 @@ import {logout} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn, fullName}) => (
   <div>
-    <h1>Color I Sing</h1>
-    <nav>
+    <h1>
+      <Link to="/home">Color I Sing</Link>
+    </h1>
+    <nav id="navigation-bar">
       {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
@@ -23,8 +25,16 @@ const Navbar = ({handleClick, isLoggedIn, fullName}) => (
           {/* The navbar will show these links before you log in */}
           <Link to="/home">Home</Link>
           <Link to="/draw">Draw</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
+          <Link to="/login" id="nav-login">
+            <link
+              rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+            />
+            <i className="fa fa-fw fa-user" /> Login
+          </Link>
+          <Link to="/signup" id="nav-signup">
+            Sign Up
+          </Link>
         </div>
       )}
     </nav>

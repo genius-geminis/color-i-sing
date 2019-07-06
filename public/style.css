@@ -1,18 +1,101 @@
-/* body {
+body {
   font-family: sans-serif;
-} */
+  background-image: url('background.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* margin-top: 80px;
+  padding: 30px; */
+}
 
-/* a {
+h1 {
+  font-family: 'Bradley Hand';
+  font-size: 50px;
+  letter-spacing: 0px;
+  word-spacing: 0px;
+  color: #800000;
+  font-weight: 700;
+  text-decoration: none solid rgb(68, 68, 68);
+  font-style: italic;
+  font-variant: small-caps;
+  text-transform: none;
+  text-align: center;
+  /* box-shadow: 0 0 25px 0 black; */
+}
+#home-page-h1 {
+  font-family: 'Dosis';
+  color: #26929c;
+}
+
+#home-page {
+  text-align: center;
+  /* background-image: url('micc.jpeg');
+  width: 100%;
+  min-height: 1px; */
+}
+
+/* links */
+a {
   text-decoration: none;
-} */
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+  -ms-overflow-style: scrollbar;
+  /* -webkit-tap-highlight-color: transparent; */
+}
 
 label {
   display: block;
 }
 
+/* nav bar */
 nav a {
   display: inline-block;
   margin: 1em;
+  text-decoration: none;
+  color: #848484;
+  font-size: 20px;
+  text-decoration: none;
+  text-align: center;
+  padding: 20px 0;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+#home-page #navigation-bar a:hover {
+  color: #e74c3c;
+}
+
+#navigation-bar a::before {
+  content: '';
+  transition: all 0.4s ease-in-out;
+  position: absolute;
+  right: 50%;
+  left: 50%;
+  bottom: 0;
+  height: 2px;
+  background-color: #e74c3c;
+}
+#navigation-bar a:hover::before {
+  right: 0;
+  left: 0;
+}
+
+#navigation-bar {
+  background-color: #ecf0f1;
+  /* border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); */
+}
+
+#nav-login {
+  margin: 10px;
+  float: right;
+}
+
+#nav-signup {
+  margin: 10px;
+  float: right;
 }
 
 form div {
@@ -22,4 +105,25 @@ form div {
 
 #canvas {
   border: 1px solid gray;
+}
+
+.button {
+  /* float: left;
+  color: #57d03b;
+  background-image: none;
+  background-color: transparent;
+  border-color: #57d03b; */
+  position: absolute;
+  background-color: #f1f1f1;
+  color: black;
+  font-size: 16px;
+  padding: 16px 30px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+}
+.button:hover {
+  background-color: black;
+  color: white;
 }
