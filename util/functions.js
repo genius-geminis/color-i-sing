@@ -1,5 +1,5 @@
 import {rainbow, sunset, redBlue} from './colors'
-import {star, flower, heart} from './templates'
+import {star, flower, heart} from './templates/index'
 import {templateInfo} from './template-info'
 
 const WIDTH = 500
@@ -11,6 +11,10 @@ let template = []
 let templateCopy = []
 let coloredPixCounter = 0
 let totalPix = 0
+
+let refImage = IJS.Image.load('./templates/ice-cream.jpg').then(img =>
+  img.grey()
+)
 
 export const getColor = (analyser, dataArray, colorPalette) => {
   analyser.getByteFrequencyData(dataArray)
@@ -82,7 +86,8 @@ export const getNeighbors = (templateName, val) => {
     totalPix = templateInfo[templateName].totalPix
   }
 
-  template = getTemplate(templateName)
+  // template = getTemplate(templateName)
+  template = refImage
 
   const startCoord = getSeed(val)
 
