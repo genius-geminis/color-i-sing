@@ -1,20 +1,12 @@
 import {rainbow, sunset, redBlue} from './colors'
-import {star, flower, heart} from './templates/index'
-import {templateInfo} from './template-info'
 
 const WIDTH = 500
 const HEIGHT = 500
 const PIX_WIDTH = WIDTH / 100
 const PIX_HEIGHT = HEIGHT / 100
 
-let template = []
-let templateCopy = []
-let coloredPixCounter = 0
-let totalPix = 0
-
-let refImage = IJS.Image.load('./templates/ice-cream.jpg').then(img =>
-  img.grey()
-)
+let refImage
+let coloredPix = new Set()
 
 export const getColor = (analyser, dataArray, colorPalette) => {
   analyser.getByteFrequencyData(dataArray)
@@ -56,40 +48,37 @@ export const makePath = (x, y, pathType) => {
   }
 }
 
-export const getSeed = val => {
-  for (let i = 0; i < templateCopy.length; i++) {
-    for (let j = 0; j < templateCopy[0].length; j++) {
-      if (templateCopy[i][j] === val) {
+export const getSeed = () => {
+  for (let i = 0; i < refImage.height; i++) {
+    for (let j = 0; j < refImage.width; j++) {
+      if (!coloredPix.has(`${i} ${j}`) && refImage.getPixelXY(j, i)[0] >= 200) {
         return {newY: i, newX: j}
       }
     }
   }
+  return null
 }
 
-const getTemplate = name => {
-  switch (name) {
-    case 'flower':
-      return flower
-    case 'heart':
-      return heart
-    case 'star':
-      return star
-    default:
-      return flower
+export const getOutline = template => {
+  refImage = template.grey()
+  const outlinePixels = []
+  for (let i = 0; i < refImage.height; i++) {
+    for (let j = 0; j < refImage.width; j++) {
+      if (refImage.getPixelXY(j, i) < 200) {
+        outlinePixels.push([i, j])
+      }
+    }
   }
+  return outlinePixels
 }
 
-export const getNeighbors = (templateName, val) => {
-  if (!templateCopy.length) {
-    templateCopy = templateInfo[templateName].copy.map(arr => [...arr])
-    coloredPixCounter = templateInfo[templateName].numAlreadyColored
-    totalPix = templateInfo[templateName].totalPix
+export const getNeighbors = template => {
+  refImage = template.grey()
+
+  const startCoord = getSeed()
+  if (!startCoord) {
+    return null
   }
-
-  // template = getTemplate(templateName)
-  template = refImage
-
-  const startCoord = getSeed(val)
 
   const queue = [[startCoord.newY, startCoord.newX]]
   const inQ = {}
@@ -105,11 +94,11 @@ export const getNeighbors = (templateName, val) => {
     ]
     neighbors.forEach(coord => {
       if (
-        coord[0] < template.length &&
+        coord[0] < template.height &&
         coord[0] >= 0 &&
-        coord[1] < template[0].length &&
+        coord[1] < template.width &&
         coord[1] >= 0 &&
-        template[coord[0]][coord[1]] === val
+        refImage.getPixelXY(coord[1], coord[0])[0] >= 200
       ) {
         if (!inQ[`${coord[0]} ${coord[1]}`]) {
           inQ[`${coord[0]} ${coord[1]}`] = true
@@ -119,23 +108,14 @@ export const getNeighbors = (templateName, val) => {
         edges.add(nextCoord)
       }
     })
-    if (val === 0) {
-      templateCopy[nextCoord[0]][nextCoord[1]] = 1
-      coloredPixCounter++
-    }
+    coloredPix.add(`${nextCoord[0]} ${nextCoord[1]}`)
   }
-
   const toPaint = Object.keys(inQ).map(coordStr =>
     coordStr.split(' ').map(str => Number(str))
   )
-  if (val === 0) {
-    return {toPaint, done: coloredPixCounter >= totalPix, edges}
-  } else {
-    return toPaint
-  }
+  return {toPaint, edges}
 }
 
-export const clearTemplate = (templateName = 'flower') => {
-  templateCopy = templateInfo[templateName].copy.map(arr => [...arr])
-  coloredPixCounter = templateInfo[templateName].numAlreadyColored
+export const clearTemplate = () => {
+  coloredPix = new Set()
 }
