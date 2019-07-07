@@ -1,5 +1,6 @@
 const User = require('./user')
 const Images = require('./images')
+const ImagesShare = require('./imagesShare')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -19,5 +20,6 @@ Images.belongsTo(User)
 
 module.exports = {
   User,
-  Images
+  Images,
+  ImagesShare
 }

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import {
   Login,
   Signup,
+  // UserHome,
   Draw,
   UserAccount,
   FormAddImage,
@@ -28,7 +29,7 @@ class Routes extends Component {
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route path="/home" component={HomePage} />
-        <Route path="/draw-options" component={drawOptions} />
+        <Route path="/drawOptions" component={drawOptions} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/draw" component={Draw} />

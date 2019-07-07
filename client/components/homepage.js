@@ -1,15 +1,17 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 
-export const HomePage = () => {
+const HomePage = () => {
   return (
     <div id="home-page">
-      <h1 id="home-page-h1">What's the color of your voice?</h1>
+      <h2>What's the color of your voice?</h2>
       <div>
-        <button type="button">
-          <Link to="drawOptions">Get Started</Link>
-        </button>
+        <Link to="drawOptions">
+          <button type="button">Get Started</button>
+        </Link>
       </div>
     </div>
   )
 }
+
+export default HomePage
