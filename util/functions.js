@@ -134,3 +134,24 @@ export const clearTemplate = (templateName = 'flower') => {
   templateCopy = templateInfo[templateName].copy.map(arr => [...arr])
   coloredPixCounter = templateInfo[templateName].numAlreadyColored
 }
+
+export const getMaxOccurrence = arr => {
+  let o = {},
+    maxCount = 0,
+    maxValue,
+    current
+  for (let i = 0; i < arr.length; i++) {
+    current = arr[i]
+
+    if (!o.hasOwnProperty(current)) {
+      o[current] = 0
+    }
+    ++o[current]
+
+    if (o[current] > maxCount) {
+      maxCount = o[current]
+      maxValue = current
+    }
+  }
+  return maxValue
+}

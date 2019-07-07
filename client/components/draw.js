@@ -3,7 +3,8 @@ import {
   // makePath,
   getColor,
   clearTemplate,
-  getNeighbors
+  getNeighbors,
+  getMaxOccurrence
 } from '../../util/functions'
 import * as palettes from '../../util/colors'
 import {Link} from 'react-router-dom'
@@ -76,41 +77,8 @@ class Draw extends React.Component {
   showColor = () => {
     const color = getColor(this.analyser, this.dataArray, this.props.palette)
 
-    let average = []
-    let count = 0
-    // store color values in array
-    while (color && count < 50) {
-      average.push([...[color]])
-      count++
-    }
-
-    // return max occurency in array
-    function getMaxOccurrence(arr) {
-      let o = {},
-        maxCount = 0,
-        maxValue,
-        current
-      for (let i = 0; i < arr.length; i++) {
-        current = arr[i]
-
-        if (!o.hasOwnProperty(current)) {
-          o[current] = 0
-        }
-        ++o[current]
-
-        if (o[current] > maxCount) {
-          maxCount = o[current]
-          maxValue = current
-        }
-      }
-      return maxValue
-    }
-
-    let newColor = getMaxOccurrence(average)
-    console.log(newColor)
-
     if (color !== this.state.currentColor) {
-      this.setState({currentColor: newColor}, this.rePaint)
+      this.setState({currentColor: color}, this.rePaint)
     }
 
     this.rafId = requestAnimationFrame(this.showColor)
@@ -127,23 +95,64 @@ class Draw extends React.Component {
   }
 
   rePaint = () => {
+    // const color = getColor(this.analyser, this.dataArray, this.props.palette)
+
+    // let average = []
+    // let count = 0
+    // // store color values in array
+    // while (color && count < 50) {
+    //   average.push([...[color]])
+    //   count++
+    // }
+
     if (this.state.currentColor === WHITE) {
       return
     }
-    const ctx = this.canvas.current.getContext('2d')
 
-    ctx.fillStyle = this.state.currentColor
+    const ctx = this.canvas.current.getContext('2d')
+    // let newColor = getMaxOccurrence(average)
+    // // console.log('this is new average color', newColor[0])
+    // this.setState({currentColor: newColor[0]})
+    // const color = getColor(this.analyser, this.dataArray, this.props.palette)
+
+    // let average = []
+    // let count = 0
+    // // store color values in array
+    // while (color && count < 50) {
+    //   average.push([...[color]])
+    //   count++
+    // }
+    // let newColor = getMaxOccurrence(average)
+    // console.log('this is new average color', newColor[0])
+    // this.setState({currentColor: newColor[0]})
+    // ctx.fillStyle = this.state.currentColor
+
     this.toRePaint.forEach(([x, y]) => {
       ctx.fillRect(x, y, 1, 1)
     })
   }
 
   paintNext = async (toPaint, done) => {
+    const color = getColor(this.analyser, this.dataArray, this.props.palette)
+
     if (this.state.status === 'stopped') {
       return
     }
     const ctx = this.canvas.current.getContext('2d')
     let waitCounter = 0
+
+    let average = []
+    let count = 0
+    // store color values in array
+    while (color && count < 50) {
+      average.push([...[color]])
+      count++
+    }
+
+    let newColor = getMaxOccurrence(average)
+    // console.log('this is new average color', newColor[0])
+    this.setState({currentColor: newColor[0]})
+
     ctx.fillStyle = this.state.currentColor
 
     for (let i = 0; i < toPaint.length; i++) {
