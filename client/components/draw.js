@@ -35,6 +35,7 @@ class Draw extends React.Component {
       canvasWidth: this.templateImage.width,
       canvasHeight: this.templateImage.height
     })
+
     const audio = await navigator.mediaDevices.getUserMedia({
       audio: true
     })
