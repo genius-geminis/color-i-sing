@@ -75,9 +75,44 @@ class Draw extends React.Component {
 
   showColor = () => {
     const color = getColor(this.analyser, this.dataArray, this.props.palette)
-    if (color !== this.state.currentColor) {
-      this.setState({currentColor: color}, this.rePaint)
+
+    let average = []
+    let count = 0
+    // store color values in array
+    while (color && count < 100) {
+      average.push([...[color]])
+      count++
     }
+
+    // return max occurency in array
+    function getMaxOccurrence(arr) {
+      let o = {},
+        maxCount = 0,
+        maxValue,
+        current
+      for (let i = 0; i < arr.length; i++) {
+        current = arr[i]
+
+        if (!o.hasOwnProperty(current)) {
+          o[current] = 0
+        }
+        ++o[current]
+
+        if (o[current] > maxCount) {
+          maxCount = o[current]
+          maxValue = current
+        }
+      }
+      return maxValue
+    }
+
+    let newColor = getMaxOccurrence(average)
+    console.log(newColor)
+
+    if (color !== this.state.currentColor) {
+      this.setState({currentColor: newColor}, this.rePaint)
+    }
+
     this.rafId = requestAnimationFrame(this.showColor)
   }
 
