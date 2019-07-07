@@ -186,11 +186,6 @@ nav a {
   float: right;
 }
 
-form div {
-  margin: 1em;
-  display: inline-block;
-}
-
 #canvas {
   border: 1px solid gray;
 }
@@ -268,4 +263,69 @@ button a {
   display: flex;
   justify-content: space-between;
   width: 80%;
+}
+
+/* forms for login and signup */
+
+form {
+  display: block;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+#authform-outer-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background: #e9faff;
+}
+
+#authform-inner-container {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+}
+
+#label #span {
+  font-family: 'Raleway-SemiBold';
+  font-size: 20px;
+  color: #555555;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+#input {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+}
+
+#form-login-button {
+  font-family: Raleway-Bold;
+  font-size: 16px;
+  color: #fff;
+  line-height: 1.2;
+  padding: 0 20px;
+  min-width: 150px;
+  height: 30px;
+  background-color: #333333;
+  border-radius: 27px;
+}
+/* google button  */
+#google-button img {
+  width: 26px;
+  padding-bottom: 3px;
+  vertical-align: middle;
+  border-style: none;
+}
+
+#google-button {
+  line-height: 1.7;
 }
