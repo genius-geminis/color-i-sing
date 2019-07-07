@@ -79,7 +79,7 @@ class Draw extends React.Component {
     let average = []
     let count = 0
     // store color values in array
-    while (color && count < 100) {
+    while (color && count < 50) {
       average.push([...[color]])
       count++
     }
