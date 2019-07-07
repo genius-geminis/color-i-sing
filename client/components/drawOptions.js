@@ -29,6 +29,7 @@ const drawOptions = props => {
         <option value="star">Star</option>
         <option value="heart">Heart</option>
         <option value="ice-cream">Ice Cream</option>
+        <option value="balloon">Balloons</option>
       </select>
 
       <div>
