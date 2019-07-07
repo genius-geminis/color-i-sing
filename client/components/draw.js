@@ -151,6 +151,7 @@ class Draw extends React.Component {
 
     let newColor = getMaxOccurrence(average)
     // console.log('this is new average color', newColor[0])
+    //setting most occurrent color on state
     this.setState({currentColor: newColor[0]})
 
     ctx.fillStyle = this.state.currentColor
