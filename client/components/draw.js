@@ -3,7 +3,8 @@ import {
   // makePath,
   getColor,
   clearTemplate,
-  getNeighbors
+  getNeighbors,
+  makePath
 } from '../../util/functions'
 import * as palettes from '../../util/colors'
 import {Link} from 'react-router-dom'
@@ -115,12 +116,14 @@ class Draw extends React.Component {
       const coord = toPaint[i]
       const x = coord[1] * 1
       const y = coord[0] * 1
+
       if (waitCounter > toPaint.length / 100) {
         waitCounter = 0
         await this.setWaiter(1)
       } else {
         waitCounter++
       }
+
       ctx.fillRect(x, y, 1, 1)
       this.toRePaint.push([x, y])
     }
@@ -133,10 +136,12 @@ class Draw extends React.Component {
         done: nextDone,
         edges: nextEdges
       } = getNeighbors(this.props.template, 0)
+      console.log(toPaint)
       nextEdges.forEach(coord => {
         ctx.fillStyle = RED
         const x = coord[1] * 1
         const y = coord[0] * 1
+
         ctx.fillRect(x, y, 1, 1)
       })
       await this.setWaiter(1000)
