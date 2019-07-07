@@ -216,6 +216,7 @@ class Draw extends React.Component {
           <div>
             {palettes[this.props.palette].map(color => (
               <span
+                key={color.toString()}
                 style={{
                   backgroundColor: color,
                   width: '1px',

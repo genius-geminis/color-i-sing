@@ -1,4 +1,4 @@
-import {star, flower, heart} from './templates/index'
+import {star, flower, heart, blank} from './templates/index'
 
 export const templateInfo = {
   flower: {
@@ -14,6 +14,11 @@ export const templateInfo = {
   heart: {
     copy: heart.map(arr => [...arr]),
     numAlreadyColored: 2311,
+    totalPix: 90000
+  },
+  blank: {
+    copy: blank.map(arr => [...arr]),
+    numAlreadyColored: 2000,
     totalPix: 90000
   }
 }

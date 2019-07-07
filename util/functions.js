@@ -1,5 +1,5 @@
 import {rainbow, sunset, redBlue} from './colors'
-import {star, flower, heart} from './templates'
+import {star, flower, heart, blank} from './templates'
 import {templateInfo} from './template-info'
 
 const WIDTH = 500
@@ -70,6 +70,8 @@ const getTemplate = name => {
       return heart
     case 'star':
       return star
+    case 'blank':
+      return blank
     default:
       return flower
   }

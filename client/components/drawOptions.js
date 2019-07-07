@@ -25,9 +25,10 @@ const drawOptions = props => {
       <label>Select Template</label>
       <select onChange={props.chooseTemplate}>
         <option>--</option>
+        <option value="blank">Blank Canvas</option>
         <option value="flower">Flower</option>
-        <option value="star">Star</option>
         <option value="heart">Heart</option>
+        <option value="star">Star</option>
       </select>
 
       <div>
