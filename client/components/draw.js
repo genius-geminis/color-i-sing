@@ -10,6 +10,7 @@ import * as palettes from '../../util/colors'
 import {Link} from 'react-router-dom'
 import {addedImageUrl, PostImageToShareThunk} from '../store'
 import {connect} from 'react-redux'
+import Modal from './Modal'
 
 const WHITE = 'rgb(255,255,255)'
 const RED = 'rgb(255,0,0)'
@@ -176,6 +177,9 @@ class Draw extends React.Component {
     this.props.PostImageToShareThunk(this.state.imageUrl)
   }
 
+  // hideModal = () => {
+  //   this.setState({show: false})
+  // }
   componentWillUnmount() {
     cancelAnimationFrame(this.rafId)
     if (this.analyser && this.source) {
@@ -189,29 +193,36 @@ class Draw extends React.Component {
       <div id="draw-page">
         <div id="draw-left">
           <div id="top-button">
-            {this.state.status === 'recording' && (
-              <button type="button" onClick={this.stopMic} id="stop-button">
-                Stop
-              </button>
-            )}
-            {this.state.status === 'cleared' && (
-              <button
-                type="button"
-                onClick={this.startColoring}
-                id="start-button"
-              >
-                Start
-              </button>
-            )}
-            {this.state.status === 'stopped' && (
-              <button type="button" onClick={this.clear} id="clear-button">
-                Clear
-              </button>
-            )}
+            <React.Fragment>
+              <Modal />
+              {this.state.status === 'recording' && (
+                <button type="button" onClick={this.stopMic} id="stop-button">
+                  Stop
+                </button>
+              )}
+              {this.state.status === 'cleared' && (
+                <button
+                  type="button"
+                  onClick={this.startColoring}
+                  id="start-button"
+                >
+                  Start
+                </button>
+              )}
+              {this.state.status === 'stopped' && (
+                <button type="button" onClick={this.clear} id="clear-button">
+                  Clear
+                </button>
+              )}
+            </React.Fragment>
           </div>
           <div>
-            <canvas id="canvas" ref={this.canvas} width={this.state.canvasWidth}
-          height={this.state.canvasHeight} />
+            <canvas
+              id="canvas"
+              ref={this.canvas}
+              width={this.state.canvasWidth}
+              height={this.state.canvasHeight}
+            />
           </div>
           <div id="bottom-button">
             {this.state.status === 'stopped' && (
