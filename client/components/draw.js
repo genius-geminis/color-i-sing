@@ -10,6 +10,7 @@ import * as palettes from '../../util/colors'
 import {Link} from 'react-router-dom'
 import {addedImageUrl, PostImageToShareThunk} from '../store'
 import {connect} from 'react-redux'
+import {Facebook, Twitter} from 'react-sharingbuttons'
 
 const WHITE = 'rgb(255,255,255)'
 const RED = 'rgb(255,0,0)'
@@ -185,6 +186,9 @@ class Draw extends React.Component {
   }
 
   render() {
+    const url = ''
+    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`
+    const twitterUrl = `https://twitter.com/home?status=${url}`
     return (
       <div id="draw-page">
         <div id="draw-left">
@@ -210,8 +214,12 @@ class Draw extends React.Component {
             )}
           </div>
           <div>
-            <canvas id="canvas" ref={this.canvas} width={this.state.canvasWidth}
-          height={this.state.canvasHeight} />
+            <canvas
+              id="canvas"
+              ref={this.canvas}
+              width={this.state.canvasWidth}
+              height={this.state.canvasHeight}
+            />
           </div>
           <div id="bottom-button">
             {this.state.status === 'stopped' && (
@@ -234,6 +242,15 @@ class Draw extends React.Component {
                     Download
                   </a>
                 </button>
+
+                <a href={facebookUrl}>
+                  {' '}
+                  <i className="fa fa-facebook-square" />
+                </a>
+                <a href={twitterUrl}>
+                  {' '}
+                  <i className="fa fa-twitter-square" />
+                </a>
 
                 <button
                   type="button"
