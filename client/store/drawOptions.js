@@ -8,8 +8,8 @@ const SELECT_TEMPLATE = 'SELECT_TEMPLATE'
  * INITIAL STATE
  */
 const initialState = {
-  palette: 'rainbow',
-  template: 'flower'
+  palette: '',
+  template: ''
 }
 
 /**

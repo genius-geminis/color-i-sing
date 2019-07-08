@@ -30,7 +30,9 @@ class Draw extends React.Component {
   }
 
   async componentDidMount() {
-    this.templateImage = await IJS.Image.load(`/${this.props.template}.jpeg`)
+    this.templateImage = await IJS.Image.load(
+      `/images/${this.props.template}.jpeg`
+    )
     this.setState({
       canvasWidth: this.templateImage.width,
       canvasHeight: this.templateImage.height
@@ -210,8 +212,12 @@ class Draw extends React.Component {
             )}
           </div>
           <div>
-            <canvas id="canvas" ref={this.canvas} width={this.state.canvasWidth}
-          height={this.state.canvasHeight} />
+            <canvas
+              id="canvas"
+              ref={this.canvas}
+              width={this.state.canvasWidth}
+              height={this.state.canvasHeight}
+            />
           </div>
           <div id="bottom-button">
             {this.state.status === 'stopped' && (

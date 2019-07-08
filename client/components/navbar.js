@@ -18,7 +18,7 @@ const Navbar = ({handleClick, isLoggedIn, fullName}) => (
     <nav id="navigation-bar">
       <div>
         <Link to="/home">Home</Link>
-        <Link to="/draw">Draw</Link>
+        <Link to="/draw-options">Draw</Link>
         {isLoggedIn ? (
           <>
             <Link href="#" onClick={handleClick} className="nav-right">

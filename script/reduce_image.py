@@ -53,5 +53,5 @@ for x in range(output_size[0]):
         else:
             out.putpixel((x, y), 255)
 
-out.save("../public/balloon", "jpeg")
+out.save("../public/butterfly", "jpeg")
 
