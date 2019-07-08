@@ -14,20 +14,14 @@ const drawOptions = props => {
         <option value="redBlue">Red to Blue</option>
       </select>
 
-      <label>Select Brush Motion</label>
-      <select onChange={props.chooseBrushMotion}>
-        <option>--</option>
-        <option value="horizontal">Linear Horizontal</option>
-        <option value="random">Random</option>
-        <option value="vertical">Linear Vertical</option>
-      </select>
-
       <label>Select Template</label>
       <select onChange={props.chooseTemplate}>
         <option>--</option>
         <option value="flower">Flower</option>
         <option value="star">Star</option>
         <option value="heart">Heart</option>
+        <option value="ice-cream">Ice Cream</option>
+        <option value="balloon">Balloons</option>
       </select>
 
       <div>
@@ -41,7 +35,6 @@ const drawOptions = props => {
 
 const mapStateToProps = state => ({
   palette: state.drawOptions.palette,
-  brushMotion: state.drawOptions.brushMotion,
   template: state.drawOptions.template
 })
 
@@ -49,11 +42,6 @@ const mapDispatchToProps = dispatch => ({
   choosePalette: event => {
     const palette = event.target.value
     dispatch(choosePalette(palette))
-  },
-
-  chooseBrushMotion: event => {
-    const brushMotion = event.target.value
-    dispatch(chooseBrushMotion(brushMotion))
   },
   chooseTemplate: event => {
     const template = event.target.value
