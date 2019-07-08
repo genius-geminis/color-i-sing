@@ -16,17 +16,17 @@ const drawOptions = props => {
             <option value="redBlue">Red to Blue</option>
           </select>
         </div>
-      <label>Select Template</label>
-      <select onChange={props.chooseTemplate}>
-        <option>--</option>
-        <option value="flower">Flower</option>
-        <option value="star">Star</option>
-        <option value="heart">Heart</option>
-        <option value="ice-cream">Ice Cream</option>
-        <option value="balloon">Balloons</option>
-      </select>
-        </div>
+        <label>Select Template</label>
+        <select onChange={props.chooseTemplate}>
+          <option>--</option>
+          <option value="flower">Flower</option>
+          <option value="star">Star</option>
+          <option value="heart">Heart</option>
+          <option value="ice-cream">Ice Cream</option>
+          <option value="balloon">Balloons</option>
+        </select>
       </div>
+
       <div>
         <button type="button">
           <Link to="draw">Start Drawing</Link>
