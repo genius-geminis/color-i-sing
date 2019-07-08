@@ -12,6 +12,10 @@ Color I Sing is a digital coloring book that lets your voice be the paint brush.
 * npm run seed
 * npm run start-dev
 
+#Live
+
+> http://colorising.herokuapp.com/
+
 # Credits :star:
 
 * Colleen Higgins
