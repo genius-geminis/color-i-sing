@@ -29,26 +29,6 @@ export const getColor = (analyser, dataArray, colorPalette) => {
   }
 }
 
-export const makePath = (x, y, pathType) => {
-  switch (pathType) {
-    case 'random': {
-      const newX = Math.round(Math.random() * WIDTH / PIX_WIDTH) * PIX_WIDTH
-      const newY = Math.round(Math.random() * HEIGHT / PIX_HEIGHT) * PIX_HEIGHT
-      return {newX, newY}
-    }
-    case 'vertical': {
-      const newY = y > HEIGHT ? 0 : y + PIX_HEIGHT
-      const newX = y > HEIGHT ? x + PIX_WIDTH : x
-      return {newX, newY}
-    }
-    default: {
-      const newX = x > WIDTH ? 0 : x + PIX_WIDTH
-      const newY = x > WIDTH ? y + PIX_HEIGHT : y
-      return {newX, newY}
-    }
-  }
-}
-
 export const getSeed = () => {
   for (let i = seedY; i < refImage.height; i++) {
     for (let j = 0; j < refImage.width; j++) {
