@@ -5,15 +5,17 @@ import {Link} from 'react-router-dom'
 
 const drawOptions = props => {
   return (
-    <div>
-      <label>Select Color Palette</label>
-      <select onChange={props.choosePalette}>
-        <option>--</option>
-        <option value="rainbow">Rainbow</option>
-        <option value="sunset">Sunset</option>
-        <option value="redBlue">Red to Blue</option>
-      </select>
-
+    <div id="options-page">
+      <div id="options-container">
+        <label>Select Color Palette</label>
+        <div className="select space-bottom">
+          <select onChange={props.choosePalette}>
+            <option>--</option>
+            <option value="rainbow">Rainbow</option>
+            <option value="sunset">Sunset</option>
+            <option value="redBlue">Red to Blue</option>
+          </select>
+        </div>
       <label>Select Template</label>
       <select onChange={props.chooseTemplate}>
         <option>--</option>
@@ -23,7 +25,8 @@ const drawOptions = props => {
         <option value="ice-cream">Ice Cream</option>
         <option value="balloon">Balloons</option>
       </select>
-
+        </div>
+      </div>
       <div>
         <button type="button">
           <Link to="draw">Start Drawing</Link>

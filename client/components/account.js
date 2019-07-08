@@ -11,15 +11,17 @@ class UserAccount extends React.Component {
     const {userAccount} = this.props
     return (
       <React.Fragment>
-        <div>
-          <span>Name : </span>
-          {userAccount.fullName}
+        <div id="account-container">
+          <div id="account-name">
+            <span>Name: </span>
+            {userAccount.fullName}
+          </div>
+          <div id="account-email">
+            <span>Email: </span>
+            {userAccount.email}
+          </div>
+          <ImageHistory />
         </div>
-        <div>
-          <span>Email : </span>
-          {userAccount.email}
-        </div>
-        <ImageHistory />
       </React.Fragment>
     )
   }

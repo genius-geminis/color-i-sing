@@ -17,7 +17,7 @@ const SingleImage = props => {
         }}
       >
         <thead>
-          <tr>
+          <tr id="account-header">
             <th width="35%">Image </th>
             <th width="25%">Name</th>
             <th width="20%">Date</th>
@@ -26,7 +26,7 @@ const SingleImage = props => {
           </tr>
         </thead>
 
-        <tbody>
+        <tbody id="account-body">
           <tr key={image.id}>
             <td>
               <img src={image.imageUrl} width="150" />

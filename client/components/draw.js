@@ -186,66 +186,85 @@ class Draw extends React.Component {
 
   render() {
     return (
-      <>
-        {this.state.status === 'recording' && (
-          <button type="button" onClick={this.stopMic}>
-            Stop
-          </button>
-        )}
-        {this.state.status === 'cleared' && (
-          <button type="button" onClick={this.startColoring}>
-            Start
-          </button>
-        )}
-
-        {this.state.status === 'stopped' && (
-          <>
-            <button type="button">
-              {this.props.isLoggedIn ? (
-                <Link to="upload">Save</Link>
-              ) : (
-                <Link to="signup">Log in or Sign up to Save</Link>
-              )}
-            </button>
-            <button type="button">
-              <a href={this.state.imageUrl} download="image">
-                Download
-              </a>
-            </button>
-            <button type="button" onClick={this.clear}>
-              Clear
-            </button>
-            <button type="button" onClick={this.shareImageLink}>
-              Share Link
-            </button>
-            <p>{this.props.link}</p>
-          </>
-        )}
-        <canvas
-          id="canvas"
-          ref={this.canvas}
-          width={this.state.canvasWidth}
-          height={this.state.canvasHeight}
-        />
-        <div>
-          <h1>Your Color Palette (Low-High):</h1>
+      <div id="draw-page">
+        <div id="draw-left">
+          <div id="top-button">
+            {this.state.status === 'recording' && (
+              <button type="button" onClick={this.stopMic} id="stop-button">
+                Stop
+              </button>
+            )}
+            {this.state.status === 'cleared' && (
+              <button
+                type="button"
+                onClick={this.startColoring}
+                id="start-button"
+              >
+                Start
+              </button>
+            )}
+            {this.state.status === 'stopped' && (
+              <button type="button" onClick={this.clear} id="clear-button">
+                Clear
+              </button>
+            )}
+          </div>
           <div>
+            <canvas id="canvas" ref={this.canvas} width={this.state.canvasWidth}
+          height={this.state.canvasHeight} />
+          </div>
+          <div id="bottom-button">
+            {this.state.status === 'stopped' && (
+              <>
+                <button type="button">
+                  {this.props.isLoggedIn ? (
+                    <Link to="upload" id="save-button">
+                      Save
+                    </Link>
+                  ) : (
+                    <Link to="signup">Log in or Sign up to Save</Link>
+                  )}
+                </button>
+                <button type="button">
+                  <a
+                    href={this.state.imageUrl}
+                    download="image"
+                    id="download-button"
+                  >
+                    Download
+                  </a>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={this.shareImageLink}
+                  id="share-button"
+                >
+                  Share Link
+                </button>
+                <p>{this.props.link}</p>
+              </>
+            )}
+          </div>
+        </div>
+        <div id="color-palette">
+          <h3>Your Color Palette (Low-High):</h3>
+          <div id="palette-colors">
             {palettes[this.props.palette].map(color => (
-              <span
+              <div
                 style={{
-                  backgroundColor: color,
-                  width: '1px',
-                  height: '100px',
-                  display: 'inline-block'
+                  backgroundColor: color
                 }}
               />
             ))}
-            <div className="palette-labels">
-              <p>low</p>
-              <p>high</p>
-            </div>
           </div>
-          <h2>Current Color:</h2>
+          <div className="palette-labels">
+            <p>low</p>
+            <p>high</p>
+          </div>
+        </div>
+        <div id="current-color">
+          <h3>Current Color:</h3>
           <div
             style={{
               backgroundColor: this.state.currentColor,
@@ -255,7 +274,7 @@ class Draw extends React.Component {
             }}
           />
         </div>
-      </>
+      </div>
     )
   }
 }

@@ -9,7 +9,8 @@ import {
   Draw,
   UserAccount,
   FormAddImage,
-  drawOptions
+  drawOptions,
+  HomePage
 } from './components'
 import {me} from './store'
 
@@ -27,6 +28,7 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
+        <Route path="/home" component={HomePage} />
         <Route path="/drawOptions" component={drawOptions} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
@@ -34,7 +36,6 @@ class Routes extends Component {
         <Route path="/upload" component={FormAddImage} />
         {isLoggedIn && <Route path="/account" component={UserAccount} />}
         {/* Displays our Login component as a fallback */}
-        <Route path="/home" component={drawOptions} />
       </Switch>
     )
   }
