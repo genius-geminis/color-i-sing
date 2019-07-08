@@ -4,7 +4,8 @@ body {
   --main-bg: #fdf3f3;
   --main-text: #100954;
   --accent-effect: #e74c3c;
-  font-family: 'Raleway', Arial, Helvetica, sans-serif;
+  font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+  font-weight: 300;
   margin: 0;
   background-image: url('old-mic.jpg');
   background-repeat: no-repeat;
@@ -53,8 +54,10 @@ h1 {
 } */
 
 #home-page {
-  padding: 10%;
+  padding-top: 10%;
   text-align: center;
+  width: 60%;
+  height: 90%;
 }
 
 .button {
@@ -66,10 +69,14 @@ h1 {
 }
 
 #options-page {
+  background-color: var(--main-bg);
+  height: 100%;
+  padding: 1% 0;
+}
+
+.options-form {
   display: flex;
-  flex-grow: 1;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
@@ -163,7 +170,7 @@ nav a {
 
 #navigation-bar {
   /* background: linear-gradient(to right, #4a3252, #774e72, #51396b); */
-  background: none;
+  background: rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid #796276;
 }
 
@@ -365,4 +372,12 @@ form {
 #account-body {
   background-color: #ffffff;
   box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+}
+
+.footer {
+  padding: 2%;
+  text-align: center;
+  height: 100px;
+  background-color: var(--accent-bg);
+  color: var(--main-bg);
 }

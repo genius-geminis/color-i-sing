@@ -6,10 +6,6 @@ import {logout} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn, fullName}) => (
   <div>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
     {/* <div id="title-container">
     { <Link to="/home" id="title">
         Color I Sing

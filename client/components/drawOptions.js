@@ -6,8 +6,8 @@ import {ColorPalette} from './colorPalette'
 
 const drawOptions = props => {
   return (
-    <form>
-      <div id="options-page">
+    <div id="options-page">
+      <form className="options-form">
         <div id="options-container">
           <div>
             <h2>Select Color Palette</h2>
@@ -125,8 +125,8 @@ const drawOptions = props => {
             Start Drawing
           </Link>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   )
 }
 
