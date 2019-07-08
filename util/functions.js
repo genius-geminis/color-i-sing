@@ -7,6 +7,7 @@ const PIX_HEIGHT = HEIGHT / 100
 
 let refImage
 let coloredPix = new Set()
+let seedY = 0
 
 export const getColor = (analyser, dataArray, colorPalette) => {
   analyser.getByteFrequencyData(dataArray)
@@ -49,9 +50,10 @@ export const makePath = (x, y, pathType) => {
 }
 
 export const getSeed = () => {
-  for (let i = 0; i < refImage.height; i++) {
+  for (let i = seedY; i < refImage.height; i++) {
     for (let j = 0; j < refImage.width; j++) {
       if (!coloredPix.has(`${i} ${j}`) && refImage.getPixelXY(j, i)[0] >= 200) {
+        seedY = i
         return {newY: i, newX: j}
       }
     }
@@ -118,4 +120,5 @@ export const getNeighbors = template => {
 
 export const clearTemplate = () => {
   coloredPix = new Set()
+  seedY = 0
 }

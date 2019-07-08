@@ -30,7 +30,7 @@ class Draw extends React.Component {
   }
 
   async componentDidMount() {
-    this.templateImage = await IJS.Image.load(`/${this.props.template}.jpg`)
+    this.templateImage = await IJS.Image.load(`/${this.props.template}.jpeg`)
     this.setState({
       canvasWidth: this.templateImage.width,
       canvasHeight: this.templateImage.height
@@ -95,7 +95,9 @@ class Draw extends React.Component {
     const ctx = this.canvas.current.getContext('2d')
 
     ctx.fillStyle = BLACK
-    toPaint.forEach(([y, x]) => {
+    toPaint.forEach(coord => {
+      const x = coord[1] * 1
+      const y = coord[0] * 1
       ctx.fillRect(x, y, 1, 1)
     })
   }
@@ -107,7 +109,9 @@ class Draw extends React.Component {
     const ctx = this.canvas.current.getContext('2d')
 
     ctx.fillStyle = this.state.currentColor
-    this.toRePaint.forEach(([x, y]) => {
+    this.toRePaint.forEach(coord => {
+      const x = coord[0] * 1
+      const y = coord[1] * 1
       ctx.fillRect(x, y, 1, 1)
     })
   }
@@ -127,7 +131,7 @@ class Draw extends React.Component {
       const coord = toPaint[i]
       const x = coord[1] * 1
       const y = coord[0] * 1
-      if (waitCounter > toPaint.length / 100) {
+      if (waitCounter > toPaint.length / 150) {
         waitCounter = 0
         await this.setWaiter(1)
       } else {
