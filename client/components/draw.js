@@ -95,37 +95,11 @@ class Draw extends React.Component {
   }
 
   rePaint = () => {
-    // const color = getColor(this.analyser, this.dataArray, this.props.palette)
-
-    // let average = []
-    // let count = 0
-    // // store color values in array
-    // while (color && count < 50) {
-    //   average.push([...[color]])
-    //   count++
-    // }
-
     if (this.state.currentColor === WHITE) {
       return
     }
 
     const ctx = this.canvas.current.getContext('2d')
-    // let newColor = getMaxOccurrence(average)
-    // // console.log('this is new average color', newColor[0])
-    // this.setState({currentColor: newColor[0]})
-    // const color = getColor(this.analyser, this.dataArray, this.props.palette)
-
-    // let average = []
-    // let count = 0
-    // // store color values in array
-    // while (color && count < 50) {
-    //   average.push([...[color]])
-    //   count++
-    // }
-    // let newColor = getMaxOccurrence(average)
-    // console.log('this is new average color', newColor[0])
-    // this.setState({currentColor: newColor[0]})
-    // ctx.fillStyle = this.state.currentColor
 
     this.toRePaint.forEach(([x, y]) => {
       ctx.fillRect(x, y, 1, 1)
@@ -150,7 +124,7 @@ class Draw extends React.Component {
     }
 
     let newColor = getMaxOccurrence(average)
-    // console.log('this is new average color', newColor[0])
+    console.log('this is new average color', newColor[0])
     //setting most occurrent color on state
     this.setState({currentColor: newColor[0]})
 

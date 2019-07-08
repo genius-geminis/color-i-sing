@@ -76,6 +76,7 @@ const getTemplate = name => {
 }
 
 export const getNeighbors = (templateName, val) => {
+  // returns an array that contains x-y pairs
   if (!templateCopy.length) {
     templateCopy = templateInfo[templateName].copy.map(arr => [...arr])
     coloredPixCounter = templateInfo[templateName].numAlreadyColored
