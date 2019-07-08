@@ -1,16 +1,16 @@
 body {
-  --accent-bg: #100954;
+  --accent-bg: #774e72;
   --accent-text: #ffcccc;
-  --main-bg: white;
+  --main-bg: #fdf3f3;
   --main-text: #100954;
   --accent-effect: #e74c3c;
   font-family: 'Raleway', Arial, Helvetica, sans-serif;
-  background-image: url('mic.jpeg');
+  margin: 0;
+  background-image: url('old-mic.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
   height: 100vh;
-  margin: 0px;
 }
 
 #app {
@@ -29,7 +29,7 @@ h2 {
 h1 {
   font-family: 'Caveat';
   font-size: 8vw;
-  color: var(--accent-text);
+  color: #ffcccc;
   letter-spacing: 0px;
   word-spacing: 0px;
   text-align: center;
@@ -53,7 +53,7 @@ h1 {
 } */
 
 #home-page {
-  padding-top: 5%;
+  padding: 10%;
   text-align: center;
 }
 
@@ -108,45 +108,6 @@ h1 {
   flex-grow: 1;
 }
 
-/* Custom Select */
-.select {
-  position: relative;
-  display: flex;
-  height: 3em;
-  line-height: 3;
-  background: #fdca96;
-  overflow: hidden;
-  border-radius: 0.25em;
-}
-
-select {
-  flex: 1;
-  padding: 0 1em;
-  color: #696969;
-  cursor: pointer;
-  font-size: 2vw;
-}
-
-/* Arrow */
-.select::after {
-  content: '\25BC';
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 0 1em;
-  background: #8b008b;
-  cursor: pointer;
-  pointer-events: none;
-  -webkit-transition: 0.25s all ease;
-  -o-transition: 0.25s all ease;
-  transition: 0.25s all ease;
-}
-
-/* Transition */
-.select:hover::after {
-  color: #f39c12;
-}
-
 .space-bottom {
   margin-bottom: 3%;
 }
@@ -172,7 +133,7 @@ nav a {
   display: inline-block;
   margin: 1em;
   text-decoration: none;
-  color: #ffcccc;
+  color: var(--accent-text);
   font-size: 20px;
   text-decoration: none;
   text-align: center;
@@ -201,7 +162,9 @@ nav a {
 }
 
 #navigation-bar {
-  background-color: var(--accent-bg);
+  /* background: linear-gradient(to right, #4a3252, #774e72, #51396b); */
+  background: none;
+  border-bottom: 1px solid #796276;
 }
 
 .nav-right {
@@ -240,7 +203,7 @@ button a {
     'drawLeft colorPalette'
     'drawLeft currColor';
   flex-grow: 1;
-  background-color: whitesmoke;
+  background-color: var(--main-bg);
   padding: 10%;
 }
 
@@ -262,12 +225,12 @@ button a {
 
 #color-palette {
   grid-area: colorPalette;
-  color: white;
+  color: var(--main-text);
 }
 
 #current-color {
   grid-area: currColor;
-  color: white;
+  color: var(--main-text);
 }
 
 #current-color > div {
