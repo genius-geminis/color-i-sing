@@ -7,13 +7,15 @@ const ImageHistory = props => {
 
   return (
     <React.Fragment>
-      {images && images.length > 0 ? (
-        images.map(image => {
-          return <SingleImage image={image} key={image.name} />
-        })
-      ) : (
-        <p>No images yet</p>
-      )}
+      <div id="account-image">
+        {images && images.length > 0 ? (
+          images.map(image => {
+            return <SingleImage image={image} key={image.name} />
+          })
+        ) : (
+          <p>No images yet</p>
+        )}
+      </div>
     </React.Fragment>
   )
 }

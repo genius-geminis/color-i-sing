@@ -10,11 +10,11 @@ const Navbar = ({handleClick, isLoggedIn, fullName}) => (
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <div id="title-container">
-      <Link id="title" to="/home">
+    {/* <div id="title-container">
+    { <Link to="/home" id="title">
         Color I Sing
-      </Link>
-    </div>
+      </Link> }
+    </div> */}
     <nav id="navigation-bar">
       <div>
         <Link to="/home">Home</Link>
@@ -24,7 +24,7 @@ const Navbar = ({handleClick, isLoggedIn, fullName}) => (
             <Link href="#" onClick={handleClick} className="nav-right">
               <i className="fa fa-sign-out" /> Logout
             </Link>
-            <Link to="/account" class="nav-right">
+            <Link to="/account" className="nav-right">
               <i className="fa fa-fw fa-user" />
               {fullName}'s Account
             </Link>

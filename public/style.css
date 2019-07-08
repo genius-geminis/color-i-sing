@@ -1,5 +1,5 @@
 body {
-  font-family: sans-serif;
+  /* font-family: 'Lora', serif; */
   background-image: url('mic.jpeg');
   background-repeat: no-repeat;
   background-size: cover;
@@ -14,25 +14,37 @@ body {
   flex-direction: column;
 }
 
-#title-container {
-  text-align: center;
-  padding: 10px 0px;
+/* #title-container  */
+/* h1 {
+  
+  color: white;
+} */
+
+h2 {
+  font-size: 3vw;
+  color: #4d4d4d;
+  font-weight: 10;
+  font-size: 20px;
 }
 
-#title {
-  font-family: 'Kaushan Script';
+h1 {
+  font-family: 'Satisfy' !important;
   font-size: 8vw;
+  color: #8c8c8c;
   letter-spacing: 0px;
   word-spacing: 0px;
-  font-weight: 700;
+  text-align: center;
+  padding: 10px 0px;
+  font-weight: 100;
+  font-size: 80px;
   font-variant: small-caps;
   text-transform: none;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
   width: 100%;
-  animation-name: example;
+  /* animation-name: example;
   animation-iteration-count: infinite;
-  animation-duration: 1s;
+  animation-duration: 1s; */
 }
 
 @keyframes example {
@@ -42,11 +54,6 @@ body {
   to {
     color: #e74c3c;
   }
-}
-
-h2 {
-  font-size: 3vw;
-  color: white;
 }
 
 #home-page,
@@ -59,7 +66,7 @@ h2 {
 }
 
 #options-container {
-  font-family: 'Kaushan Script';
+  /* font-family: 'Kaushan Script'; */
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -276,24 +283,31 @@ form {
 
 #authform-outer-container {
   width: 100%;
-  min-height: 100vh;
+  min-height: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   padding: 15px;
-  background: #e9faff;
 }
 
 #authform-inner-container {
+  /* display: flex;
+  flex-wrap: wrap;*/
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
   color: #212529;
+  background: #f0ffff;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 #label #span {
-  font-family: 'Raleway-SemiBold';
+  /* font-family: 'Raleway-SemiBold'; */
   font-size: 20px;
   color: #555555;
   line-height: 1.4;
@@ -308,12 +322,12 @@ form {
 }
 
 #form-login-button {
-  font-family: Raleway-Bold;
-  font-size: 16px;
+  /* font-family: 'Raleway-Bold'; */
+  font-size: 10px;
   color: #fff;
   line-height: 1.2;
-  padding: 0 20px;
-  min-width: 150px;
+  padding: 0px 20px;
+  min-width: 50px;
   height: 30px;
   background-color: #333333;
   border-radius: 27px;
@@ -321,11 +335,45 @@ form {
 /* google button  */
 #google-button img {
   width: 26px;
+  padding-top: 3px;
   padding-bottom: 3px;
-  vertical-align: middle;
+  /* vertical-align: middle; */
   border-style: none;
 }
 
 #google-button {
   line-height: 1.7;
+}
+
+/* user's account page */
+#account-container {
+  background-color: #e0ffff;
+  width: 100%;
+  min-height: 100vh;
+}
+
+#account-name,
+#account-email {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#account-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+#account-header {
+  background-color: #95a5a6;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+#account-body {
+  background-color: #ffffff;
+  box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
 }
