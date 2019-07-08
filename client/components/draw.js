@@ -6,10 +6,10 @@ import {
   getNeighbors,
   getOutline
 } from '../../util/functions'
-import * as palettes from '../../util/colors'
 import {Link} from 'react-router-dom'
 import {addedImageUrl, PostImageToShareThunk} from '../store'
 import {connect} from 'react-redux'
+import {ColorPalette} from './colorPalette'
 
 const WHITE = 'rgb(255,255,255)'
 const RED = 'rgb(255,0,0)'
@@ -30,7 +30,9 @@ class Draw extends React.Component {
   }
 
   async componentDidMount() {
-    this.templateImage = await IJS.Image.load(`/${this.props.template}.jpeg`)
+    this.templateImage = await IJS.Image.load(
+      `/images/${this.props.template}.jpeg`
+    )
     this.setState({
       canvasWidth: this.templateImage.width,
       canvasHeight: this.templateImage.height
@@ -209,9 +211,13 @@ class Draw extends React.Component {
               </button>
             )}
           </div>
-          <div>
-            <canvas id="canvas" ref={this.canvas} width={this.state.canvasWidth}
-          height={this.state.canvasHeight} />
+          <div className="canvas-container">
+            <canvas
+              id="canvas"
+              ref={this.canvas}
+              width={this.state.canvasWidth}
+              height={this.state.canvasHeight}
+            />
           </div>
           <div id="bottom-button">
             {this.state.status === 'stopped' && (
@@ -248,29 +254,14 @@ class Draw extends React.Component {
           </div>
         </div>
         <div id="color-palette">
-          <h3>Your Color Palette (Low-High):</h3>
-          <div id="palette-colors">
-            {palettes[this.props.palette].map(color => (
-              <div
-                style={{
-                  backgroundColor: color
-                }}
-              />
-            ))}
-          </div>
-          <div className="palette-labels">
-            <p>low</p>
-            <p>high</p>
-          </div>
+          <h3>Your Color Palette:</h3>
+          <ColorPalette palette={this.props.palette} />
         </div>
         <div id="current-color">
           <h3>Current Color:</h3>
           <div
             style={{
-              backgroundColor: this.state.currentColor,
-              width: '100px',
-              height: '100px',
-              border: '1px solid gray'
+              backgroundColor: this.state.currentColor
             }}
           />
         </div>
