@@ -6,7 +6,7 @@ from functools import reduce
 import numpy as np
 from enum import Enum
 
-input_path = "../public/balloon.jpg"
+input_path = "../public/butterfly.jpg"
 
 output_width = 297
 output_height = 421
