@@ -26,6 +26,7 @@ const drawOptions = props => {
           <option value="balloon">Balloons</option>
         </select>
       </div>
+
       <div>
         <button type="button">
           <Link to="draw">Start Drawing</Link>
