@@ -3,7 +3,8 @@ import {
   // makePath,
   getColor,
   clearTemplate,
-  getNeighbors
+  getNeighbors,
+  getOutline
 } from '../../util/functions'
 import * as palettes from '../../util/colors'
 import {Link} from 'react-router-dom'
@@ -20,13 +21,21 @@ class Draw extends React.Component {
     this.state = {
       imageUrl: '',
       status: 'cleared',
-      currentColor: WHITE
+      currentColor: WHITE,
+      canvasWidth: null,
+      canvasHeight: null
     }
     this.canvas = React.createRef()
     this.toRePaint = []
   }
 
   async componentDidMount() {
+    this.templateImage = await IJS.Image.load(`/${this.props.template}.jpeg`)
+    this.setState({
+      canvasWidth: this.templateImage.width,
+      canvasHeight: this.templateImage.height
+    })
+
     const audio = await navigator.mediaDevices.getUserMedia({
       audio: true
     })
@@ -49,15 +58,15 @@ class Draw extends React.Component {
   startColoring = async () => {
     this.setState({status: 'recording'})
     const ctx = this.canvas.current.getContext('2d')
-    const {toPaint, done, edges} = getNeighbors(this.props.template, 0)
-    edges.forEach(coord => {
+    const next = getNeighbors(this.templateImage)
+    next.edges.forEach(coord => {
       ctx.fillStyle = RED
       const x = coord[1] * 1
       const y = coord[0] * 1
       ctx.fillRect(x, y, 1, 1)
     })
     await this.setWaiter(1000)
-    this.paintNext(toPaint, done)
+    this.paintNext(next.toPaint)
   }
 
   stopMic = () => {
@@ -81,12 +90,14 @@ class Draw extends React.Component {
     this.rafId = requestAnimationFrame(this.showColor)
   }
 
-  paintOutline = () => {
-    const toPaint = getNeighbors(this.props.template, 1)
+  paintOutline = async () => {
+    const toPaint = await getOutline(this.templateImage)
     const ctx = this.canvas.current.getContext('2d')
 
     ctx.fillStyle = BLACK
-    toPaint.forEach(([y, x]) => {
+    toPaint.forEach(coord => {
+      const x = coord[1] * 1
+      const y = coord[0] * 1
       ctx.fillRect(x, y, 1, 1)
     })
   }
@@ -98,14 +109,19 @@ class Draw extends React.Component {
     const ctx = this.canvas.current.getContext('2d')
 
     ctx.fillStyle = this.state.currentColor
-    this.toRePaint.forEach(([x, y]) => {
+    this.toRePaint.forEach(coord => {
+      const x = coord[0] * 1
+      const y = coord[1] * 1
       ctx.fillRect(x, y, 1, 1)
     })
   }
 
-  paintNext = async (toPaint, done) => {
+  paintNext = async toPaint => {
     if (this.state.status === 'stopped') {
       return
+    }
+    if (!toPaint) {
+      this.stopMic()
     }
     const ctx = this.canvas.current.getContext('2d')
     let waitCounter = 0
@@ -115,7 +131,7 @@ class Draw extends React.Component {
       const coord = toPaint[i]
       const x = coord[1] * 1
       const y = coord[0] * 1
-      if (waitCounter > toPaint.length / 100) {
+      if (waitCounter > toPaint.length / 150) {
         waitCounter = 0
         await this.setWaiter(1)
       } else {
@@ -125,22 +141,18 @@ class Draw extends React.Component {
       this.toRePaint.push([x, y])
     }
     this.toRePaint = []
-    if (done || this.state.status === 'stopped') {
+    const next = getNeighbors(this.templateImage)
+    if (!next) {
       this.stopMic()
     } else {
-      const {
-        toPaint: nextToPaint,
-        done: nextDone,
-        edges: nextEdges
-      } = getNeighbors(this.props.template, 0)
-      nextEdges.forEach(coord => {
+      next.edges.forEach(coord => {
         ctx.fillStyle = RED
         const x = coord[1] * 1
         const y = coord[0] * 1
         ctx.fillRect(x, y, 1, 1)
       })
       await this.setWaiter(1000)
-      this.paintNext(nextToPaint, nextDone)
+      this.paintNext(next.toPaint)
     }
   }
 
@@ -154,8 +166,8 @@ class Draw extends React.Component {
 
   clear = () => {
     const context = this.canvas.current.getContext('2d')
-    context.clearRect(0, 0, 300, 300)
-    clearTemplate(this.props.template)
+    context.clearRect(0, 0, this.state.canvasWidth, this.state.canvasHeight)
+    clearTemplate()
     this.paintOutline()
     this.setState({imageUrl: '', status: 'cleared'})
   }
@@ -170,7 +182,6 @@ class Draw extends React.Component {
       this.analyser.disconnect()
       this.source.disconnect()
     }
-    this.clear()
   }
 
   render() {
@@ -199,7 +210,8 @@ class Draw extends React.Component {
             )}
           </div>
           <div>
-            <canvas id="canvas" ref={this.canvas} width="300" height="300" />
+            <canvas id="canvas" ref={this.canvas} width={this.state.canvasWidth}
+          height={this.state.canvasHeight} />
           </div>
           <div id="bottom-button">
             {this.state.status === 'stopped' && (
@@ -272,8 +284,7 @@ const mapStateToProps = state => ({
   palette: state.drawOptions.palette,
   brushMotion: state.drawOptions.brushMotion,
   link: state.imagesShare.link,
-  template: state.drawOptions.template,
-  templateInfo: state.drawOptions.templateInfo
+  template: state.drawOptions.template
 })
 
 const mapDispatchToProps = dispatch => ({
