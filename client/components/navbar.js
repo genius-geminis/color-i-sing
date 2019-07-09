@@ -12,17 +12,18 @@ const Navbar = ({handleClick, isLoggedIn, fullName}) => (
       </Link> }
     </div> */}
     <nav id="navigation-bar">
+      <span>Color I Sing</span>
       <div>
         <Link to="/home">Home</Link>
         <Link to="/draw-options">Draw</Link>
         {isLoggedIn ? (
           <>
-            <Link href="#" onClick={handleClick} className="nav-right">
-              <i className="fa fa-sign-out" /> Logout
-            </Link>
             <Link to="/account" className="nav-right">
               <i className="fa fa-fw fa-user" />
               {fullName}'s Account
+            </Link>
+            <Link href="#" onClick={handleClick} className="nav-right">
+              <i className="fa fa-sign-out" /> Logout
             </Link>
           </>
         ) : (
