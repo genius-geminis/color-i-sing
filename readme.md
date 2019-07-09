@@ -1,7 +1,4 @@
 ![](https://media.giphy.com/media/143qWPF33HtSTK/giphy.gif)
-  
-
-
 
 # _Color I Sing_ :notes:
 
@@ -36,6 +33,3 @@ npm run start-dev
 * Colleen Higgins :heart:
 * Alena Loffe :heart:
 * Kistina Gurung :heart:
-
-
-

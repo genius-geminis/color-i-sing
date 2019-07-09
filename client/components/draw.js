@@ -9,6 +9,7 @@ import {Link} from 'react-router-dom'
 import {addedImageUrl, PostImageToShareThunk} from '../store'
 import {connect} from 'react-redux'
 import Modal from './Modal'
+import ShareModal from './shareModal'
 import {ColorPalette} from './colorPalette'
 
 const WHITE = '#FAEDE5'
@@ -23,7 +24,8 @@ class Draw extends React.Component {
       status: '',
       canvasWidth: null,
       canvasHeight: null,
-      showModal: true
+      showCountdownModal: true,
+      showSocialModal: false
     }
     this.canvas = React.createRef()
     this.toRePaint = []
@@ -65,7 +67,7 @@ class Draw extends React.Component {
   startWithCountdown = () => {
     this.setState({status: 'recording'})
     setTimeout(() => {
-      this.setState({showModal: false})
+      this.setState({showCountdownModal: false})
       this.startColoring()
     }, 5000)
   }
@@ -215,6 +217,7 @@ class Draw extends React.Component {
 
   shareImageLink = () => {
     this.props.PostImageToShareThunk(this.state.imageUrl)
+    this.setState({showSocialModal: true})
   }
 
   componentWillUnmount() {
@@ -231,7 +234,7 @@ class Draw extends React.Component {
         <div id="draw-left">
           <div id="top-button">
             <React.Fragment>
-              {this.state.showModal && <Modal />}
+              {this.state.showCountdownModal && <Modal />}
               {this.state.status === 'recording' && (
                 <button type="button" onClick={this.stop} id="stop-button">
                   Stop
@@ -241,7 +244,7 @@ class Draw extends React.Component {
                 <button
                   type="button"
                   onClick={() => {
-                    this.setState({showModal: true})
+                    this.setState({showCountdownModal: true})
                     this.startWithCountdown()
                   }}
                   id="start-button"
@@ -256,7 +259,7 @@ class Draw extends React.Component {
               )}
             </React.Fragment>
           </div>
-          <div className="canvas-container">
+          <div>
             <canvas
               id="canvas"
               ref={this.canvas}
@@ -285,7 +288,7 @@ class Draw extends React.Component {
                     Download
                   </a>
                 </button>
-
+                {this.state.showSocialModal && <ShareModal />}
                 <button
                   type="button"
                   onClick={this.shareImageLink}

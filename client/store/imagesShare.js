@@ -26,7 +26,7 @@ export const gotImageToShare = imageUrl => ({type: GET_IMAGE_TOSHARE, imageUrl})
 export const PostImageToShareThunk = imageUrl => async dispatch => {
   try {
     const {data} = await axios.post('/api/imageShare', {imageUrl})
-    let url = `localhost:8080/api/imageShare/${data}`
+    let url = `http://colorising.herokuapp.com/api/imageShare/${data}`
     dispatch(addedImageToShare(url))
   } catch (error) {
     console.log('There was an error with ImageToShareThunk:', error)
