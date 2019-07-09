@@ -19,7 +19,7 @@ async function seed() {
     Images.create(
       {
         name: 'Something',
-        imageUrl: 'http://25.io/smaller/img/smaller_256x256.png',
+        imageUrl: '/example.png',
         userId: 1
       }
       // {include: [User]}
@@ -27,7 +27,7 @@ async function seed() {
     Images.create(
       {
         name: 'Something Else',
-        imageUrl: 'http://25.io/smaller/img/smaller_256x256.png',
+        imageUrl: '/example.png',
         userId: 2
       }
       // {include: [User]}

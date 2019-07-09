@@ -1,21 +1,27 @@
 import {rainbow, sunset, redBlue, mermaid} from './colors'
 
 const WHITE = '#FAEDE5'
-const frequencyBounds = [0, 159]
+const humanVocalRange = [0, 159]
 let refImage
 let coloredPix = new Set()
-let seedY = 0
+let initialY = 0
+const minLightness = 200
 
 export const getColor = (analyser, dataArray, colorPalette) => {
   analyser.getByteFrequencyData(dataArray)
-  const newArray = dataArray.slice(...frequencyBounds)
+  const amplitudeOfInput = dataArray.slice(...humanVocalRange)
   let i = 0
-  while (newArray[i] < 100 && i < newArray.length - 1) {
+  const minAmplitude = 100
+  while (
+    amplitudeOfInput[i] < minAmplitude &&
+    i < amplitudeOfInput.length - 1
+  ) {
     i++
   }
-  if (newArray[i] < 100) {
+  if (amplitudeOfInput[i] < minAmplitude) {
     return WHITE
   }
+
   switch (colorPalette) {
     case 'sunset':
       return sunset[i]
@@ -28,11 +34,15 @@ export const getColor = (analyser, dataArray, colorPalette) => {
   }
 }
 
-export const getSeed = () => {
-  for (let i = seedY; i < refImage.height; i++) {
+//initial X and Y value to start breadth first search
+export const getStartCoord = () => {
+  for (let i = initialY; i < refImage.height; i++) {
     for (let j = 0; j < refImage.width; j++) {
-      if (!coloredPix.has(`${i} ${j}`) && refImage.getPixelXY(j, i)[0] >= 200) {
-        seedY = i
+      if (
+        !coloredPix.has(`${i} ${j}`) &&
+        refImage.getPixelXY(j, i)[0] >= minLightness
+      ) {
+        initialY = i
         return {newY: i, newX: j}
       }
     }
@@ -40,12 +50,13 @@ export const getSeed = () => {
   return null
 }
 
+//gets coordinates (x, y) of tempalte outlines to be colored
 export const getOutline = template => {
   refImage = template.grey()
   const outlinePixels = []
   for (let i = 0; i < refImage.height; i++) {
     for (let j = 0; j < refImage.width; j++) {
-      if (refImage.getPixelXY(j, i) < 200) {
+      if (refImage.getPixelXY(j, i) < minLightness) {
         outlinePixels.push([i, j])
       }
     }
@@ -53,51 +64,56 @@ export const getOutline = template => {
   return outlinePixels
 }
 
+// returns object with array of coordinates to be painted
+// and an array of edges (also coordinates), which will be
+// highlighted to tell user which part is currenly being painted
 export const getNeighbors = template => {
-  refImage = template.grey()
-
-  const startCoord = getSeed()
+  const startCoord = getStartCoord()
   if (!startCoord) {
     return null
   }
 
   const queue = [[startCoord.newY, startCoord.newX]]
-  const inQ = {}
+  // keeps track of all coord that were in queue
+  const toPaintSet = new Set()
   const edges = new Set()
   while (queue.length) {
-    const nextCoord = queue.shift()
-    inQ[`${nextCoord[0]} ${nextCoord[1]}`] = true
+    const [nextY, nextX] = queue.shift()
+    toPaintSet.add(`${nextY} ${nextX}`)
     const neighbors = [
-      [nextCoord[0], nextCoord[1] - 1],
-      [nextCoord[0] - 1, nextCoord[1]],
-      [nextCoord[0] + 1, nextCoord[1]],
-      [nextCoord[0], nextCoord[1] + 1]
+      [nextY, nextX - 1],
+      [nextY - 1, nextX],
+      [nextY + 1, nextX],
+      [nextY, nextX + 1]
     ]
-    neighbors.forEach(coord => {
+    neighbors.forEach(([y, x]) => {
       if (
-        coord[0] < template.height &&
-        coord[0] >= 0 &&
-        coord[1] < template.width &&
-        coord[1] >= 0 &&
-        refImage.getPixelXY(coord[1], coord[0])[0] >= 200
+        y < template.height &&
+        y >= 0 &&
+        x < template.width &&
+        x >= 0 &&
+        refImage.getPixelXY(x, y)[0] >= minLightness
       ) {
-        if (!inQ[`${coord[0]} ${coord[1]}`]) {
-          inQ[`${coord[0]} ${coord[1]}`] = true
-          queue.push(coord)
+        if (!toPaintSet.has(`${y} ${x}`)) {
+          toPaintSet.add(`${y} ${x}`)
+          queue.push([y, x])
         }
       } else {
-        edges.add(nextCoord)
+        edges.add([nextY, nextX])
       }
     })
-    coloredPix.add(`${nextCoord[0]} ${nextCoord[1]}`)
+    coloredPix.add(`${nextY} ${nextX}`)
   }
-  const toPaint = Object.keys(inQ).map(coordStr =>
-    coordStr.split(' ').map(str => Number(str))
-  )
+
+  const toPaint = []
+  toPaintSet.forEach(coordStr => {
+    const coordArray = coordStr.split(' ').map(str => Number(str))
+    toPaint.push(coordArray)
+  })
   return {toPaint, edges}
 }
 
 export const clearTemplate = () => {
   coloredPix = new Set()
-  seedY = 0
+  initialY = 0
 }
