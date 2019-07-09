@@ -9,6 +9,7 @@ import {
 import {Link} from 'react-router-dom'
 import {addedImageUrl, PostImageToShareThunk} from '../store'
 import {connect} from 'react-redux'
+import Modal from './Modal'
 import {ColorPalette} from './colorPalette'
 
 const WHITE = '#FAEDE5'
@@ -207,6 +208,9 @@ class Draw extends React.Component {
     this.props.PostImageToShareThunk(this.state.imageUrl)
   }
 
+  // hideModal = () => {
+  //   this.setState({show: false})
+  // }
   componentWillUnmount() {
     cancelAnimationFrame(this.rafId)
     if (this.analyser && this.source) {
@@ -220,6 +224,8 @@ class Draw extends React.Component {
       <div id="draw-page">
         <div id="draw-left">
           <div id="top-button">
+              <React.Fragment>
+              <Modal />
             {this.state.status === 'recording' && (
               <button type="button" onClick={this.stop} id="stop-button">
                 Stop
@@ -239,6 +245,7 @@ class Draw extends React.Component {
                 Clear
               </button>
             )}
+</React.Fragment>
           </div>
           <div className="canvas-container">
             <canvas
