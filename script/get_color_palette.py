@@ -1,6 +1,6 @@
-start_hex = "0000ff"
-end_hex = "ff00ff"
-total_colors = 40
+start_hex = "6760f0"
+end_hex = "141330"
+total_colors = 53
 palette = []
 start_10 = []
 end_10 = []

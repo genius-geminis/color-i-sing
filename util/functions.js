@@ -1,4 +1,4 @@
-import {rainbow, sunset, redBlue} from './colors'
+import {rainbow, sunset, redBlue, mermaid} from './colors'
 
 const WHITE = '#FAEDE5'
 const frequencyBounds = [0, 159]
@@ -21,6 +21,8 @@ export const getColor = (analyser, dataArray, colorPalette) => {
       return sunset[i]
     case 'redBlue':
       return redBlue[i]
+    case 'mermaid':
+      return mermaid[i]
     default:
       return rainbow[i]
   }

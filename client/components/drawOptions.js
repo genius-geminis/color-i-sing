@@ -119,6 +119,18 @@ const drawOptions = props => {
                   Red to Blue
                   <ColorPalette palette="redBlue" />
                 </label>
+                <input
+                  type="radio"
+                  name="palette"
+                  value="mermaid"
+                  id="mermaid"
+                  className="draw-input"
+                />
+
+                <label htmlFor="mermaid" className="input-img">
+                  Mermaid
+                  <ColorPalette palette="mermaid" />
+                </label>
               </div>
             </div>
           </div>
