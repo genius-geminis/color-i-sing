@@ -9,7 +9,7 @@ const SELECT_TEMPLATE = 'SELECT_TEMPLATE'
  */
 const initialState = {
   palette: 'rainbow',
-  template: 'flower'
+  template: 'ice-cream'
 }
 
 /**

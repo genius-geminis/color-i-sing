@@ -6,13 +6,13 @@ import {
   getNeighbors,
   getOutline
 } from '../../util/functions'
-import * as palettes from '../../util/colors'
 import {Link} from 'react-router-dom'
 import {addedImageUrl, PostImageToShareThunk} from '../store'
 import {connect} from 'react-redux'
 import Modal from './Modal'
+import {ColorPalette} from './colorPalette'
 
-const WHITE = 'rgb(255,255,255)'
+const WHITE = '#FAEDE5'
 const RED = 'rgb(255,0,0)'
 const BLACK = 'rgb(0,0,0)'
 
@@ -22,16 +22,20 @@ class Draw extends React.Component {
     this.state = {
       imageUrl: '',
       status: 'cleared',
-      currentColor: WHITE,
       canvasWidth: null,
       canvasHeight: null
     }
     this.canvas = React.createRef()
     this.toRePaint = []
+    this.mostCommonColor = WHITE
+    this.recentColors = [WHITE]
+    this.currentColor = React.createRef()
   }
 
   async componentDidMount() {
-    this.templateImage = await IJS.Image.load(`/${this.props.template}.jpeg`)
+    this.templateImage = await IJS.Image.load(
+      `/images/${this.props.template}.jpeg`
+    )
     this.setState({
       canvasWidth: this.templateImage.width,
       canvasHeight: this.templateImage.height
@@ -70,7 +74,7 @@ class Draw extends React.Component {
     this.paintNext(next.toPaint)
   }
 
-  stopMic = () => {
+  stop = () => {
     this.setState({status: 'stopped'})
     this.getImage()
   }
@@ -83,10 +87,38 @@ class Draw extends React.Component {
     })
   }
 
+  setMode = () => {
+    const colorOccurences = this.recentColors.reduce((acc, curr) => {
+      if (acc[curr]) {
+        acc[curr]++
+      } else {
+        acc[curr] = 1
+      }
+      return acc
+    }, {})
+    const [mode] = Object.entries(colorOccurences).reduce(
+      ([accKey, accVal], [key, val]) => {
+        if (val > accVal) {
+          return [key, val]
+        }
+        return [accKey, accVal]
+      }
+    )
+    const lastMostCommonColor = this.mostCommonColor
+    this.mostCommonColor = mode
+    return lastMostCommonColor !== this.mostCommonColor
+  }
+
   showColor = () => {
     const color = getColor(this.analyser, this.dataArray, this.props.palette)
-    if (color !== this.state.currentColor) {
-      this.setState({currentColor: color}, this.rePaint)
+    const colorChanged = this.setMode()
+    this.recentColors =
+      this.recentColors.length < 20
+        ? [...this.recentColors, color]
+        : [...this.recentColors.slice(1), color]
+    if (colorChanged) {
+      this.currentColor.current.style.backgroundColor = this.mostCommonColor
+      this.rePaint()
     }
     this.rafId = requestAnimationFrame(this.showColor)
   }
@@ -104,12 +136,11 @@ class Draw extends React.Component {
   }
 
   rePaint = () => {
-    if (this.state.currentColor === WHITE) {
+    if (this.mostCommonColor === WHITE) {
       return
     }
     const ctx = this.canvas.current.getContext('2d')
-
-    ctx.fillStyle = this.state.currentColor
+    ctx.fillStyle = this.mostCommonColor
     this.toRePaint.forEach(coord => {
       const x = coord[0] * 1
       const y = coord[1] * 1
@@ -122,11 +153,11 @@ class Draw extends React.Component {
       return
     }
     if (!toPaint) {
-      this.stopMic()
+      this.stop()
     }
     const ctx = this.canvas.current.getContext('2d')
     let waitCounter = 0
-    ctx.fillStyle = this.state.currentColor
+    ctx.fillStyle = this.mostCommonColor
 
     for (let i = 0; i < toPaint.length; i++) {
       const coord = toPaint[i]
@@ -144,7 +175,7 @@ class Draw extends React.Component {
     this.toRePaint = []
     const next = getNeighbors(this.templateImage)
     if (!next) {
-      this.stopMic()
+      this.stop()
     } else {
       next.edges.forEach(coord => {
         ctx.fillStyle = RED
@@ -193,30 +224,30 @@ class Draw extends React.Component {
       <div id="draw-page">
         <div id="draw-left">
           <div id="top-button">
-            <React.Fragment>
+              <React.Fragment>
               <Modal />
-              {this.state.status === 'recording' && (
-                <button type="button" onClick={this.stopMic} id="stop-button">
-                  Stop
-                </button>
-              )}
-              {this.state.status === 'cleared' && (
-                <button
-                  type="button"
-                  onClick={this.startColoring}
-                  id="start-button"
-                >
-                  Start
-                </button>
-              )}
-              {this.state.status === 'stopped' && (
-                <button type="button" onClick={this.clear} id="clear-button">
-                  Clear
-                </button>
-              )}
-            </React.Fragment>
+            {this.state.status === 'recording' && (
+              <button type="button" onClick={this.stop} id="stop-button">
+                Stop
+              </button>
+            )}
+            {this.state.status === 'cleared' && (
+              <button
+                type="button"
+                onClick={this.startColoring}
+                id="start-button"
+              >
+                Start
+              </button>
+            )}
+            {this.state.status === 'stopped' && (
+              <button type="button" onClick={this.clear} id="clear-button">
+                Clear
+              </button>
+            )}
+</React.Fragment>
           </div>
-          <div>
+          <div className="canvas-container">
             <canvas
               id="canvas"
               ref={this.canvas}
@@ -259,31 +290,12 @@ class Draw extends React.Component {
           </div>
         </div>
         <div id="color-palette">
-          <h3>Your Color Palette (Low-High):</h3>
-          <div id="palette-colors">
-            {palettes[this.props.palette].map(color => (
-              <div
-                style={{
-                  backgroundColor: color
-                }}
-              />
-            ))}
-          </div>
-          <div className="palette-labels">
-            <p>low</p>
-            <p>high</p>
-          </div>
+          <h3>Your Color Palette:</h3>
+          <ColorPalette palette={this.props.palette} />
         </div>
         <div id="current-color">
           <h3>Current Color:</h3>
-          <div
-            style={{
-              backgroundColor: this.state.currentColor,
-              width: '100px',
-              height: '100px',
-              border: '1px solid gray'
-            }}
-          />
+          <div ref={this.currentColor} />
         </div>
       </div>
     )

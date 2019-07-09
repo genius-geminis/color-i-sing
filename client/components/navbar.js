@@ -6,27 +6,24 @@ import {logout} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn, fullName}) => (
   <div>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
     {/* <div id="title-container">
     { <Link to="/home" id="title">
         Color I Sing
       </Link> }
     </div> */}
     <nav id="navigation-bar">
+      <span>Color I Sing</span>
       <div>
         <Link to="/home">Home</Link>
-        <Link to="/draw">Draw</Link>
+        <Link to="/draw-options">Draw</Link>
         {isLoggedIn ? (
           <>
-            <Link href="#" onClick={handleClick} className="nav-right">
-              <i className="fa fa-sign-out" /> Logout
-            </Link>
             <Link to="/account" className="nav-right">
               <i className="fa fa-fw fa-user" />
               {fullName}'s Account
+            </Link>
+            <Link href="#" onClick={handleClick} className="nav-right">
+              <i className="fa fa-sign-out" /> Logout
             </Link>
           </>
         ) : (
