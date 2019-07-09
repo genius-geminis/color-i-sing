@@ -1,4 +1,6 @@
-                              ![](https://media.giphy.com/media/143qWPF33HtSTK/giphy.gif)
+<h1> align="center">
+  ![](https://media.giphy.com/media/143qWPF33HtSTK/giphy.gif)
+ </h1>
 
 
 # _Color I Sing_ :notes:
