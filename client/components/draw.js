@@ -177,6 +177,10 @@ class Draw extends React.Component {
     this.props.PostImageToShareThunk(this.state.imageUrl)
   }
 
+  createImageUrl = () => {
+    //
+  }
+
   componentWillUnmount() {
     cancelAnimationFrame(this.rafId)
     if (this.analyser && this.source) {
@@ -186,9 +190,10 @@ class Draw extends React.Component {
   }
 
   render() {
-    const url = ''
-    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`
-    const twitterUrl = `https://twitter.com/home?status=${url}`
+    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${
+      this.props.link
+    }`
+    const twitterUrl = `https://twitter.com/home?status=${this.props.link}`
     return (
       <div id="draw-page">
         <div id="draw-left">
