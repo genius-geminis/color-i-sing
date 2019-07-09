@@ -83,37 +83,39 @@ const drawOptions = props => {
             <div>
               <h2>Select Color Palette</h2>
               <div className="input-options">
+                <input
+                  type="radio"
+                  name="palette"
+                  value="rainbow"
+                  id="rainbow"
+                  className="draw-input"
+                  defaultChecked
+                />
                 <label htmlFor="rainbow">
-                  <input
-                    type="radio"
-                    name="palette"
-                    value="rainbow"
-                    id="rainbow"
-                    className="draw-input"
-                    defaultChecked
-                  />
                   Rainbow
-                  <ColorPalette palette="rainbow" />
+                  <ColorPalette className="input-img" palette="rainbow" />
                 </label>
+
+                <input
+                  type="radio"
+                  name="palette"
+                  value="sunset"
+                  id="sunset"
+                  className="draw-input"
+                />
                 <label htmlFor="sunset">
-                  <input
-                    type="radio"
-                    name="palette"
-                    value="sunset"
-                    id="sunset"
-                    className="draw-input"
-                  />
                   Sunset
-                  <ColorPalette palette="sunset" />
+                  <ColorPalette className="input-img" palette="sunset" />
                 </label>
-                <label htmlFor="redBlue">
-                  <input
-                    type="radio"
-                    name="palette"
-                    value="redBlue"
-                    id="redBlue"
-                    className="draw-input"
-                  />
+                <input
+                  type="radio"
+                  name="palette"
+                  value="redBlue"
+                  id="redBlue"
+                  className="draw-input"
+                />
+
+                <label htmlFor="redBlue" className="input-img">
                   Red to Blue
                   <ColorPalette palette="redBlue" />
                 </label>

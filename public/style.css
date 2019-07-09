@@ -97,7 +97,10 @@ h1 {
 }
 
 .draw-input {
-  /* display: none; */
+  display: none;
+}
+input[type='radio']:checked + .input-img {
+  box-shadow: 0 0 0 3px hotpink;
 }
 
 .input-img {
