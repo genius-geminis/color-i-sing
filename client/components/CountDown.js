@@ -10,8 +10,10 @@ export default class CountdownTimer extends React.Component {
   }
   decrementTimeRemaining = () => {
     if (this.state.timeRemainingInSeconds > 0) {
-      this.setState({
-        timeRemainingInSeconds: this.state.timeRemainingInSeconds - 1
+      this.setState(({timeRemainingInSeconds}) => {
+        return {
+          timeRemainingInSeconds: timeRemainingInSeconds - 1
+        }
       })
     } else {
       clearInterval(!this.timer)

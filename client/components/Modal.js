@@ -11,7 +11,7 @@ export default class Modal extends React.Component {
   componentDidMount() {
     setTimeout(() => {
       this.setState({show: false})
-    }, 5000)
+    }, 4800)
   }
 
   showHideClassName = () => {

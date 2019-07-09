@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  // makePath,
   getColor,
   clearTemplate,
   getNeighbors,
@@ -21,9 +20,10 @@ class Draw extends React.Component {
     super()
     this.state = {
       imageUrl: '',
-      status: 'cleared',
+      status: '',
       canvasWidth: null,
-      canvasHeight: null
+      canvasHeight: null,
+      showModal: true
     }
     this.canvas = React.createRef()
     this.toRePaint = []
@@ -58,10 +58,19 @@ class Draw extends React.Component {
       this.paintOutline()
       this.rafId = requestAnimationFrame(this.showColor)
     }
+
+    this.startWithCountdown()
+  }
+
+  startWithCountdown = () => {
+    this.setState({status: 'recording'})
+    setTimeout(() => {
+      this.setState({showModal: false})
+      this.startColoring()
+    }, 5000)
   }
 
   startColoring = async () => {
-    this.setState({status: 'recording'})
     const ctx = this.canvas.current.getContext('2d')
     const next = getNeighbors(this.templateImage)
     next.edges.forEach(coord => {
@@ -208,9 +217,6 @@ class Draw extends React.Component {
     this.props.PostImageToShareThunk(this.state.imageUrl)
   }
 
-  // hideModal = () => {
-  //   this.setState({show: false})
-  // }
   componentWillUnmount() {
     cancelAnimationFrame(this.rafId)
     if (this.analyser && this.source) {
@@ -224,28 +230,31 @@ class Draw extends React.Component {
       <div id="draw-page">
         <div id="draw-left">
           <div id="top-button">
-              <React.Fragment>
-              <Modal />
-            {this.state.status === 'recording' && (
-              <button type="button" onClick={this.stop} id="stop-button">
-                Stop
-              </button>
-            )}
-            {this.state.status === 'cleared' && (
-              <button
-                type="button"
-                onClick={this.startColoring}
-                id="start-button"
-              >
-                Start
-              </button>
-            )}
-            {this.state.status === 'stopped' && (
-              <button type="button" onClick={this.clear} id="clear-button">
-                Clear
-              </button>
-            )}
-</React.Fragment>
+            <React.Fragment>
+              {this.state.showModal && <Modal />}
+              {this.state.status === 'recording' && (
+                <button type="button" onClick={this.stop} id="stop-button">
+                  Stop
+                </button>
+              )}
+              {this.state.status === 'cleared' && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    this.setState({showModal: true})
+                    this.startWithCountdown()
+                  }}
+                  id="start-button"
+                >
+                  Start
+                </button>
+              )}
+              {this.state.status === 'stopped' && (
+                <button type="button" onClick={this.clear} id="clear-button">
+                  Clear
+                </button>
+              )}
+            </React.Fragment>
           </div>
           <div className="canvas-container">
             <canvas
