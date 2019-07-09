@@ -1,5 +1,5 @@
 import React from 'react'
-import {choosePalette, chooseTemplate} from '../store'
+import {getPaletteTemplate} from '../store'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {ColorPalette} from './colorPalette'
@@ -7,46 +7,8 @@ import {ColorPalette} from './colorPalette'
 const drawOptions = props => {
   return (
     <div id="options-page">
-      <form className="options-form">
+      <form className="options-form" onSubmit={props.handleSubmit}>
         <div id="options-container">
-          <div>
-            <h2>Select Color Palette</h2>
-            <div className="input-options">
-              <label htmlFor="rainbow">
-                <input
-                  type="radio"
-                  name="palette"
-                  value="rainbow"
-                  id="rainbow"
-                  className="draw-input"
-                />
-                Rainbow
-                <ColorPalette palette="rainbow" />
-              </label>
-              <label htmlFor="sunset">
-                <input
-                  type="radio"
-                  name="palette"
-                  value="sunset"
-                  id="sunset"
-                  className="draw-input"
-                />
-                Sunset
-                <ColorPalette palette="sunset" />
-              </label>
-              <label htmlFor="redBlue">
-                <input
-                  type="radio"
-                  name="palette"
-                  value="redBlue"
-                  id="redBlue"
-                  className="draw-input"
-                />
-                Red to Blue
-                <ColorPalette palette="redBlue" />
-              </label>
-            </div>
-          </div>
           <div>
             <h2>Select Template</h2>
             <div className="input-options">
@@ -57,6 +19,7 @@ const drawOptions = props => {
                   value="flower"
                   id="flower"
                   className="draw-input"
+                  defaultChecked
                 />
                 Flower
                 <img className="input-img" src="/images/flower.jpeg" />
@@ -117,13 +80,52 @@ const drawOptions = props => {
                 <img className="input-img" src="/images/heart.jpeg" />
               </label>
             </div>
+            <div>
+              <h2>Select Color Palette</h2>
+              <div className="input-options">
+                <label htmlFor="rainbow">
+                  <input
+                    type="radio"
+                    name="palette"
+                    value="rainbow"
+                    id="rainbow"
+                    className="draw-input"
+                    defaultChecked
+                  />
+                  Rainbow
+                  <ColorPalette palette="rainbow" />
+                </label>
+                <label htmlFor="sunset">
+                  <input
+                    type="radio"
+                    name="palette"
+                    value="sunset"
+                    id="sunset"
+                    className="draw-input"
+                  />
+                  Sunset
+                  <ColorPalette palette="sunset" />
+                </label>
+                <label htmlFor="redBlue">
+                  <input
+                    type="radio"
+                    name="palette"
+                    value="redBlue"
+                    id="redBlue"
+                    className="draw-input"
+                  />
+                  Red to Blue
+                  <ColorPalette palette="redBlue" />
+                </label>
+              </div>
+            </div>
           </div>
         </div>
 
         <div>
-          <Link to="draw" className="button">
+          <button type="submit" className="button">
             Start Drawing
-          </Link>
+          </button>
         </div>
       </form>
     </div>
@@ -136,13 +138,11 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  choosePalette: event => {
-    const palette = event.target.value
-    dispatch(choosePalette(palette))
-  },
-  chooseTemplate: event => {
-    const template = event.target.value
-    dispatch(chooseTemplate(template))
+  handleSubmit: event => {
+    event.preventDefault()
+    const palette = event.target.palette.value
+    const template = event.target.template.value
+    dispatch(getPaletteTemplate(palette, template))
   }
 })
 
