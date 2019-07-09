@@ -22,7 +22,6 @@ const AuthForm = props => {
               <input name="fullName" type="text" />
             </div>
           )}
-
           <div>
             <label htmlFor="email">
               <small>Email</small>
@@ -35,7 +34,7 @@ const AuthForm = props => {
             </label>
             <input name="password" type="password" />
           </div>
-          <div>
+          <div className="center-items">
             {/* <button type="submit">{displayName}</button> */}
             <button type="submit" id="form-login-button">
               Login
