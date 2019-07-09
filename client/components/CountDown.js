@@ -4,7 +4,7 @@ export default class CountdownTimer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      timeRemainingInSeconds: 0,
+      timeRemainingInSeconds: 5,
       startTimeInSeconds: 5
     }
   }
@@ -26,23 +26,23 @@ export default class CountdownTimer extends React.Component {
 
   render() {
     return (
-      <div className="countdown-timer">
+      <div className="modal-main">
         <div className="countdown-timer__circle">
           <svg>
             <circle
-              r="24"
-              cx="26"
-              cy="26"
+              r="69.85699"
+              cy="81"
+              cx="81"
               style={{
                 animation: `countdown-animation ${
-                  this.props.startTimeInSeconds
+                  this.state.startTimeInSeconds
                 }s linear`
               }}
             />
           </svg>
         </div>
         <div className="countdown-timer__text">
-          {this.state.timeRemainingInSeconds}s
+          {this.state.timeRemainingInSeconds}
         </div>
       </div>
     )

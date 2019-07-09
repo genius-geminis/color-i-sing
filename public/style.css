@@ -389,8 +389,8 @@ form {
 
 .modal-main {
   position: fixed;
-  background: white;
-  width: 80%;
+  background: transparent;
+  width: auto;
   height: auto;
   top: 50%;
   left: 50%;
@@ -406,35 +406,36 @@ form {
 }
 
 /* count-down animation */
-.countdown-timer {
+/* .countdown-timer {
   position: absolute;
-  width: 52px;
-  height: 52px;
-}
+  width: 400px;
+  height: 400px;
+} */
 
 .countdown-timer__circle circle {
-  stroke-dasharray: 151px;
-  stroke-dashoffset: 151px;
+  stroke-dasharray: 440px;
+  stroke-dashoffset: 440px;
   stroke-linecap: butt;
-  stroke-width: 4px;
+  stroke-width: 7px;
   stroke: #fd4f57;
-  fill: none;
+  fill: #fff;
 }
 
 .countdown-timer__circle svg {
-  width: 52px;
-  height: 52px;
+  width: 220px;
+  height: 220px;
   transform: rotateZ(-90deg);
 }
 
 .countdown-timer__text {
   position: absolute;
-  top: 17px;
-  width: 52px;
+  top: 105px;
+  left: 63px;
+  width: 60px;
 
-  font-size: 14px;
+  font-size: 60px;
   font-weight: 600;
-  text-align: center;
+  /* text-align: center; */
 }
 
 @keyframes countdown-animation {
@@ -442,6 +443,6 @@ form {
     stroke-dashoffset: 0px;
   }
   to {
-    stroke-dashoffset: 151px;
+    stroke-dashoffset: 440px;
   }
 }

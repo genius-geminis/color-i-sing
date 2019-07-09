@@ -21,10 +21,7 @@ export default class Modal extends React.Component {
   render() {
     return (
       <div className={this.showHideClassName()}>
-        <section className="modal-main">
-          <h1>hello</h1>
-          <CountdownTimer />
-        </section>
+        <CountdownTimer />
       </div>
     )
   }
