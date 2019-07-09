@@ -7,6 +7,7 @@ Color I Sing is a digital coloring book that lets your voice be the paint brush.
 ## Getting Started :computer:
 
 1.  Clone this repo to your desktop.
+
 2.  After cloning, go to its root directory and install the dependencies:
 
 ```
@@ -19,7 +20,8 @@ npm install
 npm run start-dev
 ```
 
-4.  You will then be able to access it at localhost:8080
+4.  You will then be able to access it at _localhost:8080_
+
 5.  Enjoy!
 
 ## Live :link:
