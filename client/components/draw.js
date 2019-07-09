@@ -11,7 +11,7 @@ import {addedImageUrl, PostImageToShareThunk} from '../store'
 import {connect} from 'react-redux'
 import {ColorPalette} from './colorPalette'
 
-const WHITE = 'rgb(255,255,255)'
+const WHITE = '#FAEDE5'
 const RED = 'rgb(255,0,0)'
 const BLACK = 'rgb(0,0,0)'
 

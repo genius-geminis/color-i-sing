@@ -1,23 +1,20 @@
 import {rainbow, sunset, redBlue} from './colors'
 
-const WIDTH = 500
-const HEIGHT = 500
-const PIX_WIDTH = WIDTH / 100
-const PIX_HEIGHT = HEIGHT / 100
-
+const WHITE = '#FAEDE5'
+const frequencyBounds = [0, 159]
 let refImage
 let coloredPix = new Set()
 let seedY = 0
 
 export const getColor = (analyser, dataArray, colorPalette) => {
   analyser.getByteFrequencyData(dataArray)
-  const newArray = dataArray.slice(0, 159)
+  const newArray = dataArray.slice(...frequencyBounds)
   let i = 0
   while (newArray[i] < 100 && i < newArray.length - 1) {
     i++
   }
   if (newArray[i] < 100) {
-    return 'rgb(255,255,255)'
+    return WHITE
   }
   switch (colorPalette) {
     case 'sunset':
