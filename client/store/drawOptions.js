@@ -1,3 +1,4 @@
+import history from '../history'
 /**
  * ACTION TYPES
  */
@@ -8,8 +9,8 @@ const SELECT_TEMPLATE = 'SELECT_TEMPLATE'
  * INITIAL STATE
  */
 const initialState = {
-  palette: 'rainbow',
-  template: 'ice-cream'
+  palette: '',
+  template: ''
 }
 
 /**
@@ -24,6 +25,14 @@ export const chooseTemplate = template => ({
   type: SELECT_TEMPLATE,
   template
 })
+
+// THUNK
+
+export const getPaletteTemplate = (palette, template) => dispatch => {
+  dispatch(choosePalette(palette))
+  dispatch(chooseTemplate(template))
+  history.push('/draw')
+}
 
 /**
  * REDUCER
