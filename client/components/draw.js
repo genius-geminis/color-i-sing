@@ -13,7 +13,7 @@ import ShareModal from './shareModal'
 import {ColorPalette} from './colorPalette'
 
 const WHITE = '#FAEDE5'
-const RED = 'rgb(255,0,0)'
+const RED = '#fd4f57'
 const BLACK = 'rgb(0,0,0)'
 
 class Draw extends React.Component {

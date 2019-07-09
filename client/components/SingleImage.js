@@ -1,7 +1,7 @@
 import React from 'react'
 import {deleteImageThunk} from '../store'
 import {connect} from 'react-redux'
-import {makeDate} from '../../util/toDate'
+import {convertDateToString} from '../../util/convertDateToString'
 
 const SingleImage = props => {
   const {image} = props
@@ -14,7 +14,7 @@ const SingleImage = props => {
             <img src={image.imageUrl} width="150" />
           </td>
           <td>{image.name}</td>
-          <td>{makeDate(image.createdAt)}</td>
+          <td>{convertDateToString(image.createdAt)}</td>
           <td>
             <button type="button">
               <a href={props.image.imageUrl} download="image">
