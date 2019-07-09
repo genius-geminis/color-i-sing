@@ -1,18 +1,12 @@
 import React from 'react'
-import CountdownTimer from './CountDown'
 import ShareLink from './shareLink'
 
-export default class Modal extends React.Component {
+export default class ShareModal extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       show: true
     }
-  }
-  componentDidMount() {
-    setTimeout(() => {
-      this.setState({show: false})
-    }, 4800)
   }
 
   showHideClassName = () => {
@@ -21,9 +15,12 @@ export default class Modal extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="social-modal">
         <div className={this.showHideClassName()}>
-          <CountdownTimer />
+          <ShareLink />
+          <button type="button" onClick={() => this.setState({show: false})}>
+            Close
+          </button>
         </div>
       </div>
     )
