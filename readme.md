@@ -1,5 +1,5 @@
-<align="center">
-  ![](https://media.giphy.com/media/143qWPF33HtSTK/giphy.gif)
+<align="center" ![](https://media.giphy.com/media/143qWPF33HtSTK/giphy.gif)>
+  
 
 
 
