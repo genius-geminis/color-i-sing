@@ -11,7 +11,7 @@ import {addedImageUrl, PostImageToShareThunk} from '../store'
 import {connect} from 'react-redux'
 import {ColorPalette} from './colorPalette'
 
-const WHITE = 'rgb(255,255,255)'
+const WHITE = '#FAEDE5'
 const RED = 'rgb(255,0,0)'
 const BLACK = 'rgb(0,0,0)'
 
@@ -21,12 +21,14 @@ class Draw extends React.Component {
     this.state = {
       imageUrl: '',
       status: 'cleared',
-      currentColor: WHITE,
       canvasWidth: null,
       canvasHeight: null
     }
     this.canvas = React.createRef()
     this.toRePaint = []
+    this.mostCommonColor = WHITE
+    this.recentColors = [WHITE]
+    this.currentColor = React.createRef()
   }
 
   async componentDidMount() {
@@ -71,7 +73,7 @@ class Draw extends React.Component {
     this.paintNext(next.toPaint)
   }
 
-  stopMic = () => {
+  stop = () => {
     this.setState({status: 'stopped'})
     this.getImage()
   }
@@ -84,10 +86,38 @@ class Draw extends React.Component {
     })
   }
 
+  setMode = () => {
+    const colorOccurences = this.recentColors.reduce((acc, curr) => {
+      if (acc[curr]) {
+        acc[curr]++
+      } else {
+        acc[curr] = 1
+      }
+      return acc
+    }, {})
+    const [mode] = Object.entries(colorOccurences).reduce(
+      ([accKey, accVal], [key, val]) => {
+        if (val > accVal) {
+          return [key, val]
+        }
+        return [accKey, accVal]
+      }
+    )
+    const lastMostCommonColor = this.mostCommonColor
+    this.mostCommonColor = mode
+    return lastMostCommonColor !== this.mostCommonColor
+  }
+
   showColor = () => {
     const color = getColor(this.analyser, this.dataArray, this.props.palette)
-    if (color !== this.state.currentColor) {
-      this.setState({currentColor: color}, this.rePaint)
+    const colorChanged = this.setMode()
+    this.recentColors =
+      this.recentColors.length < 20
+        ? [...this.recentColors, color]
+        : [...this.recentColors.slice(1), color]
+    if (colorChanged) {
+      this.currentColor.current.style.backgroundColor = this.mostCommonColor
+      this.rePaint()
     }
     this.rafId = requestAnimationFrame(this.showColor)
   }
@@ -105,12 +135,11 @@ class Draw extends React.Component {
   }
 
   rePaint = () => {
-    if (this.state.currentColor === WHITE) {
+    if (this.mostCommonColor === WHITE) {
       return
     }
     const ctx = this.canvas.current.getContext('2d')
-
-    ctx.fillStyle = this.state.currentColor
+    ctx.fillStyle = this.mostCommonColor
     this.toRePaint.forEach(coord => {
       const x = coord[0] * 1
       const y = coord[1] * 1
@@ -123,11 +152,11 @@ class Draw extends React.Component {
       return
     }
     if (!toPaint) {
-      this.stopMic()
+      this.stop()
     }
     const ctx = this.canvas.current.getContext('2d')
     let waitCounter = 0
-    ctx.fillStyle = this.state.currentColor
+    ctx.fillStyle = this.mostCommonColor
 
     for (let i = 0; i < toPaint.length; i++) {
       const coord = toPaint[i]
@@ -145,7 +174,7 @@ class Draw extends React.Component {
     this.toRePaint = []
     const next = getNeighbors(this.templateImage)
     if (!next) {
-      this.stopMic()
+      this.stop()
     } else {
       next.edges.forEach(coord => {
         ctx.fillStyle = RED
@@ -192,7 +221,7 @@ class Draw extends React.Component {
         <div id="draw-left">
           <div id="top-button">
             {this.state.status === 'recording' && (
-              <button type="button" onClick={this.stopMic} id="stop-button">
+              <button type="button" onClick={this.stop} id="stop-button">
                 Stop
               </button>
             )}
@@ -259,11 +288,7 @@ class Draw extends React.Component {
         </div>
         <div id="current-color">
           <h3>Current Color:</h3>
-          <div
-            style={{
-              backgroundColor: this.state.currentColor
-            }}
-          />
+          <div ref={this.currentColor} />
         </div>
       </div>
     )
