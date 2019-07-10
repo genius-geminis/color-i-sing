@@ -117,7 +117,7 @@ const drawOptions = props => {
             <label htmlFor="redBlue" className="input-img">
               <ColorPalette palette="redBlue" />
             </label>
-            <div className="center-items negative-margin"> Reb Blue</div>
+            <div className="center-items negative-margin">Fire & Ice</div>
           </div>
           <div className="darw-options-palette">
             <input
