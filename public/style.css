@@ -170,22 +170,67 @@ input[type='radio']:checked + .input-img {
 
 /* draw page */
 .draw-page-container {
-  display: grid;
-  grid-template-columns: 55% auto;
-  grid-template-rows: 50% auto;
-  grid-template-areas:
-    'drawLeft colorPalette'
-    'drawLeft currColor';
-  flex-grow: 1;
+  display: flex;
   background-color: var(--main-bg);
   padding: 1rem 5rem 1rem 5rem;
   margin-bottom: 6rem;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.draw-left {
-  grid-area: drawLeft;
+.right-side-draw {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  width: 400px;
+}
+
+.top-right-draw {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bottom-button {
+  height: 70px;
+}
+
+#current-color {
+  width: 100px;
+  height: 100px;
+  border: 1px solid gray;
+  align-self: center;
+  display: flex;
+  align-items: center;
+}
+
+.current-color-title {
+  text-align: right;
+}
+
+#color-palette {
+  align-self: flex-end;
+  width: 100%;
+}
+
+#draw-left button {
+  margin-right: 10px;
+  font-size: 12px;
+  padding: 10px 16px;
+}
+
+#palette-colors {
+  display: flex;
+}
+.palette-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+#palette-colors div {
+  height: 100px;
+  flex-grow: 1;
 }
 
 #canvas {
@@ -194,38 +239,6 @@ input[type='radio']:checked + .input-img {
   background-color: white;
   padding: 1rem;
   margin: 1rem 0 1rem 0;
-}
-
-#color-palette {
-  grid-area: colorPalette;
-  color: var(--main-text);
-}
-
-#current-color {
-  grid-area: currColor;
-  color: var(--main-text);
-}
-
-#current-color > div {
-  width: 100px;
-  height: 100px;
-  border: 1px solid gray;
-}
-
-#palette-colors {
-  display: flex;
-  width: 100%;
-}
-
-#palette-colors div {
-  width: 2px;
-  height: 150px;
-}
-
-.palette-labels {
-  display: flex;
-  justify-content: space-between;
-  width: 80%;
 }
 
 /* forms for login and signup */
@@ -454,6 +467,7 @@ table {
 }
 /* buttons */
 button {
+  height: 2.5rem;
   margin: 1rem;
   font-size: 0.8rem;
   text-transform: uppercase;
