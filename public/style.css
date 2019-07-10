@@ -9,7 +9,7 @@ body {
   --accent-bg: #774e72;
   --accent-text: #ffcccc;
   --main-bg: #fdf3f3;
-  --main-text: #100954;
+  --main-text: #774e72;
   --accent-effect: #fd4f57;
   font-family: 'Montserrat', Arial, Helvetica, sans-serif;
   font-weight: 400;
@@ -117,18 +117,6 @@ nav a:hover::before {
   padding-top: 5rem;
 }
 
-.main button {
-  margin-left: 1rem;
-}
-/* need to come back  */
-.button {
-  font-size: 1.5rem;
-  color: var(--accent-text);
-  border: 1px solid var(--accent-text);
-  background-color: rgba(0, 0, 0, 0.3);
-  /* padding: 0.5%; */
-}
-
 .draw-options-container {
   background-color: var(--main-bg);
   overflow-y: scroll;
@@ -171,6 +159,11 @@ nav a:hover::before {
   line-height: 80px;
   padding: 2rem 0 0 3rem;
 }
+
+.input-img {
+  cursor: pointer;
+}
+
 input[type='radio']:checked + .input-img {
   box-shadow: 0px 0px 0px 3px var(--accent-effect);
 }
@@ -217,12 +210,6 @@ input[type='radio']:checked + .input-img {
   width: 100px;
   height: 100px;
   border: 1px solid gray;
-}
-
-#draw-left button {
-  margin-right: 10px;
-  font-size: 12px;
-  padding: 10px 16px;
 }
 
 #palette-colors {
@@ -292,7 +279,7 @@ input {
   border-radius: 10px;
 } */
 
-#form-login-button {
+/* #form-login-button {
   font-size: 10px;
   color: #fff;
   line-height: 1.2;
@@ -301,9 +288,9 @@ input {
   height: 30px;
   background-color: #333333;
   border-radius: 27px;
-}
+} */
 /* google button   */
-.google-button img {
+.google-img {
   width: 36px;
   padding: 10px;
 }
@@ -311,7 +298,13 @@ input {
 .form-signup__text {
   font-size: 15px;
   color: var(--main-bg);
+  transition: 300ms ease all;
 }
+
+.form-signup__text:hover {
+  color: rgba(253, 243, 243, 0.7);
+}
+
 .center-items {
   display: flex;
   align-items: center;
@@ -454,30 +447,99 @@ table {
 }
 /* buttons */
 button {
-  background-color: #fff;
-  font-size: 16px;
+  margin: 1rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
-  padding: 16px 30px;
+  padding: 0.7rem 1.2rem;
   border-radius: 5px;
   text-align: center;
-  border: 1px solid gray;
   outline: none;
+  letter-spacing: 0.2em;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: 300ms all ease;
 }
-.clear button {
-  border: 2px solid lightskyblue;
+
+button a {
+  text-decoration: none;
 }
 
 button:hover {
   background-color: rgba(255, 255, 255, 0.4);
-  border: 2px solid var(--accent-effect);
-  box-shadow: none;
+  background: none;
 }
 
-.clear button:hover {
-  background-color: rgba(255, 255, 255, 0.4);
-  border: 2px solid lightskyblue;
-  box-shadow: none;
+.main-btn {
+  font-size: 1rem;
+  color: var(--main-text);
+  background-color: rgba(255, 204, 204, 0.9);
 }
-button a {
-  text-decoration: none;
+
+.main-btn:hover {
+  color: var(--accent-text);
+  border: 2px solid var(--accent-text);
+}
+
+.start-btn {
+  background-color: rgba(119, 78, 114, 0.7);
+  color: var(--main-bg);
+}
+
+.start-btn:hover {
+  border: 2px solid rgba(119, 78, 114, 0.7);
+  color: rgba(119, 78, 114, 0.7);
+}
+
+.clear-btn {
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+}
+
+.clear-btn:hover {
+  border: 2px solid rgba(0, 0, 0, 0.4);
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.stop-btn {
+  border: 2px solid transparent;
+  background-color: var(--accent-effect);
+  color: white;
+}
+
+.stop-btn:hover {
+  border: 2px solid var(--accent-effect);
+  color: var(--accent-effect);
+}
+
+.share-btn {
+  border: 2px solid rgba(253, 79, 87, 0.7);
+  background: none;
+  color: rgba(253, 79, 87, 0.7);
+}
+
+.share-btn:hover {
+  background-color: rgba(253, 79, 87, 0.7);
+}
+
+.save-btn {
+  background-color: rgba(253, 79, 87, 0.7);
+  color: var(--main-bg);
+}
+
+.save-btn:hover {
+  border: 2px solid rgba(253, 79, 87, 0.7);
+  background: none;
+  color: rgba(253, 79, 87, 0.7);
+}
+
+.download {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(253, 79, 87, 0.7);
+  margin: 1rem;
+  transition: 300ms ease all;
+}
+.download:hover {
+  border-bottom: 1px solid rgba(253, 79, 87, 0.7);
 }

@@ -28,19 +28,19 @@ const AuthForm = props => {
           <input name="password" type="password" />
 
           <div className="center-items">
-            <button type="submit" id="form-login-button">
+            <button type="submit" className="main-btn">
               {displayName}
             </button>
           </div>
-          <div className="center-items">
-            <a href="/auth/google" className="google-button">
-              <img src="http://www.androidpolice.com/wp-content/themes/ap2/ap_resize/ap_resize.php?src=http%3A%2F%2Fwww.androidpolice.com%2Fwp-content%2Fuploads%2F2015%2F10%2Fnexus2cee_Search-Thumb-150x150.png&w=150&h=150&zc=3" />
+          <div>
+            <a href="/auth/google" className="form-signup__text center-items">
+              <img className="google-img" src="/google.png" />
+              {displayName} with Google!
             </a>
           </div>
 
           {error && error.response && <div> {error.response.data} </div>}
         </form>
-        {/* <a href="/auth/google">{displayName} with Google</a> */}
         <div className="center-items">
           <Link
             to={name === 'login' ? 'signup' : 'login'}
