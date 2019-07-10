@@ -1,7 +1,6 @@
 import React from 'react'
 import {getPaletteTemplate} from '../store'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 import {ColorPalette} from './colorPalette'
 
 const drawOptions = props => {
@@ -137,7 +136,7 @@ const drawOptions = props => {
         <div className="center-items">
           <button
             type="submit"
-            className="button "
+            className="start-btn"
             style={{marginBottom: '2rem'}}
           >
             Start

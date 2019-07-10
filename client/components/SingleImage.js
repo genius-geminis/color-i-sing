@@ -16,15 +16,20 @@ const SingleImage = props => {
           <td>{image.name}</td>
           <td>{convertDateToString(image.createdAt)}</td>
           <td>
-            <button type="button">
-              <a href={props.image.imageUrl} download="image">
-                Download
-              </a>
-            </button>
+            <a
+              href={props.image.imageUrl}
+              download="image"
+              className="download"
+            >
+              {/* <button type="button" > */}
+              Download
+              {/* </button> */}
+            </a>
           </td>
           <td>
             <button
               type="button"
+              className="clear-btn"
               onClick={() => props.deleteImageThunk(image.id)}
             >
               delete
