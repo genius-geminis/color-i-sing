@@ -121,7 +121,7 @@ nav a:hover::before {
   background-color: var(--main-bg);
   overflow-y: scroll;
   margin-bottom: 4rem;
-  padding: 1rem 5rem 1rem 5rem;
+  padding: 1rem 5rem 5rem 5rem;
 }
 .draw-options-inner img {
   width: 250px;
@@ -179,7 +179,7 @@ input[type='radio']:checked + .input-img {
   flex-grow: 1;
   background-color: var(--main-bg);
   padding: 1rem 5rem 1rem 5rem;
-  margin-bottom: 4rem;
+  margin-bottom: 6rem;
 }
 
 .draw-left {
@@ -302,7 +302,7 @@ input {
 }
 
 .form-signup__text:hover {
-  color: rgba(253, 243, 243, 0.7);
+  color: #a17b8f;
 }
 
 .center-items {
@@ -440,10 +440,17 @@ table {
 }
 
 .footer {
-  padding: 2%;
+  padding: 3em 0 1em 0;
   text-align: center;
-  background-color: transparent;
-  color: var(--main-text);
+  color: var(--accent-bg);
+  position: -webkit-fixed;
+  position: fixed;
+  bottom: 0;
+  /* background-image: url('footer-bg.jpg'); */
+  background-size: cover;
+  background: RGB(250, 237, 229, 0.3);
+  width: 100%;
+  box-shadow: 2px 3px 4px #cdcdcd;
 }
 /* buttons */
 button {
