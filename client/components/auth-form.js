@@ -11,43 +11,41 @@ const AuthForm = props => {
   const {name, displayName, handleSubmit, error, hasImage} = props
 
   return (
-    <div id="authform-outer-container">
-      <div id="authform-inner-container">
+    <div className="authform-outer-container">
+      <div className="authform-inner-container">
         <form onSubmit={evt => handleSubmit(evt, hasImage)} name={name}>
           {name === 'signup' && (
-            <div>
-              <label htmlFor="fullName">
-                <small>Full Name</small>
-              </label>
+            <>
+              <label htmlFor="fullName">Full Name</label>
               <input name="fullName" type="text" />
-            </div>
+            </>
           )}
-          <div>
-            <label htmlFor="email">
-              <small>Email</small>
-            </label>
-            <input name="email" type="text" />
-          </div>
-          <div>
-            <label htmlFor="password">
-              <small>Password</small>
-            </label>
-            <input name="password" type="password" />
-          </div>
+
+          <label htmlFor="email">Email</label>
+          <input name="email" type="text" />
+
+          <label htmlFor="password">Password</label>
+          <input name="password" type="password" />
+
           <div className="center-items">
-            {/* <button type="submit">{displayName}</button> */}
             <button type="submit" id="form-login-button">
-              Login
+              {displayName}
             </button>
           </div>
+          <div className="center-items">
+            <a href="/auth/google" className="google-button">
+              <img src="http://www.androidpolice.com/wp-content/themes/ap2/ap_resize/ap_resize.php?src=http%3A%2F%2Fwww.androidpolice.com%2Fwp-content%2Fuploads%2F2015%2F10%2Fnexus2cee_Search-Thumb-150x150.png&w=150&h=150&zc=3" />
+            </a>
+          </div>
+
           {error && error.response && <div> {error.response.data} </div>}
         </form>
         {/* <a href="/auth/google">{displayName} with Google</a> */}
-        <a href="/auth/google" id="google-button">
-          <img src="http://www.androidpolice.com/wp-content/themes/ap2/ap_resize/ap_resize.php?src=http%3A%2F%2Fwww.androidpolice.com%2Fwp-content%2Fuploads%2F2015%2F10%2Fnexus2cee_Search-Thumb-150x150.png&w=150&h=150&zc=3" />
-        </a>
-        <div>
-          <Link to={name === 'login' ? 'signup' : 'login'} id="form-signup">
+        <div className="center-items">
+          <Link
+            to={name === 'login' ? 'signup' : 'login'}
+            className="form-signup__text"
+          >
             {' '}
             {name === 'login'
               ? "Don't have an account? Sign Up!"

@@ -25,28 +25,27 @@ class Routes extends Component {
     const {isLoggedIn, hasPalette, hasTemplate} = this.props
 
     return (
-      <Switch>
-        {/* Routes placed here are available to all visitors */}
-        <Route path="/home" component={HomePage} />
-        <Route path="/draw-options" component={drawOptions} />
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
-        <Route
-          path="/draw"
-          render={() =>
-            hasPalette && hasTemplate ? (
-              <Draw />
-            ) : (
-              <Redirect to="/draw-options" />
-            )
-          }
-        />
-        <Route path="/upload" component={FormAddImage} />
-        <Route exact path="/home" render={() => <Redirect to="/" />} />
-        <Route exact path="/" component={HomePage} />
-        {isLoggedIn && <Route path="/account" component={UserAccount} />}
-        {/* Displays our Login component as a fallback */}
-      </Switch>
+      <div className="wrapper">
+        <Switch>
+          <Route path="/draw-options" component={drawOptions} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route
+            path="/draw"
+            render={() =>
+              hasPalette && hasTemplate ? (
+                <Draw />
+              ) : (
+                <Redirect to="/draw-options" />
+              )
+            }
+          />
+          <Route path="/upload" component={FormAddImage} />
+
+          <Route exact path="/" component={HomePage} />
+          {isLoggedIn && <Route path="/account" component={UserAccount} />}
+        </Switch>
+      </div>
     )
   }
 }

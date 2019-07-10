@@ -7,7 +7,7 @@ const SingleImage = props => {
   const {image} = props
 
   return (
-    <React.Fragment>
+    <>
       <tbody id="account-body">
         <tr key={image.id}>
           <td>
@@ -32,7 +32,7 @@ const SingleImage = props => {
           </td>
         </tr>
       </tbody>
-    </React.Fragment>
+    </>
   )
 }
 
