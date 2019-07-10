@@ -236,7 +236,7 @@ class Draw extends React.Component {
             <React.Fragment>
               {this.state.showCountdownModal && <Modal />}
               {this.state.status === 'recording' && (
-                <button type="button" onClick={this.stop} id="stop-button">
+                <button type="button" onClick={this.stop} className="stop-btn">
                   Stop
                 </button>
               )}
@@ -247,13 +247,17 @@ class Draw extends React.Component {
                     this.setState({showCountdownModal: true})
                     this.startWithCountdown()
                   }}
-                  id="start-button"
+                  className="start-btn"
                 >
                   Start
                 </button>
               )}
               {this.state.status === 'stopped' && (
-                <button type="button" onClick={this.clear} className="clear">
+                <button
+                  type="button"
+                  onClick={this.clear}
+                  className="clear-btn"
+                >
                   Clear
                 </button>
               )}
@@ -270,33 +274,34 @@ class Draw extends React.Component {
           <div id="bottom-button">
             {this.state.status === 'stopped' && (
               <>
-                <button type="button">
-                  {this.props.isLoggedIn ? (
-                    <Link to="upload" id="save-button">
+                {this.props.isLoggedIn ? (
+                  <Link to="upload">
+                    <button className="save-btn" type="button">
                       Save
-                    </Link>
-                  ) : (
-                    <Link to="signup"> Save</Link>
-                  )}
-                </button>
-                <button type="button">
-                  <a
-                    href={this.state.imageUrl}
-                    download="image"
-                    id="download-button"
-                  >
-                    Download
-                  </a>
-                </button>
+                    </button>
+                  </Link>
+                ) : (
+                  <Link to="signup">
+                    <button className="save-btn" type="button">
+                      Save
+                    </button>
+                  </Link>
+                )}
                 {this.state.showSocialModal && <ShareModal />}
                 <button
                   type="button"
                   onClick={this.shareImageLink}
-                  id="share-button"
+                  className="share-btn"
                 >
-                  Share Link
+                  Share
                 </button>
-                <p>{this.props.link}</p>
+                <a
+                  href={this.state.imageUrl}
+                  download="image"
+                  className="download"
+                >
+                  Download
+                </a>
               </>
             )}
           </div>

@@ -8,9 +8,11 @@ const HomePage = () => {
       {/* <span className="button" width="100px">
         Hi
       </span> */}
-      <button type="button">
-        <Link to="draw-options">Begin</Link>
-      </button>
+      <Link to="draw-options">
+        <button type="button" className="main-btn">
+          Begin
+        </button>
+      </Link>
     </div>
   )
 }
