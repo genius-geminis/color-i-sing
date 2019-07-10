@@ -3,13 +3,14 @@ import {Link} from 'react-router-dom'
 
 const HomePage = () => {
   return (
-    <div id="home-page">
+    <div className="main">
       <h1>What's the color of your voice?</h1>
-      <div>
-        <Link to="draw-options" className="button">
-          Get Started
-        </Link>
-      </div>
+      {/* <span className="button" width="100px">
+        Hi
+      </span> */}
+      <button type="button">
+        <Link to="draw-options">Begin</Link>
+      </button>
     </div>
   )
 }

@@ -230,7 +230,7 @@ class Draw extends React.Component {
 
   render() {
     return (
-      <div id="draw-page">
+      <div className="draw-page-container">
         <div id="draw-left">
           <div id="top-button">
             <React.Fragment>
@@ -253,7 +253,7 @@ class Draw extends React.Component {
                 </button>
               )}
               {this.state.status === 'stopped' && (
-                <button type="button" onClick={this.clear} id="clear-button">
+                <button type="button" onClick={this.clear} className="clear">
                   Clear
                 </button>
               )}
@@ -276,7 +276,7 @@ class Draw extends React.Component {
                       Save
                     </Link>
                   ) : (
-                    <Link to="signup">Log in or Sign up to Save</Link>
+                    <Link to="signup"> Save</Link>
                   )}
                 </button>
                 <button type="button">
