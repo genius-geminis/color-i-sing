@@ -232,6 +232,7 @@ class Draw extends React.Component {
       this.analyser.disconnect()
       this.source.disconnect()
     }
+    clearTemplate()
   }
 
   render() {
