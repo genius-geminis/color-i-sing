@@ -26,7 +26,8 @@ class Draw extends React.Component {
       canvasWidth: null,
       canvasHeight: null,
       showCountdownModal: true,
-      showSocialModal: false
+      showSocialModal: false,
+      showConfetti: false
     }
     this.canvas = React.createRef()
     this.toRePaint = []
@@ -87,8 +88,11 @@ class Draw extends React.Component {
   }
 
   stop = () => {
-    this.setState({status: 'stopped'})
+    this.setState({status: 'stopped', showConfetti: true})
     this.getImage()
+    setTimeout(() => {
+      this.setState({showConfetti: false})
+    }, 5000)
   }
 
   setWaiter = timeout => {
@@ -275,15 +279,16 @@ class Draw extends React.Component {
             />
           </div>
           <div id="bottom-button">
+            {this.state.showConfetti && (
+              <Confetti
+                width={window.innerWidth}
+                height={window.innerHeight}
+                recycle={false}
+                numberOfPieces={800}
+              />
+            )}
             {this.state.status === 'stopped' && (
               <>
-                {' '}
-                <Confetti
-                  width={window.innerWidth}
-                  height={window.innerHeight}
-                  recycle={false}
-                  numberOfPieces={800}
-                />
                 {this.props.isLoggedIn ? (
                   <Link to="upload">
                     <button className="save-btn" type="button">
