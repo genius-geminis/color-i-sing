@@ -179,11 +179,27 @@ input[type='radio']:checked + .input-img {
   background-color: var(--main-bg);
   padding: 1rem;
   margin: 1rem 0 1rem 0;
+  justify-content: space-around;
+  align-items: center;
 }
-#current-color {
+
+.right-side-draw {
+  display: flex;
+}
+
+#current-color > div {
   width: 100px;
   height: 100px;
   border: 1px solid gray;
+  align-self: center;
+  display: flex;
+  align-items: center;
+}
+
+#color-palette {
+  /* display: flex;
+  align-content: space-around; */
+  /* align-items: flex-end; */
 }
 
 /* .draw-page-container {
@@ -227,8 +243,6 @@ input[type='radio']:checked + .input-img {
 } 
 
 */
-.right-side-draw {
-}
 
 #palette-colors {
   display: flex;

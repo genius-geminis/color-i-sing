@@ -232,33 +232,6 @@ class Draw extends React.Component {
     return (
       <div className="draw-page-container">
         <div id="draw-left">
-          <div id="top-button">
-            <React.Fragment>
-              {this.state.showCountdownModal && <Modal />}
-              {this.state.status === 'recording' && (
-                <button type="button" onClick={this.stop} id="stop-button">
-                  Stop
-                </button>
-              )}
-              {this.state.status === 'cleared' && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    this.setState({showCountdownModal: true})
-                    this.startWithCountdown()
-                  }}
-                  id="start-button"
-                >
-                  Start
-                </button>
-              )}
-              {this.state.status === 'stopped' && (
-                <button type="button" onClick={this.clear} className="clear">
-                  Clear
-                </button>
-              )}
-            </React.Fragment>
-          </div>
           <div>
             <canvas
               id="canvas"
@@ -302,10 +275,38 @@ class Draw extends React.Component {
           </div>
         </div>
         <div id="right-side-draw">
-          <div>
-            <h3>Current Color:</h3>
-            <div id="current-color" ref={this.currentColor} />
+          <div id="top-button">
+            <React.Fragment>
+              {this.state.showCountdownModal && <Modal />}
+              {this.state.status === 'recording' && (
+                <button type="button" onClick={this.stop} id="stop-button">
+                  Stop
+                </button>
+              )}
+              {this.state.status === 'cleared' && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    this.setState({showCountdownModal: true})
+                    this.startWithCountdown()
+                  }}
+                  id="start-button"
+                >
+                  Start
+                </button>
+              )}
+              {this.state.status === 'stopped' && (
+                <button type="button" onClick={this.clear} className="clear">
+                  Clear
+                </button>
+              )}
+              <div id="current-color">
+                <h3>Current Color:</h3>
+                <div ref={this.currentColor} />
+              </div>
+            </React.Fragment>
           </div>
+
           <div id="color-palette">
             <h3>Your Color Palette:</h3>
             <ColorPalette palette={this.props.palette} />
