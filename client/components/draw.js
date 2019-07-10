@@ -11,6 +11,7 @@ import {connect} from 'react-redux'
 import Modal from './Modal'
 import ShareModal from './shareModal'
 import {ColorPalette} from './colorPalette'
+import Confetti from 'react-confetti'
 
 const WHITE = '#FAEDE5'
 const RED = '#fd4f57'
@@ -25,7 +26,8 @@ class Draw extends React.Component {
       canvasWidth: null,
       canvasHeight: null,
       showCountdownModal: true,
-      showSocialModal: false
+      showSocialModal: false,
+      showConfetti: false
     }
     this.canvas = React.createRef()
     this.toRePaint = []
@@ -86,8 +88,11 @@ class Draw extends React.Component {
   }
 
   stop = () => {
-    this.setState({status: 'stopped'})
+    this.setState({status: 'stopped', showConfetti: true})
     this.getImage()
+    setTimeout(() => {
+      this.setState({showConfetti: false})
+    }, 5000)
   }
 
   setWaiter = timeout => {
@@ -229,6 +234,8 @@ class Draw extends React.Component {
   }
 
   render() {
+    // const {width, height} = useWindowSize()
+
     return (
       <div className="draw-page-container">
         <div id="draw-left">
@@ -272,6 +279,14 @@ class Draw extends React.Component {
             />
           </div>
           <div id="bottom-button">
+            {this.state.showConfetti && (
+              <Confetti
+                width={window.innerWidth}
+                height={window.innerHeight}
+                recycle={false}
+                numberOfPieces={800}
+              />
+            )}
             {this.state.status === 'stopped' && (
               <>
                 {this.props.isLoggedIn ? (
