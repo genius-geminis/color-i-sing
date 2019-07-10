@@ -301,13 +301,15 @@ class Draw extends React.Component {
             )}
           </div>
         </div>
-        <div id="color-palette">
-          <h3>Your Color Palette:</h3>
-          <ColorPalette palette={this.props.palette} />
-        </div>
-        <div id="current-color">
-          <h3>Current Color:</h3>
-          <div ref={this.currentColor} />
+        <div id="right-side-draw">
+          <div>
+            <h3>Current Color:</h3>
+            <div id="current-color" ref={this.currentColor} />
+          </div>
+          <div id="color-palette">
+            <h3>Your Color Palette:</h3>
+            <ColorPalette palette={this.props.palette} />
+          </div>
         </div>
       </div>
     )

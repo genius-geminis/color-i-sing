@@ -175,30 +175,38 @@ input[type='radio']:checked + .input-img {
 
 /* draw page */
 .draw-page-container {
+  display: flex;
+  background-color: var(--main-bg);
+  padding: 1rem;
+  margin: 1rem 0 1rem 0;
+}
+#current-color {
+  width: 100px;
+  height: 100px;
+  border: 1px solid gray;
+}
+
+/* .draw-page-container {
   display: grid;
-  grid-template-columns: 55% auto;
+  grid-template-columns: 50% auto;
   grid-template-rows: 50% auto;
   grid-template-areas:
-    'drawLeft colorPalette'
-    'drawLeft currColor';
+    'drawLeft currColor'
+    'drawLeft colorPalette';
   flex-grow: 1;
+  align-self: center;
   background-color: var(--main-bg);
-  padding: 1rem 5rem 1rem 5rem;
-  margin-bottom: 4rem;
+  padding: 1rem;
+  margin: 1rem 0 1rem 0;
 }
 
 .draw-left {
   grid-area: drawLeft;
   display: flex;
   flex-direction: column;
+  align-self: center;
 }
 
-#canvas {
-  border: 1px solid #cdcdcd;
-  box-shadow: 2px 3px 4px #cdcdcd;
-  background-color: white;
-  padding: 1rem;
-  margin: 1rem 0 1rem 0;
 }
 
 #color-palette {
@@ -209,34 +217,39 @@ input[type='radio']:checked + .input-img {
 #current-color {
   grid-area: currColor;
   color: var(--main-text);
-}
-
-#current-color > div {
-  width: 100px;
-  height: 100px;
-  border: 1px solid gray;
-}
+  justify-self: end;
+ }
 
 #draw-left button {
   margin-right: 10px;
   font-size: 12px;
   padding: 10px 16px;
+} 
+
+*/
+.right-side-draw {
 }
 
 #palette-colors {
   display: flex;
   width: 100%;
 }
+.palette-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+}
 
 #palette-colors div {
   width: 2px;
   height: 150px;
 }
-
-.palette-labels {
-  display: flex;
-  justify-content: space-between;
-  width: 80%;
+#canvas {
+  border: 1px solid #cdcdcd;
+  box-shadow: 2px 3px 4px #cdcdcd;
+  background-color: white;
+  padding: 1rem;
+  margin: 1rem 0 1rem 0;
 }
 
 /* forms for login and signup */
