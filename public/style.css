@@ -108,8 +108,8 @@ nav a:hover::before {
 /*  wrapper  */
 .wrapper {
   height: 100%;
-  padding-left: 10rem;
-  padding-right: 10rem;
+  padding-left: 10em;
+  padding-right: 10em;
 }
 
 /* home page */
@@ -139,6 +139,8 @@ nav a:hover::before {
   width: 250px;
   margin: 2rem;
   display: block;
+  border: 1px solid #cdcdcd;
+  box-shadow: 2px 3px 4px #cdcdcd;
 }
 .darw-options-palette {
   margin: 2rem;
@@ -248,7 +250,7 @@ label {
 }
 
 input {
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: 400;
   line-height: 1.5;
   color: var(--main-text);
@@ -258,8 +260,10 @@ input {
   width: 95%;
 }
 .authform-outer-container {
-  width: 25rem;
-  padding: 5rem 0 0 10rem;
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  padding: 5em 0 0 2em;
 }
 
 .authform-inner-container {
@@ -270,6 +274,7 @@ input {
   color: #212529;
   background: rgba(255, 209, 220, 0.4);
   border-radius: 8px;
+  width: 22em;
   /* overflow: hidden; */
 }
 
@@ -352,34 +357,25 @@ table {
   border-top: 1px solid #cdcdcd;
 }
 
-/* td button,
-form button {
-  font-size: 10px;
-  color: rgb(0, 0, 238);
-  line-height: 1.2;
-  padding: 0px 20px;
-  min-width: 50px;
-  height: 30px;
-  background-color: #fff;
-  border-radius: 27px;
-} */
-
-.social-modal {
+.social-share__modal {
   position: fixed;
-  width: 400px;
+  width: 30em;
   height: auto;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  padding: 3vw;
-  font-size: 1rem;
+  padding: 2em;
+  font-size: 18px;
   font-weight: 400;
   line-height: 1.5;
-  background-color: white;
-  border-radius: 10px;
+  background: white;
+  border-radius: 8px;
+  color: var(--main-text);
 }
-
+.social-share__modal span {
+  margin: 8px;
+}
 /* Modal Countdown */
 .modal {
   position: fixed;
@@ -429,10 +425,16 @@ form button {
   top: 105px;
   left: 63px;
   width: 60px;
-
   font-size: 60px;
   font-weight: 600;
   /* text-align: center; */
+}
+
+.sing {
+  font-size: 40px;
+  margin: 10px 0 0 -29px;
+
+  text-transform: uppercase;
 }
 
 @keyframes countdown-animation {

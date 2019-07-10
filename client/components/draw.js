@@ -296,7 +296,6 @@ class Draw extends React.Component {
                 >
                   Share Link
                 </button>
-                <p>{this.props.link}</p>
               </>
             )}
           </div>

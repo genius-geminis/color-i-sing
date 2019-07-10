@@ -1,6 +1,5 @@
 import React from 'react'
 import CountdownTimer from './CountDown'
-import ShareLink from './shareLink'
 
 export default class Modal extends React.Component {
   constructor(props) {
