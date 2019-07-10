@@ -178,13 +178,21 @@ input[type='radio']:checked + .input-img {
   align-items: center;
 }
 
-/* .right-side-draw {
+.right-side-draw {
   display: flex;
-} */
+  flex-direction: column;
+  justify-content: space-between;
+  width: 400px;
+}
 
 .top-right-draw {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bottom-button {
+  height: 70px;
 }
 
 #current-color {
@@ -196,45 +204,14 @@ input[type='radio']:checked + .input-img {
   align-items: center;
 }
 
-#color-palette {
-  /* display: flex;
-  align-content: space-around; */
-  /* align-items: flex-end; */
-}
-
-/* .draw-page-container {
-  display: grid;
-  grid-template-columns: 50% auto;
-  grid-template-rows: 50% auto;
-  grid-template-areas:
-    'drawLeft currColor'
-    'drawLeft colorPalette';
-  flex-grow: 1;
-  align-self: center;
-  background-color: var(--main-bg);
-  padding: 1rem;
-  margin: 1rem 0 1rem 0;
-}
-
-.draw-left {
-  grid-area: drawLeft;
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-}
-
+.current-color-title {
+  text-align: right;
 }
 
 #color-palette {
-  grid-area: colorPalette;
-  color: var(--main-text);
+  align-self: flex-end;
+  width: 100%;
 }
-
-#current-color {
-  grid-area: currColor;
-  color: var(--main-text);
-  justify-self: end;
- }
 
 #draw-left button {
   margin-right: 10px;
@@ -242,22 +219,20 @@ input[type='radio']:checked + .input-img {
   padding: 10px 16px;
 }
 
-*/
-
 #palette-colors {
   display: flex;
-  width: 100%;
 }
 .palette-labels {
   display: flex;
   justify-content: space-between;
-  width: 80%;
+  width: 100%;
 }
 
 #palette-colors div {
-  width: 2px;
-  height: 150px;
+  height: 100px;
+  flex-grow: 1;
 }
+
 #canvas {
   border: 1px solid #cdcdcd;
   box-shadow: 2px 3px 4px #cdcdcd;
@@ -485,6 +460,7 @@ table {
 }
 /* buttons */
 button {
+  height: 2.5rem;
   margin: 1rem;
   font-size: 0.8rem;
   text-transform: uppercase;
