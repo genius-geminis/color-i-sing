@@ -11,6 +11,7 @@ import {connect} from 'react-redux'
 import Modal from './Modal'
 import ShareModal from './shareModal'
 import {ColorPalette} from './colorPalette'
+import Confetti from 'react-confetti'
 
 const WHITE = '#FAEDE5'
 const RED = '#fd4f57'
@@ -229,6 +230,8 @@ class Draw extends React.Component {
   }
 
   render() {
+    // const {width, height} = useWindowSize()
+
     return (
       <div className="draw-page-container">
         <div id="draw-left">
@@ -270,6 +273,13 @@ class Draw extends React.Component {
           <div id="bottom-button">
             {this.state.status === 'stopped' && (
               <>
+                {' '}
+                <Confetti
+                  width={window.innerWidth}
+                  height={window.innerHeight}
+                  recycle={false}
+                  numberOfPieces={800}
+                />
                 <button type="button">
                   {this.props.isLoggedIn ? (
                     <Link to="upload" id="save-button">
