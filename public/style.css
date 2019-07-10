@@ -18,6 +18,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+  background-position: top;
   height: 100vh;
 }
 
@@ -63,16 +64,17 @@ h1 {
 
 /* nav bar */
 nav {
-  /* background: linear-gradient(to right, #4a3252, #774e72, #51396b); */
-  background: rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid #796276;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1vw 1vw;
+  padding: 0 2rem 0 2rem;
   position: -webkit-sticky;
   position: sticky;
   top: 0;
+  background-image: url('navbar.jpg');
+  background-position: top;
+  background-size: cover;
 }
 
 nav a {
@@ -131,6 +133,7 @@ nav a:hover::before {
   background-color: var(--main-bg);
   overflow-y: scroll;
   margin-bottom: 4rem;
+  padding: 1rem 5rem 1rem 5rem;
 }
 .draw-options-inner img {
   width: 250px;
@@ -151,7 +154,7 @@ nav a:hover::before {
   justify-content: flex-start;
   align-items: center;
   flex-grow: 1;
-  padding: 2rem;
+  /* padding: 1rem 5rem 1rem 5rem; */
 }
 
 .draw-options-inner input {
@@ -180,7 +183,7 @@ input[type='radio']:checked + .input-img {
     'drawLeft currColor';
   flex-grow: 1;
   background-color: var(--main-bg);
-  padding: 5rem;
+  padding: 1rem 5rem 1rem 5rem;
   margin-bottom: 4rem;
 }
 
@@ -256,7 +259,7 @@ input {
 }
 .authform-outer-container {
   width: 25rem;
-  padding: 5rem 0 0 6rem;
+  padding: 5rem 0 0 10rem;
 }
 
 .authform-inner-container {
