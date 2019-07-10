@@ -4,9 +4,10 @@ export default class CountdownTimer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      timeRemainingInSeconds: 5,
+      timeRemainingInSeconds: 3,
       startTimeInSeconds: 5
     }
+    this.messages = ['sing', '1', '2', '3']
   }
   decrementTimeRemaining = () => {
     if (this.state.timeRemainingInSeconds > 0) {
@@ -23,7 +24,7 @@ export default class CountdownTimer extends React.Component {
   componentDidMount() {
     this.timer = setInterval(() => {
       this.decrementTimeRemaining()
-    }, 1000)
+    }, 1250)
   }
 
   render() {
@@ -43,8 +44,12 @@ export default class CountdownTimer extends React.Component {
             />
           </svg>
         </div>
-        <div className="countdown-timer__text">
-          {this.state.timeRemainingInSeconds}
+        <div
+          className={`countdown-timer__text ${
+            this.messages[this.state.timeRemainingInSeconds]
+          }`}
+        >
+          {this.messages[this.state.timeRemainingInSeconds]}
         </div>
       </div>
     )

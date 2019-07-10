@@ -11,6 +11,7 @@ import {connect} from 'react-redux'
 import Modal from './Modal'
 import ShareModal from './shareModal'
 import {ColorPalette} from './colorPalette'
+import Confetti from 'react-confetti'
 
 const WHITE = '#FAEDE5'
 const RED = '#fd4f57'
@@ -25,7 +26,8 @@ class Draw extends React.Component {
       canvasWidth: null,
       canvasHeight: null,
       showCountdownModal: true,
-      showSocialModal: false
+      showSocialModal: false,
+      showConfetti: false
     }
     this.canvas = React.createRef()
     this.toRePaint = []
@@ -86,8 +88,11 @@ class Draw extends React.Component {
   }
 
   stop = () => {
-    this.setState({status: 'stopped'})
+    this.setState({status: 'stopped', showConfetti: true})
     this.getImage()
+    setTimeout(() => {
+      this.setState({showConfetti: false})
+    }, 5000)
   }
 
   setWaiter = timeout => {
@@ -229,6 +234,8 @@ class Draw extends React.Component {
   }
 
   render() {
+    // const {width, height} = useWindowSize()
+
     return (
       <div className="draw-page-container">
         <div id="draw-left">
@@ -273,35 +280,44 @@ class Draw extends React.Component {
             {/* ref={this.currentColor} */}
           </div>
           <div id="bottom-button">
+            {this.state.showConfetti && (
+              <Confetti
+                width={window.innerWidth}
+                height={window.innerHeight}
+                recycle={false}
+                numberOfPieces={800}
+              />
+            )}
             {this.state.status === 'stopped' && (
               <>
-                <button type="button">
-                  {this.props.isLoggedIn ? (
-                    <Link to="upload" id="save-button">
+                {this.props.isLoggedIn ? (
+                  <Link to="upload">
+                    <button className="save-btn" type="button">
                       Save
-                    </Link>
-                  ) : (
-                    <Link to="signup"> Save</Link>
-                  )}
-                </button>
-                <button type="button">
-                  <a
-                    href={this.state.imageUrl}
-                    download="image"
-                    id="download-button"
-                  >
-                    Download
-                  </a>
-                </button>
+                    </button>
+                  </Link>
+                ) : (
+                  <Link to="signup">
+                    <button className="save-btn" type="button">
+                      Save
+                    </button>
+                  </Link>
+                )}
                 {this.state.showSocialModal && <ShareModal />}
                 <button
                   type="button"
                   onClick={this.shareImageLink}
-                  id="share-button"
+                  className="share-btn"
                 >
-                  Share Link
+                  Share
                 </button>
-                <p>{this.props.link}</p>
+                <a
+                  href={this.state.imageUrl}
+                  download="image"
+                  className="download"
+                >
+                  Download
+                </a>
               </>
             )}
           </div>

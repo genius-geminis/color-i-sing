@@ -29,15 +29,19 @@ class FormAddImage extends React.Component {
   }
   render() {
     return (
-      <div id="upload-container">
-        <form onSubmit={this.uploadImage}>
-          <label>Name</label>
-          <input name="name" type="text" onChange={this.handleChange} />
-
-          <label>Image Url</label>
-          <input name="image" type="url" defaultValue={this.props.imageUrl} />
-          <button type="submit">Submit</button>
-        </form>
+      <div className="authform-outer-container">
+        <div className="authform-inner-container">
+          <form onSubmit={this.uploadImage}>
+            <label>Name</label>
+            <input
+              placeholder="Awesome Masterpiece"
+              name="name"
+              type="text"
+              onChange={this.handleChange}
+            />
+            <button type="submit">Submit</button>
+          </form>
+        </div>
       </div>
     )
   }
