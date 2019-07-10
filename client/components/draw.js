@@ -284,7 +284,6 @@ class Draw extends React.Component {
                   recycle={false}
                   numberOfPieces={800}
                 />
-                <button type="button">
                 {this.props.isLoggedIn ? (
                   <Link to="upload">
                     <button className="save-btn" type="button">
@@ -306,7 +305,6 @@ class Draw extends React.Component {
                 >
                   Share
                 </button>
-
                 <a
                   href={this.state.imageUrl}
                   download="image"
