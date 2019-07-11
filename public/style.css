@@ -121,7 +121,7 @@ nav a:hover::before {
   background-color: var(--main-bg);
   overflow-y: scroll;
   margin-bottom: 4rem;
-  padding: 1rem 5rem 2rem 5rem;
+  padding: 1rem 3rem 2rem 3rem;
 }
 .draw-options-inner img {
   width: 250px;
@@ -130,6 +130,7 @@ nav a:hover::before {
   border: 1px solid #cdcdcd;
   box-shadow: 2px 3px 4px #cdcdcd;
 }
+
 .darw-options-palette {
   margin: 2rem;
   width: 300px;
@@ -304,6 +305,7 @@ input {
 .account-container {
   background-color: var(--main-bg);
   overflow-y: scroll;
+  margin-bottom: 4rem;
 }
 
 .account-details {
