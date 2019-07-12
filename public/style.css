@@ -53,13 +53,13 @@ h1 {
   animation-iteration-count: infinite;
   animation-duration: 2s; */
 }
-h3 {
+.home-page__text {
   /* font-family: 'Caveat'; */
   color: var(--accent-text);
   font-weight: 100;
   font-size: 22px;
   text-transform: none;
-  margin-top: -20px;
+  margin: -15px 0 10px 0;
 }
 
 /* @keyframes example {

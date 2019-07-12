@@ -7,7 +7,9 @@ const HomePage = () => {
       <h1>
         Paint with all the colors <br />of your voice
       </h1>
-      <h3>~ digital coloring book that lets your voice be the paintbrush ~</h3>
+      <div className="home-page__text">
+        ~ digital coloring book that lets your voice be the paintbrush ~
+      </div>
 
       <Link to="draw-options">
         <button type="button" className="main-btn">
