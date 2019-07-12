@@ -44,13 +44,22 @@ h2 {
 
 h1 {
   font-family: 'Caveat';
-  color: #ffcccc;
+  color: var(--accent-text);
   font-weight: 100;
   font-size: 80px;
   text-transform: none;
+  line-height: 70px;
   /* animation-name: example;
   animation-iteration-count: infinite;
-  animation-duration: 1s; */
+  animation-duration: 2s; */
+}
+h3 {
+  /* font-family: 'Caveat'; */
+  color: var(--accent-text);
+  font-weight: 100;
+  font-size: 22px;
+  text-transform: none;
+  margin-top: -20px;
 }
 
 /* @keyframes example {
@@ -114,7 +123,7 @@ nav a:hover::before {
 
 /* home page */
 .main {
-  padding-top: 5rem;
+  padding-top: 4rem;
 }
 
 .draw-options-container {
