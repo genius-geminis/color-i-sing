@@ -18,6 +18,7 @@ const drawOptions = props => {
                 id="flower"
                 defaultChecked
               />
+
               <img className="input-img" src="/images/flower.jpeg" />
             </label>
             <div className="center-items"> Flower</div>
@@ -25,7 +26,6 @@ const drawOptions = props => {
           <div>
             <label htmlFor="star">
               <input type="radio" name="template" value="star" id="star" />
-
               <img className="input-img" src="/images/star.jpeg" />
             </label>
             <div className="center-items">Star</div>
@@ -38,10 +38,16 @@ const drawOptions = props => {
                 value="ice-cream"
                 id="ice-cream"
               />
-
               <img className="input-img" src="/images/ice-cream.jpeg" />
             </label>
             <div className="center-items">Ice Cream</div>
+          </div>
+          <div>
+            <label htmlFor="dino">
+              <input type="radio" name="template" value="dino" id="dino" />
+              <img className="input-img" src="/images/dino.jpeg" />
+            </label>
+            <div className="center-items">Dino</div>
           </div>
           <div>
             <label htmlFor="butterfly">
@@ -68,6 +74,18 @@ const drawOptions = props => {
             <div className="center-items">Balloons</div>
           </div>
           <div>
+            <label htmlFor="spaceship">
+              <input
+                type="radio"
+                name="template"
+                value="spaceship"
+                id="spaceship"
+              />
+              <img className="input-img" src="/images/spaceship.jpeg" />
+            </label>
+            <div className="center-items">Spaceship</div>
+          </div>
+          <div>
             <label htmlFor="heart">
               <input type="radio" name="template" value="heart" id="heart" />
               <img className="input-img" src="/images/heart.jpeg" />
@@ -78,7 +96,7 @@ const drawOptions = props => {
 
         <div className="draw-options-inner__title">Select Color Palette</div>
 
-        <div className="draw-options-inner">
+        <div className="draw-options-inner" id="palette">
           <div className="darw-options-palette">
             <input
               type="radio"
@@ -93,6 +111,7 @@ const drawOptions = props => {
             </label>
             <div className="center-items negative-margin">Rainbow</div>
           </div>
+
           <div className="darw-options-palette">
             <input
               type="radio"
