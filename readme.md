@@ -53,6 +53,6 @@ npm run start-dev
 
 ## Credits :star:
 
-* Colleen Higgins :heart:
-* Alena Loffe :heart:
-* Kistina Gurung :heart:
+* [Colleen Higgins](https://github.com/colleen-higgins-designs) :heart:
+* [Alena Loffe](https://github.com/alena-ioffe) :heart:
+* [Kistina Gurung](https://github.com/Kistinagrg) :heart:
