@@ -34,9 +34,9 @@ npm install
 ```
   process.env.GOOGLE_CLIENT_ID = 'hush hush'
   process.env.GOOGLE_CLIENT_SECRET = 'pretty secret'
-  process.env.GOOGLE_CALLBACK = '/auth/google/callback'
-  
+  process.env.GOOGLE_CALLBACK = '/auth/google/callback'  
 ```
+
 5. To use OAuth with Google, complete the step above with a real client ID and client secret from Google
    
 * You can get them here: https://console.developers.google.com/apis/credentials
