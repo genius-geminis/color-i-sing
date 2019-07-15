@@ -9,8 +9,8 @@ Color I Sing is a digital coloring book that lets your voice be the paint brush.
 
 ## Tech Stack:
 
-Front End: React, Redux, CSS, Java Script, Canvas API, Web Audio API, image-js
-Back End: Node, Express, PostgreSQL, Google Oath 
+* Front End: React, Redux, CSS, Java Script, Canvas API, Web Audio API, image-js
+* Back End: Node, Express, PostgreSQL, Google Oath 
 
 
 ## Getting Started :computer:
@@ -22,7 +22,7 @@ Back End: Node, Express, PostgreSQL, Google Oath
 ```
 npm install
 ```
-3. Create a Postgres Database
+3. Create a Postgres Database: ``` colorising ```
 
 4. Create a file called secrets.js in the project root
 
@@ -39,7 +39,7 @@ npm install
 ```
 5. To use OAuth with Google, complete the step above with a real client ID and client secret from Google
    
-  You can get them here: https://console.developers.google.com/apis/credentials
+* You can get them here: https://console.developers.google.com/apis/credentials
 
 6.  Once the dependencies are installed, start to start the application:
 
