@@ -5,7 +5,10 @@ const db = require('../db')
 const User = db.define('user', {
   fullName: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      notNull: {args: true, msg: 'You must enter a name'}
+    }
   },
   email: {
     type: Sequelize.STRING,
