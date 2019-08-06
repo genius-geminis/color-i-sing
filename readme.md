@@ -6,6 +6,18 @@
 
 Color I Sing is a digital coloring book that lets your voice be the paint brush. Using the Web Audio and Canvas APIs, this program analyses your voice and colors in the page based on the notes you sing. Users can share their creations via social media or save them to their account.
 
+## Features
+
+Choose from an list of coloring templates and color palettes.
+Stop coloring at any time by clicking the STOP button.
+Download finished images, save them to your account, or share them on social media.
+Clear image and start over.
+
+## Upcoming Features
+
+Choose your vocal range (Alto or Soprano)
+Upload a custom coloring template or color palette
+Color in the template section-by-section via mouse click
 
 ## Tech Stack:
 
