@@ -452,26 +452,25 @@ table {
   z-index: -1;
 }
 /* buttons */
-button {
-  height: 2.5rem;
+button,
+.btn {
   margin: 1rem;
   font-size: 0.8rem;
   text-transform: uppercase;
   padding: 0.7rem 1.2rem;
   border-radius: 5px;
   text-align: center;
-  outline: none;
   letter-spacing: 0.2em;
   border: 2px solid transparent;
   cursor: pointer;
   transition: 300ms all ease;
 }
 
-button a {
+.btn a {
   text-decoration: none;
 }
 
-button:hover {
+.btn:hover {
   background-color: rgba(255, 255, 255, 0.4);
   background: none;
 }

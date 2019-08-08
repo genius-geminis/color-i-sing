@@ -287,16 +287,16 @@ class Draw extends React.Component {
             {this.state.status === 'stopped' && (
               <>
                 {this.props.isLoggedIn ? (
-                  <Link to="upload">
-                    <button className="save-btn" type="button">
-                      Save
-                    </button>
+                  <Link to="upload" className="btn save-btn">
+                    {/* <button  type="button"> */}
+                    Save
+                    {/* </button> */}
                   </Link>
                 ) : (
-                  <Link to="signup">
-                    <button className="save-btn" type="button">
-                      Save
-                    </button>
+                  <Link to="signup" className="btn save-btn">
+                    {/* <button  type="button"> */}
+                    Save
+                    {/* </button> */}
                   </Link>
                 )}
                 {this.state.showSocialModal && <ShareModal />}
